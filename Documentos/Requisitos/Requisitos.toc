@@ -1,0 +1,22 @@
+\changetocdepth {4}
+\select@language {brazil}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\contentsline {chapter}{Introdu\IeC {\c c}\IeC {\~a}o}{2}{chapter*.1}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase {Vis\IeC {\~a}o Geral}}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}Arquitetura do Programa}{3}{section.1.1}
+\contentsline {section}{\numberline {1.2}Descri\IeC {\c c}\IeC {\~a}o do Jogo}{3}{section.1.2}
+\contentsline {section}{\numberline {1.3}Detalhes de Implementa\IeC {\c c}\IeC {\~a}o}{3}{section.1.3}
+\contentsline {section}{\numberline {1.4}Fluxo do Jogo}{4}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}Posi\IeC {\c c}\IeC {\~a}o Inicial}{4}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {1.4.2}Jogadas}{4}{subsection.1.4.2}
+\contentsline {subsection}{\numberline {1.4.3}Objetivo do Jogo}{4}{subsection.1.4.3}
+\contentsline {section}{\numberline {1.5}Regras do Jogo}{4}{section.1.5}
+\contentsline {section}{\numberline {1.6}Premissas de desenvolvimento}{4}{section.1.6}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {2}\MakeTextUppercase {Requisitos de Software}}{6}{chapter.2}
+\contentsline {section}{\numberline {2.1}Requisitos Funcionais}{6}{section.2.1}
+\contentsline {section}{\numberline {2.2}Requisitos N\IeC {\~a}o Funcionais}{6}{section.2.2}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {3}\MakeTextUppercase {Esbo\IeC {\c c}o da Interface Gr\IeC {\'a}fica}}{7}{chapter.3}
