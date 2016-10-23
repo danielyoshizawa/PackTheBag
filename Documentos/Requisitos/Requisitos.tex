@@ -83,13 +83,13 @@ com o intuito de preencher malas com blocos de formas e cores variados de maneir
 
 \section{Descrição do Jogo}
 
-Dois jogadores disputam por peças para preencher suas malas, com o objetivo de usar o máximo de peças possíveis para deixar o mínimo de espaços em branco na sua mala. As peças serão agrupadas por cores que possuirão diferentes pontuações. Ao final, quando não houver mais peças ou espaços na mala, os jogadores serão pontuados. Quem tiver mais pontos ganha.
+Dois jogadores disputam por peças para preencher suas malas, com o objetivo de usar o máximo de peças possíveis para deixar o mínimo de espaços em branco na sua mala. As peças serão agrupadas por cores que possuirão diferentes pontuações. Ao final, quando não houver mais posições disponíveis para peças em ambas as malas, os jogadores serão pontuados. Quem tiver mais pontos ganha.
 
-A complexidade se dá em escolher as peças certas das categorias certas e reduzir a quantidade de peças que o adversário pode utilizar para ganhar mais pontos. Serão utilizadas peças do padrão Tetris e a mala em forma de grade. Também existirão categorias por cores de peças. 
+A complexidade se dá em escolher as peças certas das categorias certas e reduzir a quantidade de peças que o adversário pode utilizar para ganhar mais pontos. Serão utilizadas peças do padrão Tetris e a mala em forma de grade. Também existirão categorias por cores de peças. As peças dentro das categorias com maior pontuação vão aparecer com menor frequência.
 
-A grade terá tamanho variado, quadrados e retangulares. Cada peça pode assumir quatro posições, porém o jogador não terá a opção de virar as peças. Estas peças podem assumir qualquer cor das categorias disponíveis. Não serão escolhas randômica, e sim um algoritmo de seleção para controlar a dificuldade.
+A grade terá tamanho variado, quadrados e retangulares. Cada peça pode assumir quatro posições pré-determinadas, o jogador não terá a opção de virar as peças. Estas peças podem assumir qualquer cor das categorias disponíveis. Não serão escolhas randômica, e sim um algoritmo de seleção para controlar a dificuldade.
 
-A cada turno, um jogador escolhe uma peça conforme sua estratégia e a arrasta para a posição desejada na grade. Logo após, passando o turno para o adversário o qual repete o processo até que um jogador preencha a mala ou que as peças disponíveis acabem.
+A cada turno, um grupo novo de 3 peças serão apresentadas e o jogador da vez escolhe uma peça conforme sua estratégia e a arrasta para a posição desejada na grade. Logo após, passando o turno para o adversário o qual repete o processo até que não exista mais posições disponíveis nas malas de ambos os jogadores. Caso um jogador ocupe todas as posições disponíveis antes do outro, o jogador que ainda possuir espaços poderá continuar jogando.
  
 \section{Detalhes de Implementação}
 
@@ -103,18 +103,18 @@ O jogo iniciará quando os dois jogadores estiverem conectados, o algoritmo esco
 
 \subsection{Jogadas}
 
-O jogador da vez escolherá uma peça dentro do catálogo de peças disponíveis e a posicionará na sua grade. O jogador poderá fazer uso de estratégia  ao escolher a sua peça a fim de obter mais pontos ou dificultar o jogo do adversário. Após posicionar sua peça, o jogador passa a vez para o adversário.
+O jogador da vez escolherá uma peça dentro do catálogo de peças disponíveis e a posicionará na sua grade. O jogador poderá fazer uso de estratégia ao escolher a peça de uma categoria a fim de obter mais pontos ou dificultar o jogo do adversário. Após posicionar sua peça, o jogador passa a vez para o adversário.
 
 \subsection{Objetivo do Jogo}
 
-O jogo chega ao seu final quando o número de peças disponíveis acaba ou as grades de ambos jogadores não possui mais espaços para receber peças.
+O jogo chega ao seu final quando as grades de ambos jogadores não possuir mais espaços para receber peças.
 
 \section{Regras do Jogo}
 
 \begin{itemize}
 \item Cada jogador seleciona e adiciona em sua grade apenas uma peça por turno;
 \item A peça deve caber e não sobrepor outras peças na grade;
-\item O jogador tem o máximo de um minuto para realizar a sua jogada e um turno;
+\item O jogador tem o máximo de um minuto para realizar a sua jogada em um turno;
 \item O jogador tem autorização para adicionar peças apenas na sua grade;
 \item O jogador poderá continuar suas jogadas caso ainda tenha espaço disponível para peças em sua grade e haja peças disponíveis, mesmo que o adversário não tenha mais espaço em sua grade;
 \end{itemize}
@@ -126,7 +126,7 @@ O software deverá :
 \begin{itemize}
 \item Ser implementado em linguagem de programação Java, utilizando paradigma de orientação a objetos, devendo executar em qualquer plataforma que disponha de máquina virtual Java;
 \item Apresentar uma interface gráfica bidimensional (2d);
-\item Ser um jogo virtual em rede, na modalidade jogador contra jogador em rede;
+\item Ser um jogo virtual em rede, na modalidade jogador contra jogador, utilizando o framework NetGamesNRT;
 \end{itemize}
 
 \chapter{Requisitos de Software}
@@ -136,7 +136,7 @@ O software deverá :
 \item Conectar - O programa deve apresentar uma opção conectar, para estabelecer conexão com o servidor. O jogador devera definir o nome que o identificará durante a partida nesta etapa;
 \item Desconectar - O jogo deve apresentar a opção desconectar, permitindo ao jogador desconectar do servidor, encerrando assim uma possível partida em andamento;
 \item Iniciar Partida - O programa deve apresentar uma opção iniciar para que a partida tenha inicio. É necessário que os dois jogadores estejam conectados ao servidor para iniciar uma nova partida;
-\item Selecionar peça - As peças devem ser geradas no inicio da partida, podendo ser selecionadas e arrastadas até a posição desejada, está ficara na posição caso não colida com nenhuma peça já colocada na grade ou com os limites da grade;
+\item Selecionar peça - As peças devem ser geradas no inicio do turno, podendo ser selecionadas e arrastadas até a posição desejada, está ficara na posição caso não colida com nenhuma peça já colocada na grade ou com os limites da grade;
 \item Sair da partida - O programa deve apresentar uma opção sair ao terminar a partida, que fará o programa voltar a tela inicial;
 \end{itemize}
 
@@ -144,7 +144,7 @@ O software deverá :
 \begin{itemize}
 \item Especificações de projeto - Software escrito na linguagem de programação Java, e especificação feita em UML segunda versão;
 \item Interface gráfica para o usuário - O programa deverá ter interface gráfica única, partilhada pelos usuários;
-\item Peças - Serão geradas peças no padrão Tetris, podendo assumir diferentes cores e rotações;
+\item Peças - Serão geradas peças no padrão Tetris, podendo assumir diferentes cores;
 \item Tecnologia de interface gráfica para usuário - A interface gráfica será desenvolvida a partir da biblioteca Slick2d;
 \end{itemize}
 
