@@ -4,3 +4,4 @@ Outros Projetos/
 Outros Projetos/*
 *.bak_*
 .DS_Store
+*.lck
