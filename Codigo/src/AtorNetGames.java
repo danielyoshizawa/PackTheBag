@@ -1,5 +1,6 @@
 import br.ufsc.inf.leobr.cliente.OuvidorProxy;
 import br.ufsc.inf.leobr.cliente.Proxy;
+import br.ufsc.inf.leobr.cliente.exception.*;
 
 public class AtorNetGames implements OuvidorProxy {
 
@@ -13,15 +14,33 @@ public class AtorNetGames implements OuvidorProxy {
     }
 
     public boolean conectar(String servidor, String nome) {
+
+        try {
+            proxy.conectar(servidor, nome);
+        } catch (JahConectadoException e) {
+            e.printStackTrace();
+        } catch (NaoPossivelConectarException e) {
+            e.printStackTrace();
+        } catch (ArquivoMultiplayerException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
     public void iniciarPartida() {
-
+        try {
+            proxy.iniciarPartida(2);
+        } catch (NaoConectadoException e) {
+            e.printStackTrace();
+        }
     }
 
-    public boolean desconectar() {
-        return false;
+    public void desconectar() {
+        try {
+            proxy.desconectar();
+        } catch (NaoConectadoException e) {
+            e.printStackTrace();
+        }
     }
 
     public String informarNomeAdversario(String idUsuario) {
@@ -29,12 +48,16 @@ public class AtorNetGames implements OuvidorProxy {
     }
 
     public void enviarJogada(Jogada jogada) {
-
+        try {
+            proxy.enviaJogada(jogada);
+        } catch (NaoJogandoException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void iniciarNovaPartida(Integer posicao) {
-
+        atorJogador.iniciarPartida();
     }
 
     @Override
@@ -47,9 +70,11 @@ public class AtorNetGames implements OuvidorProxy {
 
     }
 
+    // TODO : alterar o nome de Jogada para remover esse conflito com o framework
     @Override
     public void receberJogada(br.ufsc.inf.leobr.cliente.Jogada jogada) {
-
+        Jogada jogadaRecebida = (Jogada) jogada;
+        atorJogador.receberJogada(jogadaRecebida);
     }
 
     @Override
