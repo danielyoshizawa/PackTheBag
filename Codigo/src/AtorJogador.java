@@ -6,14 +6,19 @@ public class AtorJogador {
     // TODO : Aqui será criada uma dependencia ciclica, rever isso
     protected AtorNetGames rede;
     protected Jogo jogo;
+    protected String nome;
     // TODO : Criar a view
     // protected View view;
 
     public AtorJogador() {
-
+        super();
+        // TODO : Repensar sobre essa dependencia ciclica, talvez implementar um sistema de eventos
+        rede = new AtorNetGames(this);
     }
 
     public boolean conectar() {
+        nome = "jogado1";
+        rede.conectar("localhost", nome);
         return false;
     }
 
@@ -21,7 +26,18 @@ public class AtorJogador {
         return "";
     }
 
-    public int iniciarPartida() {
+    public int iniciarPartida(boolean ehMinhaVez) {
+        String nomeOutroJogador = rede.obterNomeAdversario() ;
+        jogo = new Jogo();
+
+        if (ehMinhaVez) {
+            jogo.criarJogador(this.nome);
+            jogo.criarJogador(nomeOutroJogador);
+        } else {
+            jogo.criarJogador(nomeOutroJogador);
+            jogo.criarJogador(this.nome);
+        }
+
         return 0;
     }
 
@@ -34,7 +50,7 @@ public class AtorJogador {
     }
 
     public void tratarInciarPartida() {
-
+        rede.iniciarPartida();
     }
 
     public void receberJogada(Jogada jogada) {
