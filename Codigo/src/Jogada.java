@@ -11,6 +11,6 @@ public class Jogada {
     }
 
     public void iniciar(Peca peca, int posicaoX, int posicaoY, String idUsuario) {
-        
+
     }
 }
