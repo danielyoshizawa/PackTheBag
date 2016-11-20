@@ -4,13 +4,13 @@ import org.newdawn.slick.SlickException;
 
 public class main {
 
-    protected static GameView gameView;
-
     public static void main(String [] args) {
-        gameView = new GameView("Pack the bag");
+        ConectarViewState conectarViewState = new ConectarViewState();
+        GameState gameState = new GameState("Pack the bag");
+        gameState.addState(conectarViewState);
+
         try {
-            AppGameContainer gameContainer = new AppGameContainer(gameView);
-            gameContainer.setDisplayMode(640, 480, false);
+            AppGameContainer gameContainer = new AppGameContainer(gameState, 1200, 800, false);
             gameContainer.start();
         } catch (SlickException e) {
             e.printStackTrace();
