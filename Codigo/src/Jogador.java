@@ -30,6 +30,6 @@ public class Jogador {
     }
 
     public void pontuar(int pontos) {
-        
+
     }
 }
