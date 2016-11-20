@@ -5,3 +5,6 @@ Outros Projetos/*
 *.bak_*
 .DS_Store
 *.lck
+*.idea
+*.idea/*
+*out/
