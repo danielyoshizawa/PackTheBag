@@ -12,11 +12,13 @@ public class AtorJogador {
     protected String servidor;
     protected boolean conectado;
     protected View view;
+    protected GerenteDeEventos gerenteEventos;
 
     public AtorJogador() {
         super();
         // TODO : Repensar sobre essa dependencia ciclica, talvez implementar um sistema de eventos
         rede = new AtorNetGames(this);
+        gerenteEventos = new GerenteDeEventos();
     }
 
     public boolean conectar() {
@@ -53,7 +55,7 @@ public class AtorJogador {
     public void tratarInciarPartida() {
         rede.iniciarPartida();
         System.out.println("Tratar Iniciar Partida");
-        view.iniciarParida();
+        view.iniciarPartida();
     }
 
     public void receberJogada(Jogada jogada) {
@@ -80,7 +82,7 @@ public class AtorJogador {
 
     public void comecar(Stage primaryStage) {
 
-        view = new View(primaryStage, Configurations.APPNOME, Configurations.JANELA_LARGURA, Configurations.JANELA_ALTURA);
+        view = new View(primaryStage, Configurations.APPNOME, Configurations.JANELA_LARGURA, Configurations.JANELA_ALTURA, gerenteEventos);
         view.start();
 
         nome = view.obterIdJogador();
@@ -93,6 +95,13 @@ public class AtorJogador {
         if (conectado) {
             System.out.println("Conectado");
         }
+
+        gerenteEventos.AdicionarOuvinte(Configurations.EVENTO_INICIAR_PARTIDA, new OuvinteDeEventos() {
+            @Override
+            public void realizaAcao() {
+                rede.iniciarPartida();
+            }
+        });
 
         view.mensagemDeAguardo();
     }

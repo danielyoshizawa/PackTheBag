@@ -9,4 +9,6 @@ public class Configurations {
     public static final int JANELA_LARGURA = 1200;
 
     public static final int JANELA_ALTURA = 900;
+
+    public static final String EVENTO_INICIAR_PARTIDA = "EVENTO_INICIAR_PARTIDA";
 }

@@ -1,9 +1,7 @@
-import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -16,13 +14,16 @@ public class View {
     protected String title;
     protected String nome;
     protected String servidor;
+    protected GerenteDeEventos gerenteDeEventos;
 
-    public View(Stage primaryStage, String title, int width, int height) {
+    public View(Stage primaryStage, String title, int width, int height, GerenteDeEventos gerenteDeEventos) {
         this.primaryStage = primaryStage;
         group = new Group();
         this.width = width;
         this.height = height;
         this.title = title;
+        this.gerenteDeEventos = gerenteDeEventos;
+        gerenteDeEventos.AdicionarEvento(Configurations.EVENTO_INICIAR_PARTIDA);
     }
 
     public void start() {
@@ -56,14 +57,15 @@ public class View {
         aguardandoText.setX(550);
         aguardandoText.setY(450);
         group.getChildren().add(aguardandoText);
+        iniciarPartida();
     }
 
-    public void iniciarParida() {
+    public void iniciarPartida() {
         Button comecarPartida = new Button("Começar Partida");
         group.getChildren().add(comecarPartida);
 
         comecarPartida.setOnAction(event -> {
-
+            gerenteDeEventos.NotificarEvento(Configurations.EVENTO_INICIAR_PARTIDA);
         });
 
     }
