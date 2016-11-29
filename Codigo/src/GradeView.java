@@ -15,23 +15,23 @@ public class GradeView extends ComponentesGraficos {
 
     private void gerarGrade(Group group) {
 
-        for (int i = 0; i <= numLinhas; i++) {
+        for (int i = 0; i <= numColunas; i++) {
             Line line = new Line();
 
             line.setStartX(posicaoX + (i * Configurations.UNIT));
             line.setStartY(posicaoY);
             line.setEndX(posicaoX + (i * Configurations.UNIT));
-            line.setEndY(posicaoY + (numColunas * Configurations.UNIT));
+            line.setEndY(posicaoY + (numLinhas * Configurations.UNIT));
 
             group.getChildren().add(line);
         }
 
-        for (int i = 0; i <= numColunas; i++) {
+        for (int i = 0; i <= numLinhas; i++) {
             Line line = new Line();
 
             line.setStartX(posicaoX);
             line.setStartY(posicaoY + (i * Configurations.UNIT));
-            line.setEndX(posicaoX + (numLinhas * Configurations.UNIT));
+            line.setEndX(posicaoX + (numColunas * Configurations.UNIT));
             line.setEndY(posicaoY + (i * Configurations.UNIT));
 
             group.getChildren().add(line);

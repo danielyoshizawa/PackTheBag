@@ -1,23 +1,70 @@
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class View extends Application {
+public class View {
 
+    protected Stage primaryStage;
+    protected Group group;
+    protected int width;
+    protected int height;
+    protected String title;
+    protected String nome;
+    protected String servidor;
 
-    public View() {
+    public View(Stage primaryStage, String title, int width, int height) {
+        this.primaryStage = primaryStage;
+        group = new Group();
+        this.width = width;
+        this.height = height;
+        this.title = title;
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Circle circ = new Circle(40,40,30);
-        Group root = new Group(circ);
-        Scene scene = new Scene(root, 1200, 900);
+    public void start() {
+        Scene scene = new Scene(group, width, height);
 
-        primaryStage.setTitle("My JavaFX Application");
+        primaryStage.setTitle(title);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public String obterIdJogador() {
+        TextInputDialog dialogoNome = new TextInputDialog();
+        dialogoNome.setTitle("Entrada de nome");
+        dialogoNome.setHeaderText("Entre com seu nome");
+        dialogoNome.setContentText("Nome:");
+        dialogoNome.showAndWait().ifPresent(v -> nome = v);
+        return nome;
+    }
+
+    public String obterIdServidor() {
+        TextInputDialog dialogoNome = new TextInputDialog();
+        dialogoNome.setTitle("Entrada de Servidor");
+        dialogoNome.setHeaderText("Entre com o ip do servidor");
+        dialogoNome.setContentText("IP servidor:");
+        dialogoNome.showAndWait().ifPresent(v -> servidor = v);
+        return servidor;
+    }
+
+    public void mensagemDeAguardo() {
+        Text aguardandoText = new Text("Aguardando o outro Jogador");
+        aguardandoText.setX(550);
+        aguardandoText.setY(450);
+        group.getChildren().add(aguardandoText);
+    }
+
+    public void iniciarParida() {
+        Button comecarPartida = new Button("Começar Partida");
+        group.getChildren().add(comecarPartida);
+
+        comecarPartida.setOnAction(event -> {
+
+        });
+
     }
 }

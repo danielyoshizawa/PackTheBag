@@ -19,6 +19,7 @@ public class AtorNetGames implements OuvidorProxy {
 
         try {
             proxy.conectar(servidor, nome);
+            return true;
         } catch (JahConectadoException e) {
             e.printStackTrace();
         } catch (NaoPossivelConectarException e) {
@@ -32,6 +33,7 @@ public class AtorNetGames implements OuvidorProxy {
     public void iniciarPartida() {
         try {
             proxy.iniciarPartida(2);
+            System.out.println("Iniciar Partida");
         } catch (NaoConectadoException e) {
             e.printStackTrace();
         }
@@ -59,6 +61,8 @@ public class AtorNetGames implements OuvidorProxy {
 
     @Override
     public void iniciarNovaPartida(Integer posicao) {
+        System.out.println("Iniciar NOVA Partida");
+
         if (posicao == 1) {
             ehMinhaVez = true;
         } else {

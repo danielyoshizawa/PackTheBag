@@ -1,3 +1,5 @@
+import javafx.stage.Stage;
+
 import java.util.ArrayList;
 
 public class AtorJogador {
@@ -7,8 +9,9 @@ public class AtorJogador {
     protected AtorNetGames rede;
     protected Jogo jogo;
     protected String nome;
-    // TODO : Criar a view
-    // protected View view;
+    protected String servidor;
+    protected boolean conectado;
+    protected View view;
 
     public AtorJogador() {
         super();
@@ -17,9 +20,7 @@ public class AtorJogador {
     }
 
     public boolean conectar() {
-        nome = "jogado1";
-        rede.conectar("localhost", nome);
-        return false;
+        return rede.conectar("127.0.0.1", nome);
     }
 
     public String obterDadosConexao() {
@@ -51,6 +52,8 @@ public class AtorJogador {
 
     public void tratarInciarPartida() {
         rede.iniciarPartida();
+        System.out.println("Tratar Iniciar Partida");
+        view.iniciarParida();
     }
 
     public void receberJogada(Jogada jogada) {
@@ -73,5 +76,24 @@ public class AtorJogador {
 
     public ArrayList<Integer> notificarPecasDisponiveis() {
         return null;
+    }
+
+    public void comecar(Stage primaryStage) {
+
+        view = new View(primaryStage, Configurations.APPNOME, Configurations.JANELA_LARGURA, Configurations.JANELA_ALTURA);
+        view.start();
+
+        nome = view.obterIdJogador();
+        servidor = view.obterIdServidor();
+
+        if (!nome.isEmpty() && !servidor.isEmpty()) {
+            conectado = conectar();
+        }
+
+        if (conectado) {
+            System.out.println("Conectado");
+        }
+
+        view.mensagemDeAguardo();
     }
 }
