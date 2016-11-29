@@ -1,5 +1,5 @@
 
-public class Jogada implements br.ufsc.inf.leobr.cliente.Jogada{
+public class Jogada implements br.ufsc.inf.leobr.cliente.Jogada {
 
     protected Peca peca;
     protected Grade posicaoDesejada;
