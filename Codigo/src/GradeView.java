@@ -1,12 +1,21 @@
 import javafx.scene.Group;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import jdk.nashorn.internal.runtime.regexp.joni.Config;
 
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
 public class GradeView extends ComponentesGraficos {
 
-    public GradeView() {
+    // TODO : Repensar isso
+    protected Map<String, Bloco> listaDeBlocos;
 
+    public GradeView() {
+        listaDeBlocos = new HashMap<>();
     }
 
     public void desenhar(Group group) {
@@ -15,26 +24,21 @@ public class GradeView extends ComponentesGraficos {
 
     private void gerarGrade(Group group) {
 
-        for (int i = 0; i <= numColunas; i++) {
-            Line line = new Line();
+        // TODO : Adaptar para adequar ao modelo
+        for (int i = 0; i < numLinhas; i++) {
+            for (int j = 0; j < numColunas; j++) {
+                Rectangle bloco = new Rectangle();
+                bloco.setHeight(Configurations.UNIT);
+                bloco.setWidth(Configurations.UNIT);
 
-            line.setStartX(posicaoX + (i * Configurations.UNIT));
-            line.setStartY(posicaoY);
-            line.setEndX(posicaoX + (i * Configurations.UNIT));
-            line.setEndY(posicaoY + (numLinhas * Configurations.UNIT));
+                bloco.setX(posicaoX + (i * Configurations.UNIT));
+                bloco.setY(posicaoY + (j * Configurations.UNIT));
 
-            group.getChildren().add(line);
-        }
+                bloco.setFill(Paint.valueOf("white"));
+                bloco.setStroke(Paint.valueOf("black"));
 
-        for (int i = 0; i <= numLinhas; i++) {
-            Line line = new Line();
-
-            line.setStartX(posicaoX);
-            line.setStartY(posicaoY + (i * Configurations.UNIT));
-            line.setEndX(posicaoX + (numColunas * Configurations.UNIT));
-            line.setEndY(posicaoY + (i * Configurations.UNIT));
-
-            group.getChildren().add(line);
+                group.getChildren().add(bloco);
+            }
         }
     }
 

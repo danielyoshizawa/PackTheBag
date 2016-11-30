@@ -67,6 +67,11 @@ public class View {
         group.getChildren().add(nomeJogador1Text);
         group.getChildren().add(nomeJogador2Text);
 
+        GradeView grade = new GradeView();
+        grade.colunas(4).linhas(4).posicaoX(200).posixaoY(200);
+
+        grade.desenhar(group);
+
         primaryStage.setTitle(title);
         primaryStage.setScene(scene);
         primaryStage.show();

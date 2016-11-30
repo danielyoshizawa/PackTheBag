@@ -12,21 +12,26 @@ public class Jogo {
     protected boolean jogoEmAndamento;
     protected boolean temPecaSelecionada;
     protected Peca pecaSelecionada;
+    protected boolean estaConectado;
 
     public Jogo() {
-
+        numeroColunas = 0;
+        numeroLinhas = 0;
+        jogoEmAndamento = false;
+        temPecaSelecionada = false;
+        estaConectado = false;
     }
 
     public boolean informarConectado() {
-        return false;
+        return estaConectado;
     }
 
     public void estabelecerConectado(boolean ehConectado) {
-
+        this.estaConectado = ehConectado;
     }
 
     public boolean informarEmAndamento() {
-        return false;
+        return jogoEmAndamento;
     }
 
     public void esvaziar() {
@@ -65,7 +70,7 @@ public class Jogo {
     }
 
     public boolean temPecaSelecionada() {
-        return false;
+        return temPecaSelecionada;
     }
 
     public Jogada informarJogada(Peca peca, int posicaoX, int posicaoY, String idUsuario) {
@@ -84,4 +89,5 @@ public class Jogo {
     public ArrayList<Peca> pegarListaDePecas() {
         return null;
     }
+
 }
