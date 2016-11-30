@@ -10,15 +10,17 @@ public class AtorJogador {
     protected Jogo jogo;
     protected String nome;
     protected String servidor;
-    protected boolean conectado;
     protected View view;
     protected GerenteDeEventos gerenteEventos;
+    protected String nomeJogador1;
+    protected String nomeJogador2;
 
     public AtorJogador() {
         super();
         // TODO : Repensar sobre essa dependencia ciclica, talvez implementar um sistema de eventos
         rede = new AtorNetGames(this);
         gerenteEventos = new GerenteDeEventos();
+        jogo = new Jogo();
     }
 
     public boolean conectar() {
@@ -31,15 +33,22 @@ public class AtorJogador {
 
     public int iniciarPartida(boolean ehMinhaVez) {
         String nomeOutroJogador = rede.obterNomeAdversario() ;
-        jogo = new Jogo();
 
         if (ehMinhaVez) {
-            jogo.criarJogador(this.nome);
-            jogo.criarJogador(nomeOutroJogador);
+            nomeJogador1 = this.nome;
+            nomeJogador2 = nomeOutroJogador;
         } else {
-            jogo.criarJogador(nomeOutroJogador);
-            jogo.criarJogador(this.nome);
+            nomeJogador1 = nomeOutroJogador;
+            nomeJogador2 = this.nome;
         }
+
+        jogo.criarJogador1(nomeJogador1);
+        jogo.criarJogador2(nomeJogador2);
+
+        view.configurarJogador1(nomeJogador1);
+        view.configurarJogador2(nomeJogador2);
+
+        view.iniciarPartida();
 
         return 0;
     }
@@ -89,11 +98,10 @@ public class AtorJogador {
         servidor = view.obterIdServidor();
 
         if (!nome.isEmpty() && !servidor.isEmpty()) {
-            conectado = conectar();
-        }
-
-        if (conectado) {
-            System.out.println("Conectado");
+            if (conectar())
+                jogo.estabelecerConectado(true);
+            else
+                view.ExibirMensagemDeErro("Falha ao conectar com o servidor");
         }
 
         gerenteEventos.AdicionarOuvinte(Configurations.EVENTO_INICIAR_PARTIDA, new OuvinteDeEventos() {

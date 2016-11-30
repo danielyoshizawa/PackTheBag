@@ -33,8 +33,14 @@ public class Jogo {
 
     }
 
-    public void criarJogador(String idJogador) {
+    public void criarJogador1(String idJogador) {
+        jogador1 = new Jogador();
+        jogador1.assumirNome(idJogador);
+    }
 
+    public void criarJogador2(String idJogador) {
+        jogador2 = new Jogador();
+        jogador2.assumirNome(idJogador);
     }
 
     public void determinarJogadorInicial() {

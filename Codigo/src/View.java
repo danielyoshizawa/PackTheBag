@@ -1,5 +1,6 @@
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.text.Text;
@@ -15,6 +16,13 @@ public class View {
     protected String nome;
     protected String servidor;
     protected GerenteDeEventos gerenteDeEventos;
+    protected Button comecarPartida;
+    protected String nomeJogador1;
+    protected String nomeJogador2;
+    protected Text nomeJogador1Text;
+    protected Text nomeJogador2Text;
+    protected Jogador jogador1;
+    protected Jogador jogador2;
 
     public View(Stage primaryStage, String title, int width, int height, GerenteDeEventos gerenteDeEventos) {
         this.primaryStage = primaryStage;
@@ -28,6 +36,24 @@ public class View {
 
     public void start() {
         Scene scene = new Scene(group, width, height);
+
+        nomeJogador1Text = new Text("");
+        nomeJogador2Text = new Text("");
+
+        comecarPartida = new Button("Começar Partida");
+        group.getChildren().add(comecarPartida);
+
+        comecarPartida.setOnAction(event -> {
+            gerenteDeEventos.NotificarEvento(Configurations.EVENTO_INICIAR_PARTIDA);
+        });
+
+        nomeJogador1Text.setX(100);
+        nomeJogador1Text.setY(100);
+        nomeJogador2Text.setX(1000);
+        nomeJogador2Text.setY(100);
+
+        group.getChildren().add(nomeJogador1Text);
+        group.getChildren().add(nomeJogador2Text);
 
         primaryStage.setTitle(title);
         primaryStage.setScene(scene);
@@ -57,16 +83,28 @@ public class View {
         aguardandoText.setX(550);
         aguardandoText.setY(450);
         group.getChildren().add(aguardandoText);
-        iniciarPartida();
     }
 
     public void iniciarPartida() {
-        Button comecarPartida = new Button("Começar Partida");
-        group.getChildren().add(comecarPartida);
+        System.out.println("View - Iniciar Partida");
+        
+    }
 
-        comecarPartida.setOnAction(event -> {
-            gerenteDeEventos.NotificarEvento(Configurations.EVENTO_INICIAR_PARTIDA);
-        });
+    public void configurarJogador1(String nome) {
+        this.nomeJogador1 = nome;
+        nomeJogador1Text.setText(nome);
+    }
 
+    public void configurarJogador2(String nome) {
+        this.nomeJogador2 = nome;
+        nomeJogador2Text.setText(nome);
+    }
+
+    public void ExibirMensagemDeErro(String mensagemDeErro) {
+        Alert dialogoErro = new Alert(Alert.AlertType.ERROR);
+        dialogoErro.setTitle("Ocorreu um Erro");
+        dialogoErro.setHeaderText("Erro");
+        dialogoErro.setContentText(mensagemDeErro);
+        dialogoErro.showAndWait();
     }
 }
