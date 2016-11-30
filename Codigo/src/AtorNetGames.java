@@ -42,6 +42,7 @@ public class AtorNetGames implements OuvidorProxy {
     public void desconectar() {
         try {
             proxy.desconectar();
+            System.out.print("Desconectando do servidor");
         } catch (NaoConectadoException e) {
             e.printStackTrace();
         }

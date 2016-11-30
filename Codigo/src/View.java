@@ -3,6 +3,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -16,22 +17,24 @@ public class View {
     protected String nome;
     protected String servidor;
     protected GerenteDeEventos gerenteDeEventos;
-    protected Button comecarPartida;
+    protected Button comecarPartidaButton;
+    protected Button desconectarButton;
     protected String nomeJogador1;
     protected String nomeJogador2;
     protected Text nomeJogador1Text;
     protected Text nomeJogador2Text;
-    protected Jogador jogador1;
-    protected Jogador jogador2;
+    protected GridPane gridPane;
 
     public View(Stage primaryStage, String title, int width, int height, GerenteDeEventos gerenteDeEventos) {
         this.primaryStage = primaryStage;
         group = new Group();
+        gridPane = new GridPane();
         this.width = width;
         this.height = height;
         this.title = title;
         this.gerenteDeEventos = gerenteDeEventos;
         gerenteDeEventos.AdicionarEvento(Configurations.EVENTO_INICIAR_PARTIDA);
+        gerenteDeEventos.AdicionarEvento(Configurations.EVENTO_DESCONECTAR);
     }
 
     public void start() {
@@ -40,11 +43,20 @@ public class View {
         nomeJogador1Text = new Text("");
         nomeJogador2Text = new Text("");
 
-        comecarPartida = new Button("Começar Partida");
-        group.getChildren().add(comecarPartida);
+        comecarPartidaButton = new Button("Começar Partida");
+        desconectarButton = new Button("Desconectar");
 
-        comecarPartida.setOnAction(event -> {
+        gridPane.add(comecarPartidaButton, 1, 1);
+        gridPane.add(desconectarButton, 2, 1);
+
+        group.getChildren().add(gridPane);
+
+        comecarPartidaButton.setOnAction(event -> {
             gerenteDeEventos.NotificarEvento(Configurations.EVENTO_INICIAR_PARTIDA);
+        });
+
+        desconectarButton.setOnAction(event -> {
+            gerenteDeEventos.NotificarEvento(Configurations.EVENTO_DESCONECTAR);
         });
 
         nomeJogador1Text.setX(100);
@@ -87,7 +99,7 @@ public class View {
 
     public void iniciarPartida() {
         System.out.println("View - Iniciar Partida");
-        
+
     }
 
     public void configurarJogador1(String nome) {

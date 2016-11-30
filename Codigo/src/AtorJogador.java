@@ -111,6 +111,13 @@ public class AtorJogador {
             }
         });
 
+        gerenteEventos.AdicionarOuvinte(Configurations.EVENTO_DESCONECTAR, new OuvinteDeEventos() {
+            @Override
+            public void realizaAcao() {
+                rede.desconectar();
+            }
+        });
+
         view.mensagemDeAguardo();
     }
 }
