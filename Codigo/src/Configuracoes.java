@@ -1,8 +1,7 @@
 
-public class Configurations {
+public class Configuracoes {
 
     public static final int UNIT = 50;
-
 
     public static final String APPNOME = "Pack the Bag";
 

@@ -57,9 +57,9 @@ public class View {
         desconectarButton = new Button("Desconectar");
         enviarJogadaButton = new Button("Enviar Jogada");
 
-        gerenteDeEventos.AdicionarEvento(Configurations.EVENTO_INICIAR_PARTIDA);
-        gerenteDeEventos.AdicionarEvento(Configurations.EVENTO_DESCONECTAR);
-        gerenteDeEventos.AdicionarEvento(Configurations.EVENTO_ENVIAR_JOGADA);
+        gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_INICIAR_PARTIDA);
+        gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_DESCONECTAR);
+        gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_ENVIAR_JOGADA);
 
         listaDeComponentes.add(gradeJogador1);
         listaDeComponentes.add(gradeJogador2);
@@ -84,8 +84,8 @@ public class View {
 
         // TODO : Descobrir o problema ao criar as grades no metodo Iniciar Partida || erro encontrado InvocationTargetException
         // TODO 2 : Repensar sobre essas constantes
-        gradeJogador1.linhas(5).colunas(5).posicaoX(Configurations.POSICAO_X_GRADE_1).posixaoY(Configurations.POSICAO_Y_GRADE_1);
-        gradeJogador2.linhas(5).colunas(5).posicaoX(Configurations.POSICAO_X_GRADE_2).posixaoY(Configurations.POSICAO_Y_GRADE_2);
+        gradeJogador1.linhas(5).colunas(5).posicaoX(Configuracoes.POSICAO_X_GRADE_1).posixaoY(Configuracoes.POSICAO_Y_GRADE_1);
+        gradeJogador2.linhas(5).colunas(5).posicaoX(Configuracoes.POSICAO_X_GRADE_2).posixaoY(Configuracoes.POSICAO_Y_GRADE_2);
 
         gradeJogador1.desenhar();
         gradeJogador2.desenhar();
@@ -100,15 +100,15 @@ public class View {
 
     private void conectarEventos() {
         comecarPartidaButton.setOnAction(event -> {
-            gerenteDeEventos.NotificarEvento(Configurations.EVENTO_INICIAR_PARTIDA);
+            gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_INICIAR_PARTIDA);
         });
 
         desconectarButton.setOnAction(event -> {
-            gerenteDeEventos.NotificarEvento(Configurations.EVENTO_DESCONECTAR);
+            gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_DESCONECTAR);
         });
 
         enviarJogadaButton.setOnAction(event -> {
-            gerenteDeEventos.NotificarEvento(Configurations.EVENTO_ENVIAR_JOGADA);
+            gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_ENVIAR_JOGADA);
         });
 
         // INFO : So recebe eventos de click realizados sobre componentes em grupo

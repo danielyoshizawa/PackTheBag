@@ -8,7 +8,6 @@ public class Bloco {
 
     protected String cor;
     protected Posicao posicao;
-    protected int x;
     protected boolean ocupado;
 
     public Bloco(String cor, Posicao posicao) {

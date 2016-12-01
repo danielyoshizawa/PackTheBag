@@ -1,5 +1,4 @@
 import javafx.stage.Stage;
-import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 
@@ -92,7 +91,7 @@ public class AtorJogador {
 
     public void comecar(Stage primaryStage) {
 
-        view = new View(primaryStage, Configurations.APPNOME, Configurations.JANELA_LARGURA, Configurations.JANELA_ALTURA, gerenteEventos);
+        view = new View(primaryStage, Configuracoes.APPNOME, Configuracoes.JANELA_LARGURA, Configuracoes.JANELA_ALTURA, gerenteEventos);
         view.start();
 
         nome = view.obterIdJogador();
@@ -105,14 +104,14 @@ public class AtorJogador {
                 view.ExibirMensagemDeErro("Falha ao conectar com o servidor");
         }
 
-        gerenteEventos.AdicionarOuvinte(Configurations.EVENTO_INICIAR_PARTIDA, new OuvinteDeEventos() {
+        gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_INICIAR_PARTIDA, new OuvinteDeEventos() {
             @Override
             public void realizaAcao() {
                 rede.iniciarPartida();
             }
         });
 
-        gerenteEventos.AdicionarOuvinte(Configurations.EVENTO_DESCONECTAR, new OuvinteDeEventos() {
+        gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_DESCONECTAR, new OuvinteDeEventos() {
             @Override
             public void realizaAcao() {
                 if (jogo.informarConectado())
@@ -120,7 +119,7 @@ public class AtorJogador {
             }
         });
 
-        gerenteEventos.AdicionarOuvinte(Configurations.EVENTO_ENVIAR_JOGADA, new OuvinteDeEventos() {
+        gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_ENVIAR_JOGADA, new OuvinteDeEventos() {
             @Override
             public void realizaAcao() {
                 rede.enviarJogada(new Jogada());
