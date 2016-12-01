@@ -1,4 +1,5 @@
 import javafx.stage.Stage;
+import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 
@@ -68,7 +69,7 @@ public class AtorJogador {
     }
 
     public void receberJogada(Jogada jogada) {
-
+        System.out.print("Jogada Recebida");
     }
 
     public int tratarClick(float posicaoX, float posicaoY) {
@@ -116,6 +117,13 @@ public class AtorJogador {
             public void realizaAcao() {
                 if (jogo.informarConectado())
                     rede.desconectar();
+            }
+        });
+
+        gerenteEventos.AdicionarOuvinte(Configurations.EVENTO_ENVIAR_JOGADA, new OuvinteDeEventos() {
+            @Override
+            public void realizaAcao() {
+                rede.enviarJogada(new Jogada());
             }
         });
 

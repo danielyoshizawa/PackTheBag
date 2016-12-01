@@ -1,5 +1,6 @@
+import br.ufsc.inf.leobr.cliente.Jogada;
 
-public class Peca {
+public class Peca implements Jogada {
 
     protected String nome;
     protected Grade gradePeca;

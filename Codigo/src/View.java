@@ -24,6 +24,8 @@ public class View {
     protected Text nomeJogador1Text;
     protected Text nomeJogador2Text;
     protected GridPane gridPane;
+    // TOOD : Remover esse botão, utilizar apenas para teste de envio de jogada
+    protected Button enviarJogadaButton;
 
     public View(Stage primaryStage, String title, int width, int height, GerenteDeEventos gerenteDeEventos) {
         this.primaryStage = primaryStage;
@@ -35,6 +37,7 @@ public class View {
         this.gerenteDeEventos = gerenteDeEventos;
         gerenteDeEventos.AdicionarEvento(Configurations.EVENTO_INICIAR_PARTIDA);
         gerenteDeEventos.AdicionarEvento(Configurations.EVENTO_DESCONECTAR);
+        gerenteDeEventos.AdicionarEvento(Configurations.EVENTO_ENVIAR_JOGADA);
     }
 
     public void start() {
@@ -45,9 +48,11 @@ public class View {
 
         comecarPartidaButton = new Button("Começar Partida");
         desconectarButton = new Button("Desconectar");
+        enviarJogadaButton = new Button("Enviar Jogada");
 
         gridPane.add(comecarPartidaButton, 1, 1);
         gridPane.add(desconectarButton, 2, 1);
+        gridPane.add(enviarJogadaButton, 3, 1);
 
         group.getChildren().add(gridPane);
 
@@ -57,6 +62,10 @@ public class View {
 
         desconectarButton.setOnAction(event -> {
             gerenteDeEventos.NotificarEvento(Configurations.EVENTO_DESCONECTAR);
+        });
+
+        enviarJogadaButton.setOnAction(event -> {
+            gerenteDeEventos.NotificarEvento(Configurations.EVENTO_ENVIAR_JOGADA);
         });
 
         nomeJogador1Text.setX(100);

@@ -13,4 +13,6 @@ public class Configurations {
     public static final String EVENTO_INICIAR_PARTIDA = "EVENTO_INICIAR_PARTIDA";
 
     public static final String EVENTO_DESCONECTAR = "EVENTO_DESCONECTAR";
+
+    public static final String EVENTO_ENVIAR_JOGADA = "EVENTO_ENVIAR_JOGADA";
 }
