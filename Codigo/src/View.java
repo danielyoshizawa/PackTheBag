@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -35,6 +36,7 @@ public class View {
     protected Scene scene;
     protected Text aguardandoText;
     protected ArrayList<ComponentesGraficos> listaDeComponentes;
+    protected Font fontJogador;
 
     public View(Stage primaryStage, String title, int width, int height, GerenteDeEventos gerenteDeEventos) {
         this.primaryStage = primaryStage;
@@ -93,6 +95,9 @@ public class View {
         primaryStage.setTitle(title);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        grupo.getStylesheets().add("style.css");
+        grupo.setId("teste");
 
         conectarEventos();
         grupo.getChildren().add(aguardandoText);
@@ -164,11 +169,13 @@ public class View {
     public void configurarJogador1(String nome) {
         this.nomeJogador1 = nome;
         nomeJogador1Text.setText(nome);
+        nomeJogador1Text.getStyleClass().add("jogador-nome");
     }
 
     public void configurarJogador2(String nome) {
         this.nomeJogador2 = nome;
         nomeJogador2Text.setText(nome);
+        nomeJogador2Text.getStyleClass().add("jogador-nome");
     }
 
     public void ExibirMensagemDeErro(String mensagemDeErro) {
