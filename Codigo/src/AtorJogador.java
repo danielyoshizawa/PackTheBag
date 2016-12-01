@@ -1,5 +1,4 @@
 import javafx.stage.Stage;
-import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 
