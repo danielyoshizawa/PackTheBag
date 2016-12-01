@@ -12,7 +12,7 @@ import java.util.Map;
 public class GradeView extends ComponentesGraficos {
 
     // TODO : Repensar isso
-    protected Map<String, Bloco> listaDeBlocos;
+    protected Map<String, BlocoView> listaDeBlocos;
 
     public GradeView() {
         listaDeBlocos = new HashMap<>();
@@ -24,22 +24,23 @@ public class GradeView extends ComponentesGraficos {
 
     private void gerarGrade(Group group) {
 
-        // TODO : Adaptar para adequar ao modelo
         for (int i = 0; i < numLinhas; i++) {
             for (int j = 0; j < numColunas; j++) {
-                Rectangle bloco = new Rectangle();
-                bloco.setHeight(Configurations.UNIT);
-                bloco.setWidth(Configurations.UNIT);
+                BlocoView bloco = new BlocoView();
+                bloco.posicaoX(posicaoX + (i * Configurations.UNIT)).posixaoY(posicaoY + (j * Configurations.UNIT));
 
-                bloco.setX(posicaoX + (i * Configurations.UNIT));
-                bloco.setY(posicaoY + (j * Configurations.UNIT));
+                bloco.desenhar(group);
 
-                bloco.setFill(Paint.valueOf("white"));
-                bloco.setStroke(Paint.valueOf("black"));
-
-                group.getChildren().add(bloco);
+                Posicao posicao = new Posicao(i, j);
+                listaDeBlocos.put(posicao.identificador(), bloco);
             }
         }
+    }
+
+    // TODO : notificar bloco invalido?
+    public void pintarBloco(Posicao posicao, String cor) {
+        BlocoView bloco = (BlocoView) listaDeBlocos.get(posicao.identificador());
+        bloco.cor(cor);
     }
 
 }

@@ -127,6 +127,6 @@ public class AtorJogador {
             }
         });
 
-        view.mensagemDeAguardo();
+        view.mensagemDeAguardo("Aguardando o outro Jogador");
     }
 }

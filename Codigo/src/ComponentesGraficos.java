@@ -9,6 +9,7 @@ public abstract class ComponentesGraficos {
     protected int numColunas = 0;
     protected int posicaoX = 0;
     protected int posicaoY = 0;
+    protected String cor = "white";
 
     public ComponentesGraficos linhas(int num) {
         numLinhas = num;
@@ -27,6 +28,10 @@ public abstract class ComponentesGraficos {
 
     public ComponentesGraficos posixaoY(int pos) {
         posicaoY = pos;
+        return this;
+    }
+
+    public ComponentesGraficos cor(String cor) {
         return this;
     }
 
