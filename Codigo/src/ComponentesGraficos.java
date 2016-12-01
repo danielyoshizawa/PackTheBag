@@ -1,8 +1,5 @@
 import javafx.scene.Group;
 
-/**
- * Created by daniel on 11/29/16.
- */
 public abstract class ComponentesGraficos {
 
     protected int numLinhas = 0;
@@ -10,6 +7,11 @@ public abstract class ComponentesGraficos {
     protected int posicaoX = 0;
     protected int posicaoY = 0;
     protected String cor = "white";
+    protected Group grupo;
+
+    protected ComponentesGraficos(Group grupo) {
+        this.grupo = grupo;
+    }
 
     public ComponentesGraficos linhas(int num) {
         numLinhas = num;
@@ -35,5 +37,9 @@ public abstract class ComponentesGraficos {
         return this;
     }
 
-    public abstract void desenhar(Group group);
+    public abstract void desenhar();
+
+
+    // TODO : Rever o retorno talvez devolver posicao
+    public abstract boolean pontoPertenceAoComponente(int x, int y);
 }

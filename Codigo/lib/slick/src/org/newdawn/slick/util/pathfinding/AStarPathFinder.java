@@ -97,7 +97,7 @@ public class AStarPathFinder implements PathFinder, PathFindingContext {
 			}
 		}
 		
-		// initial state for A*. The closed group is empty. Only the starting
+		// initial state for A*. The closed grupo is empty. Only the starting
 		// tile is in the open list and it's cost is zero, i.e. we're already there
 		nodes[sx][sy].cost = 0;
 		nodes[sx][sy].depth = 0;

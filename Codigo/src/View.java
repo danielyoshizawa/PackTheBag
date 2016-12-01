@@ -1,16 +1,20 @@
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class View {
 
     protected Stage primaryStage;
-    protected Group group;
+    protected Group grupo;
     protected int width;
     protected int height;
     protected String title;
@@ -30,18 +34,20 @@ public class View {
     protected GradeView gradeJogador2;
     protected Scene scene;
     protected Text aguardandoText;
+    protected ArrayList<ComponentesGraficos> listaDeComponentes;
 
     public View(Stage primaryStage, String title, int width, int height, GerenteDeEventos gerenteDeEventos) {
         this.primaryStage = primaryStage;
-        group = new Group();
+        grupo = new Group();
         gridPane = new GridPane();
+        listaDeComponentes = new ArrayList<>();
         this.width = width;
         this.height = height;
         this.title = title;
         this.gerenteDeEventos = gerenteDeEventos;
-        gradeJogador1 = new GradeView();
-        gradeJogador2 = new GradeView();
-        scene = new Scene(group, width, height);
+        gradeJogador1 = new GradeView(grupo);
+        gradeJogador2 = new GradeView(grupo);
+        scene = new Scene(grupo, width, height);
         aguardandoText = new Text();
 
         nomeJogador1Text = new Text("");
@@ -54,6 +60,9 @@ public class View {
         gerenteDeEventos.AdicionarEvento(Configurations.EVENTO_INICIAR_PARTIDA);
         gerenteDeEventos.AdicionarEvento(Configurations.EVENTO_DESCONECTAR);
         gerenteDeEventos.AdicionarEvento(Configurations.EVENTO_ENVIAR_JOGADA);
+
+        listaDeComponentes.add(gradeJogador1);
+        listaDeComponentes.add(gradeJogador2);
     }
 
     public void start() {
@@ -69,24 +78,24 @@ public class View {
         gridPane.add(desconectarButton, 2, 1);
         gridPane.add(enviarJogadaButton, 3, 1);
 
-        group.getChildren().add(gridPane);
-        group.getChildren().add(nomeJogador1Text);
-        group.getChildren().add(nomeJogador2Text);
+        grupo.getChildren().add(gridPane);
+        grupo.getChildren().add(nomeJogador1Text);
+        grupo.getChildren().add(nomeJogador2Text);
 
-        GradeView grade = new GradeView();
-        grade.colunas(4).linhas(4).posicaoX(200).posixaoY(200);
+        // TODO : Descobrir o problema ao criar as grades no metodo Iniciar Partida || erro encontrado InvocationTargetException
+        // TODO 2 : Repensar sobre essas constantes
+        gradeJogador1.linhas(5).colunas(5).posicaoX(Configurations.POSICAO_X_GRADE_1).posixaoY(Configurations.POSICAO_Y_GRADE_1);
+        gradeJogador2.linhas(5).colunas(5).posicaoX(Configurations.POSICAO_X_GRADE_2).posixaoY(Configurations.POSICAO_Y_GRADE_2);
 
-        grade.desenhar(group);
-
-        grade.pintarBloco(new Posicao(2,1), "red");
-        grade.pintarBloco(new Posicao(2,2), "red");
+        gradeJogador1.desenhar();
+        gradeJogador2.desenhar();
 
         primaryStage.setTitle(title);
         primaryStage.setScene(scene);
         primaryStage.show();
 
         conectarEventos();
-        group.getChildren().add(aguardandoText);
+        grupo.getChildren().add(aguardandoText);
     }
 
     private void conectarEventos() {
@@ -100,6 +109,19 @@ public class View {
 
         enviarJogadaButton.setOnAction(event -> {
             gerenteDeEventos.NotificarEvento(Configurations.EVENTO_ENVIAR_JOGADA);
+        });
+
+        // INFO : So recebe eventos de click realizados sobre componentes em grupo
+        grupo.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("Mouse clicado em : " + event.getX() + " : " + event.getY());
+                for (ComponentesGraficos componente : listaDeComponentes) {
+                    if (componente.pontoPertenceAoComponente((int)event.getX(), (int)event.getY()) == true) {
+                        System.out.println("Bloco Encontrado !!!");
+                    }
+                }
+            }
         });
     }
 
@@ -131,11 +153,11 @@ public class View {
         mensagemDeAguardo("");
 
         // TODO : Descobrir pq estes objetos nao aparecem na tela dentro desse metodo, somente no start funciona
-        gradeJogador1.linhas(3).colunas(5).posicaoX(100).posixaoY(400);
+        /*gradeJogador1.linhas(3).colunas(5).posicaoX(100).posixaoY(400);
         gradeJogador2.linhas(3).colunas(5).posicaoX(600).posixaoY(400);
 
-        gradeJogador1.desenhar(group);
-        gradeJogador2.desenhar(group);
+        gradeJogador1.desenhar();
+        gradeJogador2.desenhar();*/
 
     }
 

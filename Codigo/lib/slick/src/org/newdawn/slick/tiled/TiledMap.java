@@ -779,11 +779,11 @@ public class TiledMap {
 	}
 
 	/**
-	 * Returns the number of objects of a specific object-group.
+	 * Returns the number of objects of a specific object-grupo.
 	 * 
 	 * @param groupID
-	 *            The index of this object-group
-	 * @return Number of the objects in the object-group or -1, when error
+	 *            The index of this object-grupo
+	 * @return Number of the objects in the object-grupo or -1, when error
 	 *         occurred.
 	 */
 	public int getObjectCount(int groupID) {
@@ -795,10 +795,10 @@ public class TiledMap {
 	}
 
 	/**
-	 * Return the name of a specific object from a specific group.
+	 * Return the name of a specific object from a specific grupo.
 	 * 
 	 * @param groupID
-	 *            Index of a group
+	 *            Index of a grupo
 	 * @param objectID
 	 *            Index of an object
 	 * @return The name of an object or null, when error occurred
@@ -815,10 +815,10 @@ public class TiledMap {
 	}
 
 	/**
-	 * Return the type of an specific object from a specific group.
+	 * Return the type of an specific object from a specific grupo.
 	 * 
 	 * @param groupID
-	 *            Index of a group
+	 *            Index of a grupo
 	 * @param objectID
 	 *            Index of an object
 	 * @return The type of an object or null, when error occurred
@@ -835,10 +835,10 @@ public class TiledMap {
 	}
 
 	/**
-	 * Returns the x-coordinate of a specific object from a specific group.
+	 * Returns the x-coordinate of a specific object from a specific grupo.
 	 * 
 	 * @param groupID
-	 *            Index of a group
+	 *            Index of a grupo
 	 * @param objectID
 	 *            Index of an object
 	 * @return The x-coordinate of an object, or -1, when error occurred
@@ -855,10 +855,10 @@ public class TiledMap {
 	}
 
 	/**
-	 * Returns the y-coordinate of a specific object from a specific group.
+	 * Returns the y-coordinate of a specific object from a specific grupo.
 	 * 
 	 * @param groupID
-	 *            Index of a group
+	 *            Index of a grupo
 	 * @param objectID
 	 *            Index of an object
 	 * @return The y-coordinate of an object, or -1, when error occurred
@@ -875,10 +875,10 @@ public class TiledMap {
 	}
 
 	/**
-	 * Returns the width of a specific object from a specific group.
+	 * Returns the width of a specific object from a specific grupo.
 	 * 
 	 * @param groupID
-	 *            Index of a group
+	 *            Index of a grupo
 	 * @param objectID
 	 *            Index of an object
 	 * @return The width of an object, or -1, when error occurred
@@ -895,10 +895,10 @@ public class TiledMap {
 	}
 
 	/**
-	 * Returns the height of a specific object from a specific group.
+	 * Returns the height of a specific object from a specific grupo.
 	 * 
 	 * @param groupID
-	 *            Index of a group
+	 *            Index of a grupo
 	 * @param objectID
 	 *            Index of an object
 	 * @return The height of an object, or -1, when error occurred
@@ -918,7 +918,7 @@ public class TiledMap {
 	 * Retrieve the image source property for a given object
 	 * 
 	 * @param groupID
-	 *            Index of a group
+	 *            Index of a grupo
 	 * @param objectID
 	 *            Index of an object
 	 * @return The image source reference or null if one isn't defined
@@ -945,7 +945,7 @@ public class TiledMap {
 	 * property is found, def is returned.
 	 * 
 	 * @param groupID
-	 *            Index of a group
+	 *            Index of a grupo
 	 * @param objectID
 	 *            Index of an object
 	 * @param propertyName
@@ -976,32 +976,32 @@ public class TiledMap {
 	}
 
 	/**
-	 * A group of objects on the map (objects layer)
+	 * A grupo of objects on the map (objects layer)
 	 * 
 	 * @author kulpae
 	 */
 	protected class ObjectGroup {
-		/** The index of this group */
+		/** The index of this grupo */
 		public int index;
-		/** The name of this group - read from the XML */
+		/** The name of this grupo - read from the XML */
 		public String name;
-		/** The Objects of this group */
+		/** The Objects of this grupo */
 		public ArrayList objects;
 		/** The width of this layer */
 		public int width;
 		/** The height of this layer */
 		public int height;
 
-		/** the properties of this group */
+		/** the properties of this grupo */
 		public Properties props;
 
 		/**
-		 * Create a new group based on the XML definition
+		 * Create a new grupo based on the XML definition
 		 * 
 		 * @param element
 		 *            The XML element describing the layer
 		 * @throws SlickException
-		 *             Indicates a failure to parse the XML group
+		 *             Indicates a failure to parse the XML grupo
 		 */
 		public ObjectGroup(Element element) throws SlickException {
 			name = element.getAttribute("name");
@@ -1038,7 +1038,7 @@ public class TiledMap {
 	}
 
 	/**
-	 * An object from a object-group on the map
+	 * An object from a object-grupo on the map
 	 * 
 	 * @author kulpae
 	 */
@@ -1060,16 +1060,16 @@ public class TiledMap {
 		/** The image source */
 		private String image;
 
-		/** the properties of this group */
+		/** the properties of this grupo */
 		public Properties props;
 
 		/**
-		 * Create a new group based on the XML definition
+		 * Create a new grupo based on the XML definition
 		 * 
 		 * @param element
 		 *            The XML element describing the layer
 		 * @throws SlickException
-		 *             Indicates a failure to parse the XML group
+		 *             Indicates a failure to parse the XML grupo
 		 */
 		public GroupObject(Element element) throws SlickException {
 			name = element.getAttribute("name");

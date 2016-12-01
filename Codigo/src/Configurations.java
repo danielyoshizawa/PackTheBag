@@ -15,4 +15,12 @@ public class Configurations {
     public static final String EVENTO_DESCONECTAR = "EVENTO_DESCONECTAR";
 
     public static final String EVENTO_ENVIAR_JOGADA = "EVENTO_ENVIAR_JOGADA";
+
+    public static final int POSICAO_X_GRADE_1 = 100;
+
+    public static final int POSICAO_X_GRADE_2 = 800;
+
+    public static final int POSICAO_Y_GRADE_1 = 600;
+
+    public static final int POSICAO_Y_GRADE_2 = 600;
 }
