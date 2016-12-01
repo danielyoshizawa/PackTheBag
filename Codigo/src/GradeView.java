@@ -1,14 +1,6 @@
 import javafx.scene.Group;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
 
-import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class GradeView extends ComponentesGraficos {
@@ -33,7 +25,7 @@ public class GradeView extends ComponentesGraficos {
             for (int j = 0; j < numColunas; j++) {
 
                 BlocoView bloco = new BlocoView(super.grupo);
-                bloco.posicaoX(posicaoX + (i * Configurations.UNIT)).posixaoY(posicaoY + (j * Configurations.UNIT));
+                bloco.posicaoX(posicaoX + (i * Configuracoes.UNIT)).posixaoY(posicaoY + (j * Configuracoes.UNIT));
 
                 bloco.desenhar();
 

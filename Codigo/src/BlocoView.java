@@ -4,37 +4,37 @@ import javafx.scene.shape.Rectangle;
 
 public class BlocoView extends ComponentesGraficos {
 
-    protected Rectangle rect;
+    protected Rectangle retangulo;
 
     public BlocoView(Group grupo) {
         super(grupo);
-        rect = new Rectangle();
-        super.grupo.getChildren().add(rect);
+        retangulo = new Rectangle();
+        super.grupo.getChildren().add(retangulo);
     }
 
     @Override
     public ComponentesGraficos cor(String cor) {
-        rect.setFill(Paint.valueOf(cor));
+        retangulo.setFill(Paint.valueOf(cor));
         return this;
     }
 
     @Override
     public void desenhar() {
-        rect.setHeight(Configurations.UNIT);
-        rect.setWidth(Configurations.UNIT);
+        retangulo.setHeight(Configuracoes.UNIT);
+        retangulo.setWidth(Configuracoes.UNIT);
 
-        rect.setX(posicaoX);
-        rect.setY(posicaoY);
+        retangulo.setX(posicaoX);
+        retangulo.setY(posicaoY);
 
-        rect.setFill(Paint.valueOf(cor));
-        rect.setStroke(Paint.valueOf("black"));
+        retangulo.setFill(Paint.valueOf(cor));
+        retangulo.setStroke(Paint.valueOf("black"));
 
     }
 
     @Override
     public boolean pontoPertenceAoComponente(int x, int y) {
-        if (x > posicaoX && x < (posicaoX + Configurations.UNIT))
-            if (y > posicaoY && y < (posicaoY + Configurations.UNIT))
+        if (x > posicaoX && x < (posicaoX + Configuracoes.UNIT))
+            if (y > posicaoY && y < (posicaoY + Configuracoes.UNIT))
                 return true;
 
         return false;

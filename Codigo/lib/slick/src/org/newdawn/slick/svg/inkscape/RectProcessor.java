@@ -11,7 +11,7 @@ import org.newdawn.slick.svg.ParsingException;
 import org.w3c.dom.Element;
 
 /**
- * A processor for the <rect> element.
+ * A processor for the <retangulo> element.
  *
  * @author kevin
  */
@@ -45,7 +45,7 @@ public class RectProcessor implements ElementProcessor {
 	 * @see org.newdawn.slick.svg.inkscape.ElementProcessor#handles(org.w3c.dom.Element)
 	 */
 	public boolean handles(Element element) {
-		if (element.getNodeName().equals("rect")) {
+		if (element.getNodeName().equals("retangulo")) {
 			return true;
 		}
 		
