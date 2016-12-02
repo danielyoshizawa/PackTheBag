@@ -12,8 +12,10 @@ public class Jogo {
     protected boolean jogoEmAndamento;
     protected boolean temPecaSelecionada;
     protected Peca pecaSelecionada;
+    protected Posicao posicaoSelecionada;
     protected boolean estaConectado;
     protected GeradorDePecas geradorDePecas;
+    protected String nomeJogadorDaVez;
 
     public Jogo() {
         numeroColunas = 0;
@@ -25,6 +27,7 @@ public class Jogo {
         geradorDePecas = new GeradorDePecas();
         jogador1 = new Jogador();
         jogador2 = new Jogador();
+        gerarNovasPecasDisponiveis();
     }
 
     public boolean informarConectado() {
@@ -70,13 +73,16 @@ public class Jogo {
         return 0;
     }
 
-    // TODO : padronizar o idUsuario - idJogador
+    // TODO : padronizar ou idUsuario - idJogador
     public boolean ehJogadorDaVez(String idUsuario) {
-        return false;
+        return nomeJogadorDaVez.equals(idUsuario);
     }
 
-    public void setarPecaSelecionada(Peca peca) {
-
+    // TODO : Verificar se peca esta na lista, ou algum teste de consistencia
+    public void setarPecaSelecionada(String identificador, Posicao posicaoSelecionada) {
+        pecaSelecionada = pecaComIdentificador(identificador);
+        this.posicaoSelecionada = posicaoSelecionada;
+        temPecaSelecionada = true;
     }
 
     public boolean temPecaSelecionada() {
@@ -94,10 +100,30 @@ public class Jogo {
 
     private void gerarNovasPecasDisponiveis() {
         pecasDisponiveis = geradorDePecas.PegarPecasAleatorias(Configuracoes.QUANTIDADE_PECAS_TURNO);
+
+        for (int i = 0; i < pecasDisponiveis.size(); i++) {
+            pecasDisponiveis.get(i).setIdentificador(Configuracoes.PECA_IDENTIFICADOR + i);
+        }
     }
 
     public ArrayList<Peca> pegarListaDePecas() {
         return pecasDisponiveis;
     }
 
+    public Peca pecaComIdentificador(String identificador) {
+        for (Peca peca : pecasDisponiveis) {
+            if (peca.getIdentificador().equals(identificador))
+                return peca;
+        }
+
+        return null;
+    }
+
+    public void setNomeJogadorDaVez(String nomeJogadorDaVez) {
+        this.nomeJogadorDaVez = nomeJogadorDaVez;
+    }
+
+    public String getNomeJogadorDaVez() {
+        return nomeJogadorDaVez;
+    }
 }

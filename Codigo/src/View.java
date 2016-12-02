@@ -25,6 +25,7 @@ public class View {
     protected Button desconectarButton;
     protected String nomeJogador1;
     protected String nomeJogador2;
+    protected String nomeJogadorDaVez;
     protected Text nomeJogador1Text;
     protected Text nomeJogador2Text;
     protected GridPane gridPane;
@@ -47,8 +48,6 @@ public class View {
         this.height = height;
         this.title = title;
         this.gerenteDeEventos = gerenteDeEventos;
-        gradeJogador1 = new GradeView();
-        gradeJogador2 = new GradeView();
         scene = new Scene(grupo, width, height);
         aguardandoText = new Text();
 
@@ -62,9 +61,8 @@ public class View {
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_INICIAR_PARTIDA);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_DESCONECTAR);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_ENVIAR_JOGADA);
-
-        listaDeComponentes.add(gradeJogador1);
-        listaDeComponentes.add(gradeJogador2);
+        gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_PECA_SELECIONADA);
+        gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_GRADE_SELECIONADA);
     }
 
     public void start() {
@@ -83,14 +81,6 @@ public class View {
         grupo.getChildren().add(gridPane);
         grupo.getChildren().add(nomeJogador1Text);
         grupo.getChildren().add(nomeJogador2Text);
-
-        // TODO : Descobrir o problema ao criar as grades no metodo Iniciar Partida || erro encontrado InvocationTargetException
-        // TODO 2 : Repensar sobre essas constantes
-        gradeJogador1.linhas(5).colunas(5).posicaoX(Configuracoes.POSICAO_X_GRADE_1).posixaoY(Configuracoes.POSICAO_Y_GRADE_1);
-        gradeJogador2.linhas(5).colunas(5).posicaoX(Configuracoes.POSICAO_X_GRADE_2).posixaoY(Configuracoes.POSICAO_Y_GRADE_2);
-
-        gradeJogador1.desenhar(grupo);
-        gradeJogador2.desenhar(grupo);
 
         primaryStage.setTitle(title);
         primaryStage.setScene(scene);
@@ -118,9 +108,24 @@ public class View {
             @Override
             public void handle(MouseEvent event) {
                 System.out.println("Mouse clicado em : " + event.getX() + " : " + event.getY());
+                Posicao posicaoClick = new Posicao(0,0);
+
+                // TODO : Repensar sobre essa logica inserida na view
+                if (!nome.equals(nomeJogadorDaVez)) {
+                    System.out.println("Não é o jogador da vez");
+                    return;
+                }
+
                 for (ComponentesGraficos componente : listaDeComponentes) {
-                    if (componente.pontoPertenceAoComponente((int)event.getX(), (int)event.getY()) == true) {
-                        System.out.println("Bloco Encontrado !!!");
+                    if (componente.pontoPertenceAoComponente((int)event.getX(), (int)event.getY(), posicaoClick) == true) {
+                        if (componente instanceof GradeView) {
+                            System.out.println("Grade Encontrado !!! na posicao : " + posicaoClick.getX() + " - " + posicaoClick.getY());
+                            gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_GRADE_SELECIONADA, ((GradeView) componente).getIdUsuario(), posicaoClick);
+                        }
+                        else if (componente instanceof PecaView) {
+                            System.out.println("Peca Encontrada !!! na posicao : " + posicaoClick.getX() + " - " + posicaoClick.getY());
+                            gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_PECA_SELECIONADA, ((PecaView) componente).getIdentificador(), posicaoClick);
+                        }
                     }
                 }
             }
@@ -145,22 +150,26 @@ public class View {
         return servidor;
     }
 
-    public void mensagemDeAguardo(String mensagem) {
+    public void mensagemDeStatus(String mensagem) {
         aguardandoText.setText(mensagem);
     }
 
     public void iniciarPartida() {
         System.out.println("View - Iniciar Partida");
 
-        mensagemDeAguardo("");
+        mensagemDeStatus("");
 
-        // TODO : Descobrir pq estes objetos nao aparecem na tela dentro desse metodo, somente no start funciona
-        /*gradeJogador1.linhas(3).colunas(5).posicaoX(100).posixaoY(400);
-        gradeJogador2.linhas(3).colunas(5).posicaoX(600).posixaoY(400);
+        gradeJogador1 = new GradeView(nomeJogador1);
+        gradeJogador2 = new GradeView(nomeJogador2);
 
-        gradeJogador1.desenhar();
-        gradeJogador2.desenhar();*/
+        listaDeComponentes.add(gradeJogador1);
+        listaDeComponentes.add(gradeJogador2);
 
+        gradeJogador1.linhas(5).colunas(5).posicaoX(Configuracoes.POSICAO_X_GRADE_1).posixaoY(Configuracoes.POSICAO_Y_GRADE_1);
+        gradeJogador2.linhas(5).colunas(5).posicaoX(Configuracoes.POSICAO_X_GRADE_2).posixaoY(Configuracoes.POSICAO_Y_GRADE_2);
+
+        gradeJogador1.desenhar(grupo);
+        gradeJogador2.desenhar(grupo);
     }
 
     public void configurarJogador1(String nome) {
@@ -187,19 +196,27 @@ public class View {
 
         for (int i = 0; i < pecas.size(); i++) {
             PecaView pecaView = new PecaView(pecas.get(i).pegarPosicoes());
+            pecaView.setIdentificador(pecas.get(i).getIdentificador());
             // TODO : Rever essas posicoes
             pecaView.posixaoY(200);
             pecaView.posicaoX(100 + (5*i * Configuracoes.UNIT));
+            pecaView.cor(pecas.get(i).getCor());
             pecaView.desenhar(grupo);
             pecasDisponiveis.add(pecaView);
+            listaDeComponentes.add(pecaView);
         }
     }
 
     private void limparPecasDisponiveis() {
         for (PecaView peca : pecasDisponiveis) {
             peca.remover(grupo);
+            listaDeComponentes.remove(peca);
         }
 
         pecasDisponiveis.clear();
+    }
+
+    public void setNomeJogadorDaVez(String jogadorDaVez) {
+        this.nomeJogadorDaVez = jogadorDaVez;
     }
 }

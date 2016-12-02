@@ -1,4 +1,4 @@
 public interface OuvinteDeEventos {
 
-    public void realizaAcao();
+    public void realizaAcao(Object... objetos);
 }

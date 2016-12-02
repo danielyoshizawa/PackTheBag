@@ -29,14 +29,14 @@ public abstract class ComponentesGraficos {
     }
 
     public ComponentesGraficos cor(String cor) {
+        this.cor = cor;
         return this;
     }
 
     public abstract void desenhar(Group grupo);
 
 
-    // TODO : Rever o retorno talvez devolver posicao
-    public abstract boolean pontoPertenceAoComponente(int x, int y);
+    public abstract boolean pontoPertenceAoComponente(int x, int y, Posicao posicao);
 
     public abstract void remover(Group grupo);
 }
