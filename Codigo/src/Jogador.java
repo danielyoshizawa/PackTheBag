@@ -17,8 +17,8 @@ public class Jogador {
 
     }
 
-    public void aplicarJogada(JogadaPack jogadaPack) {
-
+    public boolean aplicarJogada(JogadaPack jogadaPack) {
+        return false;
     }
 
     public boolean pecaEncaixaNaPosicao(Peca peca) {

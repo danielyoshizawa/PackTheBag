@@ -49,6 +49,7 @@ public class AtorJogador {
         view.configurarJogador1(nomeJogador1);
         view.configurarJogador2(nomeJogador2);
 
+        jogo.setNomeJogadorDaVez(nomeJogador1);
         view.setNomeJogadorDaVez(nomeJogador1);
 
         view.novasPecas(jogo.pegarListaDePecas());
@@ -186,14 +187,29 @@ public class AtorJogador {
             @Override
             public void realizaAcao(Object... objetos) {
                 if (!jogo.temPecaSelecionada) {
-                    view.mensagemDeStatus("Selecione a peca primeiro");
+                    view.mensagemDeStatus("Selecione a peça primeiro");
                     return;
                 }
 
-                String idUsuario = (String)objetos[0];
-                Posicao posicao = (Posicao)objetos[1];
-                System.out.println("Posicao na Grade recebido por evento : " + posicao.getX() + " - " + posicao.getY());
-                System.out.println("Id usuario recebido da grade : " + idUsuario);
+                String idUsuario = "";
+                Posicao posicao = null;
+
+                // TODO : Ver a necessidade disso, acredito que ja lance uma excecao caso os objetos nao existam
+                try {
+                    idUsuario = (String) objetos[0];
+                    posicao = (Posicao) objetos[1];
+                } catch (Exception ex) {
+                    System.out.println("Ocorreu um erro ao recuperar parametros de realizarAcao");
+                    ex.printStackTrace();
+                }
+
+                JogadaPack jogada = jogo.informarJogada(idUsuario, posicao);
+
+                if (jogada == null) {
+                    view.mensagemDeStatus("Jogada invalida");
+                } else {
+                    rede.enviarJogada(jogada);
+                }
             }
         });
 

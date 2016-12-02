@@ -3,7 +3,7 @@ import br.ufsc.inf.leobr.cliente.Jogada;
 public class JogadaPack implements Jogada {
 
     protected Peca peca;
-    protected Posicao posicaoPrimeiraPeca;
+    protected Posicao posicaoNaGrade;
     protected String idUsuario;
 
     // TODO : pensar sobre inicialização no construtor ou lazy
@@ -11,18 +11,19 @@ public class JogadaPack implements Jogada {
 
     }
 
-    public void criar(Peca peca, Posicao posicaoPrimeiraPeca, String idUsuario) {
+    public void criar(Peca peca, Posicao posicaoNaGrade, String idUsuario) {
         this.peca = peca;
-        this.posicaoPrimeiraPeca = posicaoPrimeiraPeca;
+        this.posicaoNaGrade = posicaoNaGrade;
         this.idUsuario = idUsuario;
     }
 
+    // TODO : será necessario ?
     public void iniciar(Peca peca, int posicaoX, int posicaoY, String idUsuario) {
 
     }
 
-    public Posicao getPosicaoPrimeiraPeca() {
-        return posicaoPrimeiraPeca;
+    public Posicao getPosicaoNaGrade() {
+        return posicaoNaGrade;
     }
 
     public Peca getPeca() {

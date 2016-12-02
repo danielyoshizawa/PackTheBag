@@ -89,7 +89,23 @@ public class Jogo {
         return temPecaSelecionada;
     }
 
-    public JogadaPack informarJogada(Peca peca, int posicaoX, int posicaoY, String idUsuario) {
+    public JogadaPack informarJogada(String idUsuario, Posicao posicaoNaGrade) {
+        if (!ehJogadorDaVez(idUsuario)) {
+            System.out.println("Não é o jogador da vez");
+            // TODO : analisar como sera formada a jogada e se null é o melhor retorno em caso de erro
+            return null;
+        } else {
+            JogadaPack jogada = new JogadaPack();
+            jogada.criar(pecaSelecionada, posicaoNaGrade, idUsuario);
+            if (ehJogadorDaVez(jogador1.getIdUsuario())) {
+                if (jogador1.aplicarJogada(jogada))
+                    return jogada;
+            } else {
+                if (jogador2.aplicarJogada(jogada))
+                    return jogada;
+            }
+        }
+
         return null;
     }
 
