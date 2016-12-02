@@ -24,7 +24,10 @@ public class AtorJogador {
     }
 
     public boolean conectar() {
-        return rede.conectar("127.0.0.1", nome);
+        if(servidor != ""){
+            servidor = "127.0.0.1";
+        }
+        return rede.conectar(servidor, nome);
     }
 
     public String obterDadosConexao() {
