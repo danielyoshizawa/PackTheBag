@@ -35,12 +35,14 @@ public class View {
     protected Scene scene;
     protected Text aguardandoText;
     protected ArrayList<ComponentesGraficos> listaDeComponentes;
+    protected ArrayList<PecaView> pecasDisponiveis;
 
     public View(Stage primaryStage, String title, int width, int height, GerenteDeEventos gerenteDeEventos) {
         this.primaryStage = primaryStage;
         grupo = new Group();
         gridPane = new GridPane();
         listaDeComponentes = new ArrayList<>();
+        pecasDisponiveis = new ArrayList<>();
         this.width = width;
         this.height = height;
         this.title = title;
@@ -180,12 +182,24 @@ public class View {
     }
 
     public void novasPecas(ArrayList<Peca> pecas) {
+
+        limparPecasDisponiveis();
+
         for (int i = 0; i < pecas.size(); i++) {
             PecaView pecaView = new PecaView(pecas.get(i).pegarPosicoes());
             // TODO : Rever essas posicoes
             pecaView.posixaoY(200);
             pecaView.posicaoX(100 + (5*i * Configuracoes.UNIT));
             pecaView.desenhar(grupo);
+            pecasDisponiveis.add(pecaView);
         }
+    }
+
+    private void limparPecasDisponiveis() {
+        for (PecaView peca : pecasDisponiveis) {
+            peca.remover(grupo);
+        }
+
+        pecasDisponiveis.clear();
     }
 }

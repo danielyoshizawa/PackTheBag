@@ -51,4 +51,11 @@ public class GradeView extends ComponentesGraficos {
         return false;
     }
 
+    @Override
+    public void remover(Group grupo) {
+        for (Map.Entry<String, BlocoView> entrada : listaDeBlocos.entrySet()) {
+            entrada.getValue().remover(grupo);
+        }
+    }
+
 }

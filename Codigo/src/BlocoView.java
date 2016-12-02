@@ -41,4 +41,11 @@ public class BlocoView extends ComponentesGraficos {
 
         return false;
     }
+
+    @Override
+    public void remover(Group grupo) {
+        Platform.runLater(() -> {
+            grupo.getChildren().remove(retangulo);
+        });
+    }
 }

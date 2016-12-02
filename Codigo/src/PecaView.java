@@ -44,4 +44,11 @@ public class PecaView extends ComponentesGraficos {
 
         return false;
     }
+
+    @Override
+    public void remover(Group grupo) {
+        for (Map.Entry<Posicao, BlocoView> entrada : listaDeBlocos.entrySet()) {
+            entrada.getValue().remover(grupo);
+        }
+    }
 }

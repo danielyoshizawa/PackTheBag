@@ -37,4 +37,6 @@ public abstract class ComponentesGraficos {
 
     // TODO : Rever o retorno talvez devolver posicao
     public abstract boolean pontoPertenceAoComponente(int x, int y);
+
+    public abstract void remover(Group grupo);
 }
