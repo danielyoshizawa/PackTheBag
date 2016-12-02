@@ -1,7 +1,7 @@
 
 public class Jogador {
 
-    protected String nome;
+    protected String idUsuario;
     protected float pontuacao;
     protected Grade grade;
 
@@ -9,15 +9,15 @@ public class Jogador {
 
     }
 
-    public void assumirNome(String idJogador) {
-
+    public void assumirNome(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public void iniciarGrade(int numLinhas, int numColunas) {
 
     }
 
-    public void aplicarJogada(Jogada jogada) {
+    public void aplicarJogada(JogadaPack jogadaPack) {
 
     }
 
@@ -31,5 +31,9 @@ public class Jogador {
 
     public void pontuar(int pontos) {
 
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
     }
 }
