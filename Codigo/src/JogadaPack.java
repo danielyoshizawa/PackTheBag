@@ -1,19 +1,19 @@
+import br.ufsc.inf.leobr.cliente.Jogada;
 
-public class Jogada implements br.ufsc.inf.leobr.cliente.Jogada {
+public class JogadaPack implements Jogada {
 
     protected Peca peca;
-    protected Grade posicaoDesejada;
-    protected long tempoDisponivel;
+    protected Posicao posicaoPrimeiraPeca;
     protected String idUsuario;
 
     // TODO : pensar sobre inicialização no construtor ou lazy
-    public Jogada() {
+    public JogadaPack() {
 
     }
 
-    public void criar(Peca peca, Grade posicaoDesejada, String idUsuario) {
+    public void criar(Peca peca, Posicao posicaoPrimeiraPeca, String idUsuario) {
         this.peca = peca;
-        this.posicaoDesejada = posicaoDesejada;
+        this.posicaoPrimeiraPeca = posicaoPrimeiraPeca;
         this.idUsuario = idUsuario;
     }
 
@@ -21,8 +21,8 @@ public class Jogada implements br.ufsc.inf.leobr.cliente.Jogada {
 
     }
 
-    public Grade getPosicaoDesejada() {
-        return posicaoDesejada;
+    public Posicao getPosicaoPrimeiraPeca() {
+        return posicaoPrimeiraPeca;
     }
 
     public Peca getPeca() {

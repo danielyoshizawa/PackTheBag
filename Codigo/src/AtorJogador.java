@@ -50,7 +50,7 @@ public class AtorJogador {
 
         view.iniciarPartida();
 
-        return 0;
+        return 0; // Contexto da JogadaPack
     }
 
     public boolean avaliarInterrupcao() {
@@ -67,8 +67,11 @@ public class AtorJogador {
         view.iniciarPartida();
     }
 
-    public void receberJogada(Jogada jogada) {
-        System.out.print("Jogada Recebida");
+    public void receberJogada(JogadaPack jogadaPack) {
+        System.out.print("JogadaPack Recebida");
+        jogo.receberJogada(jogadaPack);
+
+        view.novasPecas(jogo.pegarListaDePecas());
     }
 
     public int tratarClick(float posicaoX, float posicaoY) {
@@ -122,7 +125,9 @@ public class AtorJogador {
         gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_ENVIAR_JOGADA, new OuvinteDeEventos() {
             @Override
             public void realizaAcao() {
-                rede.enviarJogada(new Jogada());
+                JogadaPack jogadaPack = new JogadaPack();
+                jogadaPack.criar(new Peca(new Posicao(1,1)), new Posicao(0,0), nome);
+                rede.enviarJogada(jogadaPack);
             }
         });
 

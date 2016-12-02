@@ -1,3 +1,4 @@
+import br.ufsc.inf.leobr.cliente.Jogada;
 import br.ufsc.inf.leobr.cliente.OuvidorProxy;
 import br.ufsc.inf.leobr.cliente.Proxy;
 import br.ufsc.inf.leobr.cliente.exception.*;
@@ -52,9 +53,9 @@ public class AtorNetGames implements OuvidorProxy {
         return "";
     }
 
-    public void enviarJogada(Jogada jogada) {
+    public void enviarJogada(JogadaPack jogadaPack) {
         try {
-            proxy.enviaJogada(jogada);
+            proxy.enviaJogada(jogadaPack);
         } catch (NaoJogandoException e) {
             e.printStackTrace();
         }
@@ -83,10 +84,10 @@ public class AtorNetGames implements OuvidorProxy {
 
     }
 
-    // TODO : alterar o nome de Jogada para remover esse conflito com o framework
+    // TODO : alterar o nome de JogadaPack para remover esse conflito com o framework
     @Override
-    public void receberJogada(br.ufsc.inf.leobr.cliente.Jogada jogada) {
-        Jogada jogadaRecebida = (Jogada) jogada;
+    public void receberJogada(Jogada jogada) {
+        JogadaPack jogadaRecebida = (JogadaPack) jogada;
         atorJogador.receberJogada(jogadaRecebida);
     }
 
