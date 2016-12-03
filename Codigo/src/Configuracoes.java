@@ -23,9 +23,9 @@ public class Configuracoes {
 
     public static final int POSICAO_X_GRADE_2 = 800;
 
-    public static final int POSICAO_Y_GRADE_1 = 600;
+    public static final int POSICAO_Y_GRADE_1 = 550;
 
-    public static final int POSICAO_Y_GRADE_2 = 600;
+    public static final int POSICAO_Y_GRADE_2 = 550;
 
     public static final int QUANTIDADE_PECAS_TURNO = 3;
 

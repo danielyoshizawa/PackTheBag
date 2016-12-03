@@ -52,6 +52,7 @@ public class View {
         this.gerenteDeEventos = gerenteDeEventos;
         scene = new Scene(grupo, width, height);
         aguardandoText = new Text();
+        grupo.getStylesheets().add("style.css");
 
         nomeJogador1Text = new Text("");
         nomeJogador2Text = new Text("");
@@ -69,12 +70,13 @@ public class View {
 
     public void start() {
         nomeJogador1Text.setX(100);
-        nomeJogador1Text.setY(100);
-        nomeJogador2Text.setX(1000);
-        nomeJogador2Text.setY(100);
+        nomeJogador1Text.setY(540);
+        nomeJogador2Text.setX(800);
+        nomeJogador2Text.setY(540);
 
-        aguardandoText.setX(550);
-        aguardandoText.setY(450);
+        aguardandoText.setX(450);
+        aguardandoText.setY(600);
+        aguardandoText.getStyleClass().add("aguardandoTexto");
 
         gridPane.add(comecarPartidaButton, 1, 1);
         gridPane.add(desconectarButton, 2, 1);
@@ -87,9 +89,6 @@ public class View {
         primaryStage.setTitle(title);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        grupo.getStylesheets().add("style.css");
-        grupo.setId("teste");
 
         conectarEventos();
         grupo.getChildren().add(aguardandoText);

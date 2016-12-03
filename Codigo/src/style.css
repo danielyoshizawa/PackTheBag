@@ -1,6 +1,12 @@
-.jogador-nome{
-    -fx-font-size: 20px;
+@font-face {
+    font-family: "PB-Title";
+    src: url('../lib/font/Bungee/Bungee-Regular.ttf');
 }
-#teste{
-    -fx-background-color: red;
+
+.jogador-nome{
+    -fx-font-size: 28px;
+}
+.aguardandoTexto{
+    -fx-font-size: 22px;
+    -fx-font-family: "PB-Title";
 }

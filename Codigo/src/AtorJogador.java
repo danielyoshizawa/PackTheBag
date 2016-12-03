@@ -1,5 +1,5 @@
 import javafx.stage.Stage;
-import org.lwjgl.Sys;
+
 
 import java.util.ArrayList;
 
@@ -121,13 +121,20 @@ public class AtorJogador {
         view = new View(primaryStage, Configuracoes.APPNOME, Configuracoes.JANELA_LARGURA, Configuracoes.JANELA_ALTURA, gerenteEventos);
         view.start();
 
-        do {
+        /*do {
             nome = view.obterIdJogador();
         } while (nome.isEmpty());
 
         do {
             servidor = view.obterIdServidor();
         } while (servidor.isEmpty());
+
+*/
+        // TODO : remover quando descomentar codigo acima
+        nome = view.obterIdJogador();
+        servidor = "127.0.0.1";
+
+
 
         if (!nome.isEmpty() && !servidor.isEmpty()) {
             if (conectar()) {
