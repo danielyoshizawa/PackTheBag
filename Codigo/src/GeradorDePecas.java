@@ -35,7 +35,9 @@ public class GeradorDePecas {
         ArrayList<Peca> pecas = new ArrayList<>();
 
         for (int i = 0; i < quantidade ; i++) {
-            pecas.add(listaDePecas.get((int)( Math.random() * 6)));
+            Peca peca = listaDePecas.get((int)( Math.random() * 6));
+            peca.setCor("red");
+            pecas.add(peca);
         }
 
         return pecas;
