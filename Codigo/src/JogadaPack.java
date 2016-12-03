@@ -5,22 +5,20 @@ public class JogadaPack implements Jogada {
     protected Peca peca;
     protected Posicao posicaoNaGrade;
     protected String idUsuario;
+    protected Posicao posicaoNaPeca;
 
-    // TODO : pensar sobre inicialização no construtor ou lazy
     public JogadaPack() {
 
     }
 
-    public void criar(Peca peca, Posicao posicaoNaGrade, String idUsuario) {
+    // TODO : talvez receber a posicao da peca tbm
+    public void iniciar(Peca peca, Posicao posicaoNaGrade, Posicao posicaoNaPeca, String idUsuario) {
         this.peca = peca;
         this.posicaoNaGrade = posicaoNaGrade;
         this.idUsuario = idUsuario;
+        this.posicaoNaPeca = posicaoNaPeca;
     }
 
-    // TODO : será necessario ?
-    public void iniciar(Peca peca, int posicaoX, int posicaoY, String idUsuario) {
-
-    }
 
     public Posicao getPosicaoNaGrade() {
         return posicaoNaGrade;
@@ -32,5 +30,13 @@ public class JogadaPack implements Jogada {
 
     public String getIdUsuario() {
         return idUsuario;
+    }
+
+    public Posicao getPosicaoNaPeca() {
+        return posicaoNaPeca;
+    }
+
+    public void setPeca(Peca peca) {
+        this.peca = peca;
     }
 }

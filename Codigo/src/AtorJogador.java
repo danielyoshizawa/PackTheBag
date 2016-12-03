@@ -1,5 +1,4 @@
 import javafx.stage.Stage;
-import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 
@@ -79,6 +78,7 @@ public class AtorJogador {
     public void receberJogada(JogadaPack jogadaPack) {
         view.mensagemDeStatus("Jogada Recebida!!! Pode jogar.");
         jogo.receberJogada(jogadaPack);
+        view.aplicarJogada(jogadaPack);
 
         view.novasPecas(jogo.pegarListaDePecas());
 
@@ -90,19 +90,20 @@ public class AtorJogador {
         return 0;
     }
 
-    public void enviarJogada(String identificador, Posicao posicaoNaGrade, String idUsuario) {
-        JogadaPack jogadaPack = new JogadaPack();
-        Peca peca = jogo.pecaComIdentificador(identificador);
-
-        if (peca != null) {
-            jogadaPack.criar(peca, posicaoNaGrade, idUsuario);
-            alterarJogadorDaVez(idUsuario);
-            rede.enviarJogada(jogadaPack);
-            view.mensagemDeStatus("Jogada Enviada");
-        } else {
-            view.mensagemDeStatus("Peca invalida, tente novamente");
-        }
-    }
+    // TODO : Analisar se esse metodo vai ser necessario
+//    public void enviarJogada(String identificador, Posicao posicaoNaGrade, String idUsuario) {
+//        JogadaPack jogadaPack = new JogadaPack();
+//        Peca peca = jogo.pecaComIdentificador(identificador);
+//
+//        if (peca != null) {
+//            jogadaPack.iniciar(peca, posicaoNaGrade, idUsuario);
+//            alterarJogadorDaVez(idUsuario);
+//            rede.enviarJogada(jogadaPack);
+//            view.mensagemDeStatus("Jogada Enviada");
+//        } else {
+//            view.mensagemDeStatus("Peca invalida, tente novamente");
+//        }
+//    }
 
     // TODO : Analizar como este metodo sera implementado
     public ArrayList<Integer> informarEstado() {
@@ -169,13 +170,14 @@ public class AtorJogador {
             }
         });
 
+        // TODO : Remover este evento
         gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_ENVIAR_JOGADA, new OuvinteDeEventos() {
             @Override
             public void realizaAcao(Object... objetos) {
                 if (jogo.getNomeJogadorDaVez().equals(nome)) {
                     Peca peca = (Peca) objetos[0];
-                    Posicao posicao = (Posicao) objetos[1];
-                    enviarJogada(peca.getIdentificador(), posicao, nome);
+                    Posicao posicaoNaGrade = (Posicao) objetos[1];
+                    //enviarJogada(peca.getIdentificador(), posicaoNaGrade, nome);
                     view.mensagemDeStatus("Jogada enviada!!!");
                 } else {
                     view.mensagemDeStatus("Ainda não é sua vez");
@@ -205,9 +207,11 @@ public class AtorJogador {
 
                 JogadaPack jogada = jogo.informarJogada(idUsuario, posicao);
 
+                // TODO : talvez mover para o metodo enviar jogada
                 if (jogada == null) {
                     view.mensagemDeStatus("Jogada invalida");
                 } else {
+                    view.aplicarJogada(jogada);
                     rede.enviarJogada(jogada);
                 }
             }

@@ -219,4 +219,12 @@ public class View {
     public void setNomeJogadorDaVez(String jogadorDaVez) {
         this.nomeJogadorDaVez = jogadorDaVez;
     }
+
+    public void aplicarJogada(JogadaPack jogada) {
+        if (jogada.getIdUsuario().equals(nomeJogador1)) {
+            gradeJogador1.aplicarJogada(jogada.peca.pegarPosicoes(), jogada.peca.getCor());
+        } else if (jogada.getIdUsuario().equals(nomeJogador2)) {
+            gradeJogador2.aplicarJogada(jogada.peca.pegarPosicoes(), jogada.peca.getCor());
+        }
+    }
 }

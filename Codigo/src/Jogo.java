@@ -25,8 +25,9 @@ public class Jogo {
         estaConectado = false;
         pecasDisponiveis = new ArrayList<>();
         geradorDePecas = new GeradorDePecas();
-        jogador1 = new Jogador();
-        jogador2 = new Jogador();
+        // TODO : Gerar tamanhos variados de grade
+        jogador1 = new Jogador(5,5);
+        jogador2 = new Jogador(5,5);
         gerarNovasPecasDisponiveis();
     }
 
@@ -96,7 +97,7 @@ public class Jogo {
             return null;
         } else {
             JogadaPack jogada = new JogadaPack();
-            jogada.criar(pecaSelecionada, posicaoNaGrade, idUsuario);
+            jogada.iniciar(pecaSelecionada, posicaoNaGrade, posicaoSelecionada, idUsuario);
             if (ehJogadorDaVez(jogador1.getIdUsuario())) {
                 if (jogador1.aplicarJogada(jogada))
                     return jogada;

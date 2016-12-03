@@ -31,4 +31,9 @@ public class Posicao implements Jogada{
         this.y = y;
     }
 
+    public void deslocar(Posicao deslocamento) {
+        x = x + deslocamento.getX();
+        y = y + deslocamento.getY();
+    }
+
 }
