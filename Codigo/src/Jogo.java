@@ -6,13 +6,14 @@ public class Jogo {
     protected int numeroColunas;
     protected Jogador jogadorDaVez;
     // TODO : Criar entidade posicao
-    protected ArrayList<Integer> pecasDisponiveis;
+    protected ArrayList<Peca> pecasDisponiveis;
     protected Jogador jogador1;
     protected Jogador jogador2;
     protected boolean jogoEmAndamento;
     protected boolean temPecaSelecionada;
     protected Peca pecaSelecionada;
     protected boolean estaConectado;
+    protected GeradorDePecas geradorDePecas;
 
     public Jogo() {
         numeroColunas = 0;
@@ -20,6 +21,10 @@ public class Jogo {
         jogoEmAndamento = false;
         temPecaSelecionada = false;
         estaConectado = false;
+        pecasDisponiveis = new ArrayList<>();
+        geradorDePecas = new GeradorDePecas();
+        jogador1 = new Jogador();
+        jogador2 = new Jogador();
     }
 
     public boolean informarConectado() {
@@ -39,12 +44,10 @@ public class Jogo {
     }
 
     public void criarJogador1(String idJogador) {
-        jogador1 = new Jogador();
         jogador1.assumirNome(idJogador);
     }
 
     public void criarJogador2(String idJogador) {
-        jogador2 = new Jogador();
         jogador2.assumirNome(idJogador);
     }
 
@@ -52,8 +55,15 @@ public class Jogo {
 
     }
 
-    public void receberJogada(Jogada jogada) {
+    public void receberJogada(JogadaPack jogadaPack) {
 
+        if (jogadaPack.getIdUsuario().equals(jogador1.getIdUsuario())) {
+            jogador1.aplicarJogada(jogadaPack);
+        } else if (jogadaPack.getIdUsuario().equals(jogador2.getIdUsuario())) {
+            jogador2.aplicarJogada(jogadaPack);
+        }
+
+        gerarNovasPecasDisponiveis();
     }
 
     public int tratarClick(float posicaoX, float posicaoY, String idUsuario) {
@@ -73,7 +83,7 @@ public class Jogo {
         return temPecaSelecionada;
     }
 
-    public Jogada informarJogada(Peca peca, int posicaoX, int posicaoY, String idUsuario) {
+    public JogadaPack informarJogada(Peca peca, int posicaoX, int posicaoY, String idUsuario) {
         return null;
     }
 
@@ -83,11 +93,11 @@ public class Jogo {
     }
 
     private void gerarNovasPecasDisponiveis() {
-
+        pecasDisponiveis = geradorDePecas.PegarPecasAleatorias(Configuracoes.QUANTIDADE_PECAS_TURNO);
     }
 
     public ArrayList<Peca> pegarListaDePecas() {
-        return null;
+        return pecasDisponiveis;
     }
 
 }
