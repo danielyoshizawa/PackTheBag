@@ -1,15 +1,24 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class GeradorDePecas {
 
     protected Map<Integer, Peca> listaDePecas;
+    protected Map<Integer, String> listaDeCores;
 
     public GeradorDePecas() {
         listaDePecas = new HashMap<>();
+        listaDeCores = new HashMap<>();
         criarPecas();
+        criarCores();
+    }
+
+    // TODO : Pensar em uma maneira mais elegante, por enquanto vai ser assim
+    private void criarCores() {
+        listaDeCores.put(0, "blue");
+        listaDeCores.put(1, "red");
+        listaDeCores.put(2, "yellow");
     }
 
     // TODO : Achar um jeito melhor de fazer isso, tem muitos objetos sendo inseridos.
@@ -36,7 +45,7 @@ public class GeradorDePecas {
 
         for (int i = 0; i < quantidade ; i++) {
             Peca peca = listaDePecas.get((int)( Math.random() * 6));
-            peca.setCor("red");
+            peca.setCor(listaDeCores.get((int)( Math.random() * 2)));
             pecas.add(peca);
         }
 
