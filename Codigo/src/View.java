@@ -36,11 +36,8 @@ public class View {
     protected Scene scene;
     protected Text aguardandoText;
     protected ArrayList<ComponentesGraficos> listaDeComponentes;
-<<<<<<< HEAD
     protected Font fontJogador;
-=======
     protected ArrayList<PecaView> pecasDisponiveis;
->>>>>>> 55e374ea6c5a31f3c0e5222b938c985b694079ad
 
     public View(Stage primaryStage, String title, int width, int height, GerenteDeEventos gerenteDeEventos) {
         this.primaryStage = primaryStage;
