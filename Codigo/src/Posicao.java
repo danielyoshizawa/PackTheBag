@@ -1,5 +1,6 @@
+import br.ufsc.inf.leobr.cliente.Jogada;
 
-public class Posicao {
+public class Posicao implements Jogada{
 
     protected int x;
     protected int y;

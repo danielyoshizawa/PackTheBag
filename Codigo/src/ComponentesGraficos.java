@@ -7,11 +7,6 @@ public abstract class ComponentesGraficos {
     protected int posicaoX = 0;
     protected int posicaoY = 0;
     protected String cor = "white";
-    protected Group grupo;
-
-    protected ComponentesGraficos(Group grupo) {
-        this.grupo = grupo;
-    }
 
     public ComponentesGraficos linhas(int num) {
         numLinhas = num;
@@ -37,9 +32,11 @@ public abstract class ComponentesGraficos {
         return this;
     }
 
-    public abstract void desenhar();
+    public abstract void desenhar(Group grupo);
 
 
     // TODO : Rever o retorno talvez devolver posicao
     public abstract boolean pontoPertenceAoComponente(int x, int y);
+
+    public abstract void remover(Group grupo);
 }

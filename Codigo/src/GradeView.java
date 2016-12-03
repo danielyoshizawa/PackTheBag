@@ -9,25 +9,24 @@ public class GradeView extends ComponentesGraficos {
     protected Map<String, BlocoView> listaDeBlocos;
 
 
-    public GradeView(Group grupo)
+    public GradeView()
     {
-        super(grupo);
         listaDeBlocos = new HashMap<>();
     }
 
-    public void desenhar() {
-        gerarGrade();
+    public void desenhar(Group grupo) {
+        gerarGrade(grupo);
     }
 
-    private void gerarGrade() {
+    private void gerarGrade(Group grupo) {
 
         for (int i = 0; i < numLinhas; i++) {
             for (int j = 0; j < numColunas; j++) {
 
-                BlocoView bloco = new BlocoView(super.grupo);
+                BlocoView bloco = new BlocoView();
                 bloco.posicaoX(posicaoX + (i * Configuracoes.UNIT)).posixaoY(posicaoY + (j * Configuracoes.UNIT));
 
-                bloco.desenhar();
+                bloco.desenhar(grupo);
 
                 Posicao posicao = new Posicao(i, j);
                 listaDeBlocos.put(posicao.identificador(), bloco);
@@ -50,6 +49,13 @@ public class GradeView extends ComponentesGraficos {
         }
 
         return false;
+    }
+
+    @Override
+    public void remover(Group grupo) {
+        for (Map.Entry<String, BlocoView> entrada : listaDeBlocos.entrySet()) {
+            entrada.getValue().remover(grupo);
+        }
     }
 
 }

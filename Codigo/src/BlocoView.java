@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -6,10 +7,8 @@ public class BlocoView extends ComponentesGraficos {
 
     protected Rectangle retangulo;
 
-    public BlocoView(Group grupo) {
-        super(grupo);
+    public BlocoView() {
         retangulo = new Rectangle();
-        super.grupo.getChildren().add(retangulo);
     }
 
     @Override
@@ -19,7 +18,7 @@ public class BlocoView extends ComponentesGraficos {
     }
 
     @Override
-    public void desenhar() {
+    public void desenhar(Group grupo) {
         retangulo.setHeight(Configuracoes.UNIT);
         retangulo.setWidth(Configuracoes.UNIT);
 
@@ -29,6 +28,9 @@ public class BlocoView extends ComponentesGraficos {
         retangulo.setFill(Paint.valueOf(cor));
         retangulo.setStroke(Paint.valueOf("black"));
 
+        Platform.runLater(() -> {
+            grupo.getChildren().add(retangulo);
+        });
     }
 
     @Override
@@ -38,5 +40,12 @@ public class BlocoView extends ComponentesGraficos {
                 return true;
 
         return false;
+    }
+
+    @Override
+    public void remover(Group grupo) {
+        Platform.runLater(() -> {
+            grupo.getChildren().remove(retangulo);
+        });
     }
 }

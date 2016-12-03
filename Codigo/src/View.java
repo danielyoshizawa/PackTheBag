@@ -35,18 +35,20 @@ public class View {
     protected Scene scene;
     protected Text aguardandoText;
     protected ArrayList<ComponentesGraficos> listaDeComponentes;
+    protected ArrayList<PecaView> pecasDisponiveis;
 
     public View(Stage primaryStage, String title, int width, int height, GerenteDeEventos gerenteDeEventos) {
         this.primaryStage = primaryStage;
         grupo = new Group();
         gridPane = new GridPane();
         listaDeComponentes = new ArrayList<>();
+        pecasDisponiveis = new ArrayList<>();
         this.width = width;
         this.height = height;
         this.title = title;
         this.gerenteDeEventos = gerenteDeEventos;
-        gradeJogador1 = new GradeView(grupo);
-        gradeJogador2 = new GradeView(grupo);
+        gradeJogador1 = new GradeView();
+        gradeJogador2 = new GradeView();
         scene = new Scene(grupo, width, height);
         aguardandoText = new Text();
 
@@ -55,7 +57,7 @@ public class View {
 
         comecarPartidaButton = new Button("Começar Partida");
         desconectarButton = new Button("Desconectar");
-        enviarJogadaButton = new Button("Enviar Jogada");
+        enviarJogadaButton = new Button("Enviar JogadaPack");
 
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_INICIAR_PARTIDA);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_DESCONECTAR);
@@ -87,8 +89,8 @@ public class View {
         gradeJogador1.linhas(5).colunas(5).posicaoX(Configuracoes.POSICAO_X_GRADE_1).posixaoY(Configuracoes.POSICAO_Y_GRADE_1);
         gradeJogador2.linhas(5).colunas(5).posicaoX(Configuracoes.POSICAO_X_GRADE_2).posixaoY(Configuracoes.POSICAO_Y_GRADE_2);
 
-        gradeJogador1.desenhar();
-        gradeJogador2.desenhar();
+        gradeJogador1.desenhar(grupo);
+        gradeJogador2.desenhar(grupo);
 
         primaryStage.setTitle(title);
         primaryStage.setScene(scene);
@@ -177,5 +179,27 @@ public class View {
         dialogoErro.setHeaderText("Erro");
         dialogoErro.setContentText(mensagemDeErro);
         dialogoErro.showAndWait();
+    }
+
+    public void novasPecas(ArrayList<Peca> pecas) {
+
+        limparPecasDisponiveis();
+
+        for (int i = 0; i < pecas.size(); i++) {
+            PecaView pecaView = new PecaView(pecas.get(i).pegarPosicoes());
+            // TODO : Rever essas posicoes
+            pecaView.posixaoY(200);
+            pecaView.posicaoX(100 + (5*i * Configuracoes.UNIT));
+            pecaView.desenhar(grupo);
+            pecasDisponiveis.add(pecaView);
+        }
+    }
+
+    private void limparPecasDisponiveis() {
+        for (PecaView peca : pecasDisponiveis) {
+            peca.remover(grupo);
+        }
+
+        pecasDisponiveis.clear();
     }
 }
