@@ -1,12 +1,7 @@
-@font-face {
-    font-family: "PB-Title";
-    src: url('../lib/font/Bungee/Bungee-Regular.ttf');
-}
-
 .jogador-nome{
     -fx-font-size: 28px;
 }
 .aguardandoTexto{
-    -fx-font-size: 22px;
-    -fx-font-family: "PB-Title";
+    -fx-font-size: 30px;
+    -fx-font-family:  sans-serif;
 }

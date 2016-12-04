@@ -11,6 +11,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class View {
 
@@ -37,7 +40,7 @@ public class View {
     protected Scene scene;
     protected Text aguardandoText;
     protected ArrayList<ComponentesGraficos> listaDeComponentes;
-    protected Font fontJogador;
+    protected Font fontJogo;
     protected ArrayList<PecaView> pecasDisponiveis;
 
     public View(Stage primaryStage, String title, int width, int height, GerenteDeEventos gerenteDeEventos) {
@@ -69,6 +72,7 @@ public class View {
     }
 
     public void start() {
+
         nomeJogador1Text.setX(100);
         nomeJogador1Text.setY(540);
         nomeJogador2Text.setX(800);
