@@ -24,4 +24,7 @@ public class Bloco {
         this.ocupado = ocupado;
     }
 
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
 }

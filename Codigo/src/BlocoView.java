@@ -6,14 +6,17 @@ import javafx.scene.shape.Rectangle;
 public class BlocoView extends ComponentesGraficos {
 
     protected Rectangle retangulo;
+    protected Posicao posicao;
 
-    public BlocoView() {
+    public BlocoView(Posicao posicao) {
         retangulo = new Rectangle();
+        this.posicao = posicao;
     }
 
     @Override
     public ComponentesGraficos cor(String cor) {
         retangulo.setFill(Paint.valueOf(cor));
+        this.cor = cor;
         return this;
     }
 
@@ -34,10 +37,13 @@ public class BlocoView extends ComponentesGraficos {
     }
 
     @Override
-    public boolean pontoPertenceAoComponente(int x, int y) {
+    public boolean pontoPertenceAoComponente(int x, int y, Posicao posicao) {
         if (x > posicaoX && x < (posicaoX + Configuracoes.UNIT))
-            if (y > posicaoY && y < (posicaoY + Configuracoes.UNIT))
+            if (y > posicaoY && y < (posicaoY + Configuracoes.UNIT)) {
+                posicao.setX(this.posicao.getX());
+                posicao.setY(this.posicao.getY());
                 return true;
+            }
 
         return false;
     }

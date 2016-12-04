@@ -51,7 +51,14 @@ public class AtorJogador {
         view.configurarJogador1(nomeJogador1);
         view.configurarJogador2(nomeJogador2);
 
+        jogo.setNomeJogadorDaVez(nomeJogador1);
+        view.setNomeJogadorDaVez(nomeJogador1);
+
+        view.novasPecas(jogo.pegarListaDePecas());
+
         view.iniciarPartida();
+
+        view.mensagemDeStatus("Partida Iniciada - Jogador " + jogo.getNomeJogadorDaVez());
 
         return 0; // Contexto da JogadaPack
     }
@@ -61,29 +68,45 @@ public class AtorJogador {
     }
 
     public int desconectar() {
+        rede.desconectar();
+        jogo.estabelecerConectado(false);
         return 0;
     }
 
     public void tratarInciarPartida() {
         rede.iniciarPartida();
         System.out.println("Tratar Iniciar Partida");
-        view.iniciarPartida();
     }
 
     public void receberJogada(JogadaPack jogadaPack) {
-        System.out.print("JogadaPack Recebida");
+        view.mensagemDeStatus("Jogada Recebida!!! Pode jogar.");
         jogo.receberJogada(jogadaPack);
+        view.aplicarJogada(jogadaPack);
 
         view.novasPecas(jogo.pegarListaDePecas());
+
+        alterarJogadorDaVez();
     }
 
+    // TODO : Isso nao deveria fazer parte do modelo, eu acho
     public int tratarClick(float posicaoX, float posicaoY) {
         return 0;
     }
 
-    public void enviarJogada(Peca peca, int posicaoX, int posicaoY, String idUsuario) {
-
-    }
+    // TODO : Analisar se esse metodo vai ser necessario
+//    public void enviarJogada(String identificador, Posicao posicaoNaGrade, String idUsuario) {
+//        JogadaPack jogadaPack = new JogadaPack();
+//        Peca peca = jogo.pecaComIdentificador(identificador);
+//
+//        if (peca != null) {
+//            jogadaPack.iniciar(peca, posicaoNaGrade, idUsuario);
+//            alterarJogadorDaVez(idUsuario);
+//            rede.enviarJogada(jogadaPack);
+//            view.mensagemDeStatus("Jogada Enviada");
+//        } else {
+//            view.mensagemDeStatus("Peca invalida, tente novamente");
+//        }
+//    }
 
     // TODO : Analizar como este metodo sera implementado
     public ArrayList<Integer> informarEstado() {
@@ -100,40 +123,88 @@ public class AtorJogador {
         view = new View(primaryStage, Configuracoes.APPNOME, Configuracoes.JANELA_LARGURA, Configuracoes.JANELA_ALTURA, gerenteEventos);
         view.start();
 
-        nome = view.obterIdJogador();
-        servidor = view.obterIdServidor();
+        do {
+            nome = view.obterIdJogador();
+        } while (nome.isEmpty());
+
+        do {
+            servidor = view.obterIdServidor();
+        } while (servidor.isEmpty());
 
         if (!nome.isEmpty() && !servidor.isEmpty()) {
-            if (conectar())
+            if (conectar()) {
                 jogo.estabelecerConectado(true);
-            else
+                view.mensagemDeStatus("Jogo Conectado");
+            } else {
                 view.ExibirMensagemDeErro("Falha ao conectar com o servidor");
+            }
         }
+
+        conectarEventos();
+
+        view.mensagemDeStatus("Aguardando o outro Jogador");
+    }
+
+    private void alterarJogadorDaVez() {
+        if (jogo.getNomeJogadorDaVez().equals(nomeJogador1)) {
+            view.setNomeJogadorDaVez(nomeJogador2);
+            jogo.setNomeJogadorDaVez(nomeJogador2);
+        }
+        else {
+            view.setNomeJogadorDaVez(nomeJogador1);
+            jogo.setNomeJogadorDaVez(nomeJogador1);
+        }
+    }
+
+    private void conectarEventos() {
 
         gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_INICIAR_PARTIDA, new OuvinteDeEventos() {
             @Override
-            public void realizaAcao() {
-                rede.iniciarPartida();
+            public void realizaAcao(Object... objetos) {
+                tratarInciarPartida();
             }
         });
 
         gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_DESCONECTAR, new OuvinteDeEventos() {
             @Override
-            public void realizaAcao() {
+            public void realizaAcao(Object... objetos) {
                 if (jogo.informarConectado())
-                    rede.desconectar();
+                    desconectar();
             }
         });
 
-        gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_ENVIAR_JOGADA, new OuvinteDeEventos() {
+        gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_GRADE_SELECIONADA, new OuvinteDeEventos() {
             @Override
-            public void realizaAcao() {
-                JogadaPack jogadaPack = new JogadaPack();
-                jogadaPack.criar(new Peca(new Posicao(1,1)), new Posicao(0,0), nome);
-                rede.enviarJogada(jogadaPack);
+            public void realizaAcao(Object... objetos) {
+                if (!jogo.temPecaSelecionada) {
+                    view.mensagemDeStatus("Selecione a peça primeiro");
+                    return;
+                }
+
+                String idUsuario = (String) objetos[0];
+                Posicao posicao = (Posicao) objetos[1];
+
+                JogadaPack jogada = jogo.informarJogada(idUsuario, posicao);
+
+                // TODO : talvez mover para o metodo enviar jogada
+                if (jogada == null) {
+                    view.mensagemDeStatus("Jogada invalida");
+                } else {
+                    view.aplicarJogada(jogada);
+                    rede.enviarJogada(jogada);
+                    alterarJogadorDaVez();
+                }
             }
         });
 
-        view.mensagemDeAguardo("Aguardando o outro Jogador");
+        gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_PECA_SELECIONADA, new OuvinteDeEventos() {
+            @Override
+            public void realizaAcao(Object... objetos) {
+                String idPeca = (String)objetos[0];
+                Posicao posicao = (Posicao)objetos[1];
+                view.mensagemDeStatus(idPeca + " selecionada");
+                jogo.setarPecaSelecionada(idPeca, posicao);
+            }
+        });
     }
 }

@@ -1,5 +1,6 @@
 import javafx.scene.Group;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,11 +8,12 @@ public class GradeView extends ComponentesGraficos {
 
     // TODO : Repensar isso
     protected Map<String, BlocoView> listaDeBlocos;
+    protected String idUsuario;
 
-
-    public GradeView()
+    public GradeView(String idUsuario)
     {
         listaDeBlocos = new HashMap<>();
+        this.idUsuario = idUsuario;
     }
 
     public void desenhar(Group grupo) {
@@ -23,29 +25,31 @@ public class GradeView extends ComponentesGraficos {
         for (int i = 0; i < numLinhas; i++) {
             for (int j = 0; j < numColunas; j++) {
 
-                BlocoView bloco = new BlocoView();
-                bloco.posicaoX(posicaoX + (i * Configuracoes.UNIT)).posixaoY(posicaoY + (j * Configuracoes.UNIT));
+                Posicao posicao = new Posicao(i, j);
+                BlocoView bloco = new BlocoView(posicao);
 
+                bloco.posicaoX(posicaoX + (i * Configuracoes.UNIT)).posixaoY(posicaoY + (j * Configuracoes.UNIT));
                 bloco.desenhar(grupo);
 
-                Posicao posicao = new Posicao(i, j);
                 listaDeBlocos.put(posicao.identificador(), bloco);
             }
         }
     }
 
     // TODO : notificar bloco invalido?
+    // TODO : Verificar se funciona com posicao ao inves do identificador
     public void pintarBloco(Posicao posicao, String cor) {
         BlocoView bloco = (BlocoView) listaDeBlocos.get(posicao.identificador());
         bloco.cor(cor);
     }
 
     @Override
-    public boolean pontoPertenceAoComponente(int x, int y) {
+    public boolean pontoPertenceAoComponente(int x, int y, Posicao posicao) {
 
         for (Map.Entry<String, BlocoView> entrada : listaDeBlocos.entrySet()) {
-            if (entrada.getValue().pontoPertenceAoComponente(x,y) == true)
+            if (entrada.getValue().pontoPertenceAoComponente(x,y, posicao)) {
                 return true;
+            }
         }
 
         return false;
@@ -58,4 +62,13 @@ public class GradeView extends ComponentesGraficos {
         }
     }
 
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void aplicarJogada(ArrayList<Posicao> listaDePosicoes, String cor) {
+        for (Posicao posicao : listaDePosicoes) {
+            pintarBloco(posicao, cor);
+        }
+    }
 }

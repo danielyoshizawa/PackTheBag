@@ -5,8 +5,9 @@ public class Jogador {
     protected float pontuacao;
     protected Grade grade;
 
-    public Jogador() {
-
+    public Jogador(int numLinhas, int numColunas) {
+        grade = new Grade();
+        grade.iniciar(numLinhas, numColunas);
     }
 
     public void assumirNome(String idUsuario) {
@@ -17,8 +18,8 @@ public class Jogador {
 
     }
 
-    public void aplicarJogada(JogadaPack jogadaPack) {
-
+    public boolean aplicarJogada(JogadaPack jogadaPack) {
+        return grade.encaixa(jogadaPack);
     }
 
     public boolean pecaEncaixaNaPosicao(Peca peca) {
@@ -36,4 +37,5 @@ public class Jogador {
     public String getIdUsuario() {
         return idUsuario;
     }
+
 }

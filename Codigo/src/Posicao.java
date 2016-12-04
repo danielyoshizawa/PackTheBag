@@ -23,4 +23,17 @@ public class Posicao implements Jogada{
         return y;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void deslocar(Posicao deslocamento) {
+        x = x + deslocamento.getX();
+        y = y + deslocamento.getY();
+    }
+
 }

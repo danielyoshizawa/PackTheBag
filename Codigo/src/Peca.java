@@ -4,11 +4,17 @@ import java.util.ArrayList;
 
 public class Peca implements Jogada {
 
-    protected String nome;
+    protected String identificador;
     protected Grade gradePeca;
     protected String cor;
     protected ArrayList<Posicao> listaDePosicoes;
 
+    public Peca(Peca peca) {
+        this.identificador = peca.identificador;
+        this.gradePeca = peca.gradePeca;
+        this.cor = peca.cor;
+        this.listaDePosicoes = peca.listaDePosicoes;
+    }
 
     public Peca(Posicao ... posicoes) {
         listaDePosicoes = new ArrayList<>();
@@ -27,7 +33,33 @@ public class Peca implements Jogada {
         return listaDePosicoes;
     }
 
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
+    }
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
     public boolean ehPosicaoValida(float posicaoX, float posicaoY) {
         return false;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public void deslocar(Posicao posicaoNaGrade, Posicao posicaoNaPeca) {
+        Posicao posicaoDeslocar = new Posicao(
+                posicaoNaGrade.getX() - posicaoNaPeca.getX(),
+                posicaoNaGrade.getY() - posicaoNaPeca.getY());
+
+        for (Posicao posicaoBloco : listaDePosicoes) {
+            posicaoBloco.deslocar(posicaoDeslocar);
+        }
     }
 }

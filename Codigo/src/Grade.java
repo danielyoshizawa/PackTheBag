@@ -1,12 +1,14 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Grade {
 
-    // TODO : criar uma maneira melhor de armazenar as posicoes
+    // TODO : iniciar uma maneira melhor de armazenar as posicoes
     protected boolean [][] posicoes;
     protected int numLinhas;
     protected int numColunas;
+    // TODO : Talvez seja melhor usar um ArrayList<Bloco>
     protected Map<String, Bloco> listaDeBlocos;
 
 
@@ -26,7 +28,7 @@ public class Grade {
         }
     }
 
-    // TODO : criar uma entidade posicao ou algo assim, pra representar essas tuplas
+    // TODO : iniciar uma entidade posicao ou algo assim, pra representar essas tuplas
     public void configurarPosicoesOcupadas(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
 
     }
@@ -40,8 +42,36 @@ public class Grade {
 
     }
 
-    public boolean encaixa(Peca peca) {
+    // TODO : Nao sei se jogada deveria estar aqui
+    public boolean encaixa(JogadaPack jogada) {
+
+        Peca peca = jogada.getPeca();
+        ArrayList<Posicao> posicoesPeca = peca.pegarPosicoes();
+
+        if (posicoesDisponiveis(posicoesPeca)) {
+            for (Posicao posicao : posicoesPeca) {
+                Bloco bloco = listaDeBlocos.get(posicao.identificador());
+                bloco.setCor(peca.getCor());
+                bloco.setOcupado(true);
+            }
+
+            return true;
+        }
+
         return false;
+    }
+
+    private boolean posicoesDisponiveis(ArrayList<Posicao> posicoesPeca) {
+        for (Posicao posicao : posicoesPeca ) {
+            Bloco bloco = listaDeBlocos.get(posicao.identificador());
+            try {
+                if (bloco.Ocupado())
+                    return false;
+            } catch (NullPointerException nullEx) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public Map<String, Bloco> getListaDeBlocos() {

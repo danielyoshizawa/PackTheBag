@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class GerenteDeEventos {
 
@@ -20,10 +21,10 @@ public class GerenteDeEventos {
         eventMap.put(evento, temp);
     }
 
-    public void NotificarEvento(String evento) {
+    public void NotificarEvento(String evento, Object ... objetos) {
         ArrayList<OuvinteDeEventos> temp = (ArrayList<OuvinteDeEventos>) eventMap.get(evento);
         for (OuvinteDeEventos ouvinte : temp) {
-            ouvinte.realizaAcao();
+            ouvinte.realizaAcao(objetos);
         }
     }
 

@@ -12,8 +12,10 @@ public class Jogo {
     protected boolean jogoEmAndamento;
     protected boolean temPecaSelecionada;
     protected Peca pecaSelecionada;
+    protected Posicao posicaoSelecionada;
     protected boolean estaConectado;
     protected GeradorDePecas geradorDePecas;
+    protected String nomeJogadorDaVez;
 
     public Jogo() {
         numeroColunas = 0;
@@ -23,8 +25,10 @@ public class Jogo {
         estaConectado = false;
         pecasDisponiveis = new ArrayList<>();
         geradorDePecas = new GeradorDePecas();
-        jogador1 = new Jogador();
-        jogador2 = new Jogador();
+        // TODO : Gerar tamanhos variados de grade
+        jogador1 = new Jogador(7,7);
+        jogador2 = new Jogador(7,7);
+        gerarNovasPecasDisponiveis();
     }
 
     public boolean informarConectado() {
@@ -70,20 +74,43 @@ public class Jogo {
         return 0;
     }
 
-    // TODO : padronizar o idUsuario - idJogador
+    // TODO : padronizar ou idUsuario - idJogador
     public boolean ehJogadorDaVez(String idUsuario) {
-        return false;
+        return nomeJogadorDaVez.equals(idUsuario);
     }
 
-    public void setarPecaSelecionada(Peca peca) {
-
+    // TODO : Verificar se peca esta na lista, ou algum teste de consistencia
+    public void setarPecaSelecionada(String identificador, Posicao posicaoSelecionada) {
+        pecaSelecionada = pecaComIdentificador(identificador);
+        this.posicaoSelecionada = posicaoSelecionada;
+        temPecaSelecionada = true;
     }
 
     public boolean temPecaSelecionada() {
         return temPecaSelecionada;
     }
 
-    public JogadaPack informarJogada(Peca peca, int posicaoX, int posicaoY, String idUsuario) {
+    public JogadaPack informarJogada(String idUsuario, Posicao posicaoNaGrade) {
+        if (!ehJogadorDaVez(idUsuario)) {
+            System.out.println("Não é o jogador da vez");
+            // TODO : analisar como sera formada a jogada e se null é o melhor retorno em caso de erro
+            return null;
+        } else {
+            JogadaPack jogada = new JogadaPack();
+
+            Peca pecaDeslocada = new Peca(pecaSelecionada);
+            pecaDeslocada.deslocar(posicaoNaGrade, posicaoSelecionada);
+
+            jogada.iniciar(pecaDeslocada, posicaoNaGrade, posicaoSelecionada, idUsuario);
+            if (ehJogadorDaVez(jogador1.getIdUsuario())) {
+                if (jogador1.aplicarJogada(jogada))
+                    return jogada;
+            } else {
+                if (jogador2.aplicarJogada(jogada))
+                    return jogada;
+            }
+        }
+
         return null;
     }
 
@@ -94,10 +121,30 @@ public class Jogo {
 
     private void gerarNovasPecasDisponiveis() {
         pecasDisponiveis = geradorDePecas.PegarPecasAleatorias(Configuracoes.QUANTIDADE_PECAS_TURNO);
+
+        for (int i = 0; i < pecasDisponiveis.size(); i++) {
+            pecasDisponiveis.get(i).setIdentificador(Configuracoes.PECA_IDENTIFICADOR + i);
+        }
     }
 
     public ArrayList<Peca> pegarListaDePecas() {
         return pecasDisponiveis;
     }
 
+    public Peca pecaComIdentificador(String identificador) {
+        for (Peca peca : pecasDisponiveis) {
+            if (peca.getIdentificador().equals(identificador))
+                return peca;
+        }
+
+        return null;
+    }
+
+    public void setNomeJogadorDaVez(String nomeJogadorDaVez) {
+        this.nomeJogadorDaVez = nomeJogadorDaVez;
+    }
+
+    public String getNomeJogadorDaVez() {
+        return nomeJogadorDaVez;
+    }
 }
