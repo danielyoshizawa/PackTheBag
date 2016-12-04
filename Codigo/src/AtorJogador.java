@@ -55,7 +55,7 @@ public class AtorJogador {
 
         view.iniciarPartida();
 
-        view.mensagemDeStatus("Partida Iniciada");
+        view.mensagemDeStatus("Partida Iniciada - Jogador " + jogo.getNomeJogadorDaVez());
 
         return 0; // Contexto da JogadaPack
     }
@@ -82,7 +82,7 @@ public class AtorJogador {
 
         view.novasPecas(jogo.pegarListaDePecas());
 
-        alterarJogadorDaVez(jogadaPack.getIdUsuario());
+        alterarJogadorDaVez();
     }
 
     // TODO : Isso nao deveria fazer parte do modelo, eu acho
@@ -142,14 +142,14 @@ public class AtorJogador {
         view.mensagemDeStatus("Aguardando o outro Jogador");
     }
 
-    private void alterarJogadorDaVez(String jogadorAtual) {
-        if (jogadorAtual.equals(nomeJogador1)) {
+    private void alterarJogadorDaVez() {
+        if (jogo.getNomeJogadorDaVez().equals(nomeJogador1)) {
             view.setNomeJogadorDaVez(nomeJogador2);
             jogo.setNomeJogadorDaVez(nomeJogador2);
         }
         else {
             view.setNomeJogadorDaVez(nomeJogador1);
-            jogo.setNomeJogadorDaVez(nomeJogador2);
+            jogo.setNomeJogadorDaVez(nomeJogador1);
         }
     }
 
@@ -170,21 +170,6 @@ public class AtorJogador {
             }
         });
 
-        // TODO : Remover este evento
-        gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_ENVIAR_JOGADA, new OuvinteDeEventos() {
-            @Override
-            public void realizaAcao(Object... objetos) {
-                if (jogo.getNomeJogadorDaVez().equals(nome)) {
-                    Peca peca = (Peca) objetos[0];
-                    Posicao posicaoNaGrade = (Posicao) objetos[1];
-                    //enviarJogada(peca.getIdentificador(), posicaoNaGrade, nome);
-                    view.mensagemDeStatus("Jogada enviada!!!");
-                } else {
-                    view.mensagemDeStatus("Ainda não é sua vez");
-                }
-            }
-        });
-
         gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_GRADE_SELECIONADA, new OuvinteDeEventos() {
             @Override
             public void realizaAcao(Object... objetos) {
@@ -193,17 +178,8 @@ public class AtorJogador {
                     return;
                 }
 
-                String idUsuario = "";
-                Posicao posicao = null;
-
-                // TODO : Ver a necessidade disso, acredito que ja lance uma excecao caso os objetos nao existam
-                try {
-                    idUsuario = (String) objetos[0];
-                    posicao = (Posicao) objetos[1];
-                } catch (Exception ex) {
-                    System.out.println("Ocorreu um erro ao recuperar parametros de realizarAcao");
-                    ex.printStackTrace();
-                }
+                String idUsuario = (String) objetos[0];
+                Posicao posicao = (Posicao) objetos[1];
 
                 JogadaPack jogada = jogo.informarJogada(idUsuario, posicao);
 
@@ -213,6 +189,7 @@ public class AtorJogador {
                 } else {
                     view.aplicarJogada(jogada);
                     rede.enviarJogada(jogada);
+                    alterarJogadorDaVez();
                 }
             }
         });

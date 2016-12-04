@@ -36,7 +36,7 @@ public class GeradorDePecas {
         // Peca S Horizontal
         listaDePecas.put(5, new Peca(new Posicao(0,1), new Posicao(1,1), new Posicao(1,0), new Posicao(2,0)));
         // Peca S vertical
-        listaDePecas.put(6, new Peca(new Posicao(0,0), new Posicao(0,1), new Posicao(1,1), new Posicao(2,0)));
+        listaDePecas.put(6, new Peca(new Posicao(0,0), new Posicao(0,1), new Posicao(1,1), new Posicao(1,2)));
     }
 
     // TODO : Verificar se a peca ja nao foi gerada para evitar duplicacao
@@ -44,8 +44,8 @@ public class GeradorDePecas {
         ArrayList<Peca> pecas = new ArrayList<>();
 
         for (int i = 0; i < quantidade ; i++) {
-            Peca peca = listaDePecas.get((int)( Math.random() * 6));
-            peca.setCor(listaDeCores.get((int)( Math.random() * 2)));
+            Peca peca = listaDePecas.get((int)( Math.random() * 7));
+            peca.setCor(listaDeCores.get((int)( Math.random() * 3)));
             pecas.add(peca);
         }
 

@@ -29,8 +29,6 @@ public class View {
     protected Text nomeJogador1Text;
     protected Text nomeJogador2Text;
     protected GridPane gridPane;
-    // TOOD : Remover esse botão, utilizar apenas para teste de envio de jogada
-    protected Button enviarJogadaButton;
     protected GradeView gradeJogador1;
     protected GradeView gradeJogador2;
     protected Scene scene;
@@ -56,11 +54,10 @@ public class View {
 
         comecarPartidaButton = new Button("Começar Partida");
         desconectarButton = new Button("Desconectar");
-        enviarJogadaButton = new Button("Enviar JogadaPack");
+
 
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_INICIAR_PARTIDA);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_DESCONECTAR);
-        gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_ENVIAR_JOGADA);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_PECA_SELECIONADA);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_GRADE_SELECIONADA);
     }
@@ -76,7 +73,6 @@ public class View {
 
         gridPane.add(comecarPartidaButton, 1, 1);
         gridPane.add(desconectarButton, 2, 1);
-        gridPane.add(enviarJogadaButton, 3, 1);
 
         grupo.getChildren().add(gridPane);
         grupo.getChildren().add(nomeJogador1Text);
@@ -99,20 +95,17 @@ public class View {
             gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_DESCONECTAR);
         });
 
-        enviarJogadaButton.setOnAction(event -> {
-            gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_ENVIAR_JOGADA);
-        });
-
         // INFO : So recebe eventos de click realizados sobre componentes em grupo
         grupo.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 System.out.println("Mouse clicado em : " + event.getX() + " : " + event.getY());
+                System.out.println("Jogador da Vez : " + nomeJogadorDaVez);
                 Posicao posicaoClick = new Posicao(0,0);
 
                 // TODO : Repensar sobre essa logica inserida na view
                 if (!nome.equals(nomeJogadorDaVez)) {
-                    System.out.println("Não é o jogador da vez");
+                    mensagemDeStatus("Ainda não é sua vez, seu apressadinho!!!");
                     return;
                 }
 

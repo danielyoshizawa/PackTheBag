@@ -46,22 +46,15 @@ public class Grade {
     public boolean encaixa(JogadaPack jogada) {
 
         Peca peca = jogada.getPeca();
-        Posicao posicaoNaGrade = jogada.getPosicaoNaGrade();
-        Posicao posicaoNaPeca = jogada.getPosicaoNaPeca();
-
-        Peca pecaDeslocada = new Peca(peca);
-
-        pecaDeslocada.deslocar(posicaoNaGrade, posicaoNaPeca);
-        ArrayList<Posicao> posicoesPeca = pecaDeslocada.pegarPosicoes();
+        ArrayList<Posicao> posicoesPeca = peca.pegarPosicoes();
 
         if (posicoesDisponiveis(posicoesPeca)) {
             for (Posicao posicao : posicoesPeca) {
                 Bloco bloco = listaDeBlocos.get(posicao.identificador());
-                bloco.setCor(pecaDeslocada.getCor());
+                bloco.setCor(peca.getCor());
                 bloco.setOcupado(true);
             }
-            // TODO : Reavaliar se isso é certo.
-            jogada.setPeca(pecaDeslocada);
+
             return true;
         }
 
@@ -71,8 +64,12 @@ public class Grade {
     private boolean posicoesDisponiveis(ArrayList<Posicao> posicoesPeca) {
         for (Posicao posicao : posicoesPeca ) {
             Bloco bloco = listaDeBlocos.get(posicao.identificador());
-            if (bloco.Ocupado())
+            try {
+                if (bloco.Ocupado())
+                    return false;
+            } catch (NullPointerException nullEx) {
                 return false;
+            }
         }
         return true;
     }

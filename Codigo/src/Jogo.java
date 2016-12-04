@@ -97,7 +97,11 @@ public class Jogo {
             return null;
         } else {
             JogadaPack jogada = new JogadaPack();
-            jogada.iniciar(pecaSelecionada, posicaoNaGrade, posicaoSelecionada, idUsuario);
+
+            Peca pecaDeslocada = new Peca(pecaSelecionada);
+            pecaDeslocada.deslocar(posicaoNaGrade, posicaoSelecionada);
+
+            jogada.iniciar(pecaDeslocada, posicaoNaGrade, posicaoSelecionada, idUsuario);
             if (ehJogadorDaVez(jogador1.getIdUsuario())) {
                 if (jogador1.aplicarJogada(jogada))
                     return jogada;
