@@ -6,10 +6,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class View {
 
@@ -34,6 +38,7 @@ public class View {
     protected Scene scene;
     protected Text aguardandoText;
     protected ArrayList<ComponentesGraficos> listaDeComponentes;
+    protected Font fontJogo;
     protected ArrayList<PecaView> pecasDisponiveis;
 
     public View(Stage primaryStage, String title, int width, int height, GerenteDeEventos gerenteDeEventos) {
@@ -48,6 +53,7 @@ public class View {
         this.gerenteDeEventos = gerenteDeEventos;
         scene = new Scene(grupo, width, height);
         aguardandoText = new Text();
+        grupo.getStylesheets().add("style.css");
 
         nomeJogador1Text = new Text("");
         nomeJogador2Text = new Text("");
@@ -63,13 +69,15 @@ public class View {
     }
 
     public void start() {
-        nomeJogador1Text.setX(100);
-        nomeJogador1Text.setY(100);
-        nomeJogador2Text.setX(1000);
-        nomeJogador2Text.setY(100);
 
-        aguardandoText.setX(550);
-        aguardandoText.setY(450);
+        nomeJogador1Text.setX(100);
+        nomeJogador1Text.setY(540);
+        nomeJogador2Text.setX(800);
+        nomeJogador2Text.setY(540);
+
+        aguardandoText.setX(450);
+        aguardandoText.setY(600);
+        aguardandoText.getStyleClass().add("aguardandoTexto");
 
         gridPane.add(comecarPartidaButton, 1, 1);
         gridPane.add(desconectarButton, 2, 1);
@@ -168,11 +176,13 @@ public class View {
     public void configurarJogador1(String nome) {
         this.nomeJogador1 = nome;
         nomeJogador1Text.setText(nome);
+        nomeJogador1Text.getStyleClass().add("jogador-nome");
     }
 
     public void configurarJogador2(String nome) {
         this.nomeJogador2 = nome;
         nomeJogador2Text.setText(nome);
+        nomeJogador2Text.getStyleClass().add("jogador-nome");
     }
 
     public void ExibirMensagemDeErro(String mensagemDeErro) {
