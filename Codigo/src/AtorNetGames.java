@@ -49,13 +49,10 @@ public class AtorNetGames implements OuvidorProxy {
         }
     }
 
-    public String informarNomeAdversario(String idUsuario) {
-        return "";
-    }
 
-    public void enviarJogada(JogadaPack jogadaPack) {
+    public void enviarJogada(Jogada jogada) {
         try {
-            proxy.enviaJogada(jogadaPack);
+            proxy.enviaJogada(jogada);
         } catch (NaoJogandoException e) {
             e.printStackTrace();
         }
@@ -84,11 +81,13 @@ public class AtorNetGames implements OuvidorProxy {
 
     }
 
-    // TODO : alterar o nome de JogadaPack para remover esse conflito com o framework
     @Override
     public void receberJogada(Jogada jogada) {
-        JogadaPack jogadaRecebida = (JogadaPack) jogada;
-        atorJogador.receberJogada(jogadaRecebida);
+        if (jogada instanceof JogadaPack) {
+            atorJogador.receberJogada((JogadaPack) jogada);
+        } else if (jogada instanceof JogadaFinalizar) {
+            atorJogador.finalizarPartida();
+        }
     }
 
     @Override

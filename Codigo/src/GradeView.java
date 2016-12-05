@@ -38,7 +38,7 @@ public class GradeView extends ComponentesGraficos {
 
     // TODO : notificar bloco invalido?
     // TODO : Verificar se funciona com posicao ao inves do identificador
-    public void pintarBloco(Posicao posicao, String cor) {
+    protected void pintarBloco(Posicao posicao, String cor) {
         BlocoView bloco = (BlocoView) listaDeBlocos.get(posicao.identificador());
         bloco.cor(cor);
     }

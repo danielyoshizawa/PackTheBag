@@ -38,4 +38,7 @@ public class Jogador {
         return idUsuario;
     }
 
+    public int calcularPontuacao() {
+        return grade.pontuacao();
+    }
 }

@@ -26,8 +26,8 @@ public class Jogo {
         pecasDisponiveis = new ArrayList<>();
         geradorDePecas = new GeradorDePecas();
         // TODO : Gerar tamanhos variados de grade
-        jogador1 = new Jogador(7,7);
-        jogador2 = new Jogador(7,7);
+        jogador1 = new Jogador(5,5);
+        jogador2 = new Jogador(5,5);
         gerarNovasPecasDisponiveis();
     }
 
@@ -70,10 +70,6 @@ public class Jogo {
         gerarNovasPecasDisponiveis();
     }
 
-    public int tratarClick(float posicaoX, float posicaoY, String idUsuario) {
-        return 0;
-    }
-
     // TODO : padronizar ou idUsuario - idJogador
     public boolean ehJogadorDaVez(String idUsuario) {
         return nomeJogadorDaVez.equals(idUsuario);
@@ -101,7 +97,7 @@ public class Jogo {
             Peca pecaDeslocada = new Peca(pecaSelecionada);
             pecaDeslocada.deslocar(posicaoNaGrade, posicaoSelecionada);
 
-            jogada.iniciar(pecaDeslocada, posicaoNaGrade, posicaoSelecionada, idUsuario);
+            jogada.iniciar(pecaDeslocada, posicaoNaGrade, posicaoSelecionada, idUsuario, false);
             if (ehJogadorDaVez(jogador1.getIdUsuario())) {
                 if (jogador1.aplicarJogada(jogada))
                     return jogada;
@@ -146,5 +142,29 @@ public class Jogo {
 
     public String getNomeJogadorDaVez() {
         return nomeJogadorDaVez;
+    }
+
+    public JogadaPack informarJogadaVazia(String idUsuario) {
+        if (!ehJogadorDaVez(idUsuario)) {
+            System.out.println("Não é o jogador da vez");
+            // TODO : analisar como sera formada a jogada e se null é o melhor retorno em caso de erro
+            return null;
+        } else {
+            JogadaPack jogada = new JogadaPack();
+            jogada.iniciar(null, null, null, idUsuario, false);
+            return jogada;
+        }
+    }
+
+    public void finalizarPartida() {
+        jogoEmAndamento = false;
+    }
+
+    public int pontuacaoJogador(String idUsuario) {
+        if (idUsuario.equals(jogador1.getIdUsuario())) {
+            return jogador1.calcularPontuacao();
+        } else {
+            return jogador2.calcularPontuacao();
+        }
     }
 }

@@ -27,11 +27,16 @@ public class View {
     protected GerenteDeEventos gerenteDeEventos;
     protected Button comecarPartidaButton;
     protected Button desconectarButton;
+    protected Button passarVezButton;
+    protected Button finalizarPartidaButton;
     protected String nomeJogador1;
     protected String nomeJogador2;
     protected String nomeJogadorDaVez;
     protected Text nomeJogador1Text;
     protected Text nomeJogador2Text;
+    protected Text nomeJogadorDaVezText;
+    protected Text pontuacaoJogador1Text;
+    protected Text pontuacaoJogador2Text;
     protected GridPane gridPane;
     protected GradeView gradeJogador1;
     protected GradeView gradeJogador2;
@@ -57,23 +62,35 @@ public class View {
 
         nomeJogador1Text = new Text("");
         nomeJogador2Text = new Text("");
+        nomeJogadorDaVezText = new Text("");
+        pontuacaoJogador1Text = new Text("");
+        pontuacaoJogador2Text = new Text("");
 
         comecarPartidaButton = new Button("Começar Partida");
         desconectarButton = new Button("Desconectar");
-
+        passarVezButton = new Button("Passar a Vez");
+        finalizarPartidaButton = new Button("Finalizar Partida");
 
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_INICIAR_PARTIDA);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_DESCONECTAR);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_PECA_SELECIONADA);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_GRADE_SELECIONADA);
+        gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_PASSAR_VEZ);
+        gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_FINALIZAR_PARTIDA);
     }
 
     public void start() {
 
         nomeJogador1Text.setX(100);
-        nomeJogador1Text.setY(540);
+        nomeJogador1Text.setY(550);
         nomeJogador2Text.setX(800);
-        nomeJogador2Text.setY(540);
+        nomeJogador2Text.setY(550);
+        nomeJogadorDaVezText.setX(500);
+        nomeJogadorDaVezText.setY(100);
+        pontuacaoJogador1Text.setX(100);
+        pontuacaoJogador1Text.setY(450);
+        pontuacaoJogador2Text.setX(800);
+        pontuacaoJogador2Text.setY(450);
 
         aguardandoText.setX(450);
         aguardandoText.setY(600);
@@ -81,10 +98,15 @@ public class View {
 
         gridPane.add(comecarPartidaButton, 1, 1);
         gridPane.add(desconectarButton, 2, 1);
+        gridPane.add(passarVezButton, 3, 1);
+        gridPane.add(finalizarPartidaButton, 4, 1);
 
         grupo.getChildren().add(gridPane);
         grupo.getChildren().add(nomeJogador1Text);
         grupo.getChildren().add(nomeJogador2Text);
+        grupo.getChildren().add(nomeJogadorDaVezText);
+        grupo.getChildren().add(pontuacaoJogador1Text);
+        grupo.getChildren().add(pontuacaoJogador2Text);
 
         primaryStage.setTitle(title);
         primaryStage.setScene(scene);
@@ -101,6 +123,10 @@ public class View {
 
         desconectarButton.setOnAction(event -> {
             gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_DESCONECTAR);
+        });
+
+        passarVezButton.setOnAction(event -> {
+            gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_PASSAR_VEZ, nomeJogadorDaVez);
         });
 
         // INFO : So recebe eventos de click realizados sobre componentes em grupo
@@ -130,6 +156,10 @@ public class View {
                     }
                 }
             }
+        });
+
+        finalizarPartidaButton.setOnAction(event -> {
+            gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_FINALIZAR_PARTIDA, nomeJogadorDaVez);
         });
     }
 
@@ -221,6 +251,7 @@ public class View {
 
     public void setNomeJogadorDaVez(String jogadorDaVez) {
         this.nomeJogadorDaVez = jogadorDaVez;
+        nomeJogadorDaVezText.setText("Jogador da vez : " + jogadorDaVez);
     }
 
     public void aplicarJogada(JogadaPack jogada) {
@@ -229,5 +260,10 @@ public class View {
         } else if (jogada.getIdUsuario().equals(nomeJogador2)) {
             gradeJogador2.aplicarJogada(jogada.peca.pegarPosicoes(), jogada.peca.getCor());
         }
+    }
+
+    public void exibirPontuacao(int pontuacaoJogador1, int pontuacaoJogador2) {
+        pontuacaoJogador1Text.setText(nomeJogador1 + " fez " + pontuacaoJogador1 + " pontos.");
+        pontuacaoJogador2Text.setText(nomeJogador2 + " fez " + pontuacaoJogador2 + " pontos.");
     }
 }

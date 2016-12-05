@@ -6,13 +6,14 @@ public class JogadaPack implements Jogada {
     protected Posicao posicaoNaGrade;
     protected String idUsuario;
     protected Posicao posicaoNaPeca;
+    protected Boolean finalizarPartida;
 
     public JogadaPack() {
 
     }
 
     // TODO : talvez receber a posicao da peca tbm
-    public void iniciar(Peca peca, Posicao posicaoNaGrade, Posicao posicaoNaPeca, String idUsuario) {
+    public void iniciar(Peca peca, Posicao posicaoNaGrade, Posicao posicaoNaPeca, String idUsuario, boolean finalizarPartida) {
         this.peca = peca;
         this.posicaoNaGrade = posicaoNaGrade;
         this.idUsuario = idUsuario;
@@ -38,5 +39,9 @@ public class JogadaPack implements Jogada {
 
     public void setPeca(Peca peca) {
         this.peca = peca;
+    }
+
+    public boolean finalizarPartida() {
+        return finalizarPartida;
     }
 }
