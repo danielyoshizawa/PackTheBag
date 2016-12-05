@@ -77,8 +77,11 @@ public class AtorJogador {
 
     public void receberJogada(JogadaPack jogadaPack) {
         view.mensagemDeStatus("Jogada Recebida!!! Pode jogar.");
-        jogo.receberJogada(jogadaPack);
-        view.aplicarJogada(jogadaPack);
+
+        if (jogadaPack.getPeca() != null) {
+            jogo.receberJogada(jogadaPack);
+            view.aplicarJogada(jogadaPack);
+        }
 
         view.novasPecas(jogo.pegarListaDePecas());
 
@@ -201,6 +204,21 @@ public class AtorJogador {
                 Posicao posicao = (Posicao)objetos[1];
                 view.mensagemDeStatus(idPeca + " selecionada");
                 jogo.setarPecaSelecionada(idPeca, posicao);
+            }
+        });
+
+        gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_PASSAR_VEZ, new OuvinteDeEventos() {
+            @Override
+            public void realizaAcao(Object... objetos) {
+                String idUsuario = (String) objetos[0];
+                JogadaPack jogada = jogo.informarJogadaVazia(idUsuario);
+
+                if (jogada == null) {
+                    view.mensagemDeStatus("Não pode passar a vez ainda, espera seu turno");
+                } else {
+                    rede.enviarJogada(jogada);
+                    alterarJogadorDaVez();
+                }
             }
         });
     }

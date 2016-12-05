@@ -26,8 +26,8 @@ public class Jogo {
         pecasDisponiveis = new ArrayList<>();
         geradorDePecas = new GeradorDePecas();
         // TODO : Gerar tamanhos variados de grade
-        jogador1 = new Jogador(7,7);
-        jogador2 = new Jogador(7,7);
+        jogador1 = new Jogador(5,5);
+        jogador2 = new Jogador(5,5);
         gerarNovasPecasDisponiveis();
     }
 
@@ -146,5 +146,17 @@ public class Jogo {
 
     public String getNomeJogadorDaVez() {
         return nomeJogadorDaVez;
+    }
+
+    public JogadaPack informarJogadaVazia(String idUsuario) {
+        if (!ehJogadorDaVez(idUsuario)) {
+            System.out.println("Não é o jogador da vez");
+            // TODO : analisar como sera formada a jogada e se null é o melhor retorno em caso de erro
+            return null;
+        } else {
+            JogadaPack jogada = new JogadaPack();
+            jogada.iniciar(null, null, null, idUsuario);
+            return jogada;
+        }
     }
 }

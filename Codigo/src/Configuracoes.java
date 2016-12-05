@@ -13,8 +13,6 @@ public class Configuracoes {
 
     public static final String EVENTO_DESCONECTAR = "EVENTO_DESCONECTAR";
 
-    public static final String EVENTO_ENVIAR_JOGADA = "EVENTO_ENVIAR_JOGADA";
-
     public static final String EVENTO_PECA_SELECIONADA = "EVENTO_PECA_SELECIONADA";
 
     public static final String EVENTO_GRADE_SELECIONADA = "EVENTO_GRADE_SELECIONADA";
@@ -30,4 +28,6 @@ public class Configuracoes {
     public static final int QUANTIDADE_PECAS_TURNO = 3;
 
     public static final String PECA_IDENTIFICADOR = "Peca - ";
+
+    public static final String EVENTO_PASSAR_VEZ = "EVENTO_PASSAR_VEZ";
 }
