@@ -23,12 +23,6 @@ public class Peca implements Jogada {
             listaDePosicoes.add(posicao);
     }
 
-    // TODO : Rever necessidade de ter esse metodo
-    public void adicionarPosicoes(Posicao ... posicoes) {
-        for (Posicao posicao : posicoes)
-            listaDePosicoes.add(posicao);
-    }
-
     public ArrayList<Posicao> pegarPosicoes() {
         return listaDePosicoes;
     }
@@ -39,10 +33,6 @@ public class Peca implements Jogada {
 
     public String getIdentificador() {
         return identificador;
-    }
-
-    public boolean ehPosicaoValida(float posicaoX, float posicaoY) {
-        return false;
     }
 
     public String getCor() {

@@ -5,7 +5,6 @@ import java.util.Map;
 public class Grade {
 
     // TODO : iniciar uma maneira melhor de armazenar as posicoes
-    protected boolean [][] posicoes;
     protected int numLinhas;
     protected int numColunas;
     // TODO : Talvez seja melhor usar um ArrayList<Bloco>
@@ -28,19 +27,10 @@ public class Grade {
         }
     }
 
-    // TODO : iniciar uma entidade posicao ou algo assim, pra representar essas tuplas
-    public void configurarPosicoesOcupadas(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
-
-    }
-
     public void esvaziar() {
         listaDeBlocos.clear();
     }
 
-    // TODO : Avaliar pra que vai servir isso
-    public void excluirGrade() {
-
-    }
 
     // TODO : Nao sei se jogada deveria estar aqui
     public boolean encaixa(JogadaPack jogada) {
@@ -61,7 +51,7 @@ public class Grade {
         return false;
     }
 
-    private boolean posicoesDisponiveis(ArrayList<Posicao> posicoesPeca) {
+    protected boolean posicoesDisponiveis(ArrayList<Posicao> posicoesPeca) {
         for (Posicao posicao : posicoesPeca ) {
             Bloco bloco = listaDeBlocos.get(posicao.identificador());
             try {
@@ -72,10 +62,6 @@ public class Grade {
             }
         }
         return true;
-    }
-
-    public Map<String, Bloco> getListaDeBlocos() {
-        return listaDeBlocos;
     }
 
     public int pontuacao() {

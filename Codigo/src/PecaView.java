@@ -9,15 +9,6 @@ public class PecaView extends ComponentesGraficos {
     protected Map<Posicao, BlocoView> listaDeBlocos;
     protected String identificador;
 
-    public PecaView(Posicao ... posicoes) {
-        listaDeBlocos = new HashMap<>();
-
-        for (Posicao posicao : posicoes) {
-
-            listaDeBlocos.put(posicao, new BlocoView(posicao));
-        }
-    }
-
     public PecaView(ArrayList<Posicao> posicoes) {
         listaDeBlocos = new HashMap<>();
 
@@ -35,6 +26,7 @@ public class PecaView extends ComponentesGraficos {
         return identificador;
     }
 
+    @Override
     public void desenhar(Group grupo) {
         for (Map.Entry<Posicao, BlocoView> entrada : listaDeBlocos.entrySet()) {
 

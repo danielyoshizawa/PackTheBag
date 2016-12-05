@@ -6,23 +6,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 public class View {
 
     protected Stage primaryStage;
     protected Group grupo;
-    protected int width;
-    protected int height;
-    protected String title;
-    protected String nome;
+    protected int largura;
+    protected int altura;
+    protected String titulo;
+    protected String idUsuario;
     protected String servidor;
     protected GerenteDeEventos gerenteDeEventos;
     protected Button comecarPartidaButton;
@@ -43,20 +39,19 @@ public class View {
     protected Scene scene;
     protected Text aguardandoText;
     protected ArrayList<ComponentesGraficos> listaDeComponentes;
-    protected Font fontJogo;
     protected ArrayList<PecaView> pecasDisponiveis;
 
-    public View(Stage primaryStage, String title, int width, int height, GerenteDeEventos gerenteDeEventos) {
+    public View(Stage primaryStage, String titulo, int largura, int altura, GerenteDeEventos gerenteDeEventos) {
         this.primaryStage = primaryStage;
         grupo = new Group();
         gridPane = new GridPane();
         listaDeComponentes = new ArrayList<>();
         pecasDisponiveis = new ArrayList<>();
-        this.width = width;
-        this.height = height;
-        this.title = title;
+        this.largura = largura;
+        this.altura = altura;
+        this.titulo = titulo;
         this.gerenteDeEventos = gerenteDeEventos;
-        scene = new Scene(grupo, width, height);
+        scene = new Scene(grupo, largura, altura);
         aguardandoText = new Text();
         grupo.getStylesheets().add("style.css");
 
@@ -79,7 +74,7 @@ public class View {
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_FINALIZAR_PARTIDA);
     }
 
-    public void start() {
+    public void iniciar() {
 
         nomeJogador1Text.setX(100);
         nomeJogador1Text.setY(550);
@@ -108,7 +103,7 @@ public class View {
         grupo.getChildren().add(pontuacaoJogador1Text);
         grupo.getChildren().add(pontuacaoJogador2Text);
 
-        primaryStage.setTitle(title);
+        primaryStage.setTitle(titulo);
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -116,7 +111,7 @@ public class View {
         grupo.getChildren().add(aguardandoText);
     }
 
-    private void conectarEventos() {
+    protected void conectarEventos() {
         comecarPartidaButton.setOnAction(event -> {
             gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_INICIAR_PARTIDA);
         });
@@ -138,7 +133,7 @@ public class View {
                 Posicao posicaoClick = new Posicao(0,0);
 
                 // TODO : Repensar sobre essa logica inserida na view
-                if (!nome.equals(nomeJogadorDaVez)) {
+                if (!idUsuario.equals(nomeJogadorDaVez)) {
                     mensagemDeStatus("Ainda não é sua vez, seu apressadinho!!!");
                     return;
                 }
@@ -165,11 +160,11 @@ public class View {
 
     public String obterIdJogador() {
         TextInputDialog dialogoNome = new TextInputDialog();
-        dialogoNome.setTitle("Entrada de nome");
-        dialogoNome.setHeaderText("Entre com seu nome");
+        dialogoNome.setTitle("Entrada de idUsuario");
+        dialogoNome.setHeaderText("Entre com seu idUsuario");
         dialogoNome.setContentText("Nome:");
-        dialogoNome.showAndWait().ifPresent(v -> nome = v);
-        return nome;
+        dialogoNome.showAndWait().ifPresent(v -> idUsuario = v);
+        return idUsuario;
     }
 
     public String obterIdServidor() {
@@ -203,16 +198,16 @@ public class View {
         gradeJogador2.desenhar(grupo);
     }
 
-    public void configurarJogador1(String nome) {
-        this.nomeJogador1 = nome;
-        nomeJogador1Text.setText(nome);
-        nomeJogador1Text.getStyleClass().add("jogador-nome");
+    public void configurarJogador1(String idUsuario) {
+        this.nomeJogador1 = idUsuario;
+        nomeJogador1Text.setText(idUsuario);
+        nomeJogador1Text.getStyleClass().add("jogador-idUsuario");
     }
 
-    public void configurarJogador2(String nome) {
-        this.nomeJogador2 = nome;
-        nomeJogador2Text.setText(nome);
-        nomeJogador2Text.getStyleClass().add("jogador-nome");
+    public void configurarJogador2(String idUsuario) {
+        this.nomeJogador2 = idUsuario;
+        nomeJogador2Text.setText(idUsuario);
+        nomeJogador2Text.getStyleClass().add("jogador-idUsuario");
     }
 
     public void ExibirMensagemDeErro(String mensagemDeErro) {
@@ -240,7 +235,7 @@ public class View {
         }
     }
 
-    private void limparPecasDisponiveis() {
+    protected void limparPecasDisponiveis() {
         for (PecaView peca : pecasDisponiveis) {
             peca.remover(grupo);
             listaDeComponentes.remove(peca);

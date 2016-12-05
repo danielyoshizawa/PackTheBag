@@ -35,7 +35,6 @@ public abstract class ComponentesGraficos {
 
     public abstract void desenhar(Group grupo);
 
-
     public abstract boolean pontoPertenceAoComponente(int x, int y, Posicao posicao);
 
     public abstract void remover(Group grupo);

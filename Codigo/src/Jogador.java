@@ -17,20 +17,8 @@ public class Jogador {
         grade.iniciar(numLinhas, numColunas);
     }
 
-    public boolean aplicarJogada(JogadaPack jogadaPack) {
-        return grade.encaixa(jogadaPack);
-    }
-
-    public boolean pecaEncaixaNaPosicao(Peca peca) {
-        return false;
-    }
-
-    public Grade getGrade() {
-        return null;
-    }
-
-    public void pontuar(int pontos) {
-
+    public boolean aplicarJogada(JogadaPack jogada) {
+        return grade.encaixa(jogada);
     }
 
     public String getIdUsuario() {

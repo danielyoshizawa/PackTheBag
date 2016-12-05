@@ -1,11 +1,7 @@
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
 public class AtorJogador {
 
-    protected String idUsuario;
-    // TODO : Aqui será criada uma dependencia ciclica, rever isso
     protected AtorNetGames rede;
     protected Jogo jogo;
     protected String nome;
@@ -16,8 +12,7 @@ public class AtorJogador {
     protected String nomeJogador2;
 
     public AtorJogador() {
-        super();
-        // TODO : Repensar sobre essa dependencia ciclica, talvez implementar um sistema de eventos
+        // TODO : Repensar sobre essa dependencia ciclica, talvez utilizar o sistema de eventos
         rede = new AtorNetGames(this);
         gerenteEventos = new GerenteDeEventos();
         jogo = new Jogo();
@@ -30,9 +25,6 @@ public class AtorJogador {
         return rede.conectar(servidor, nome);
     }
 
-    public String obterDadosConexao() {
-        return "";
-    }
 
     public int iniciarPartida(boolean ehMinhaVez) {
         String nomeOutroJogador = rede.obterNomeAdversario() ;
@@ -63,9 +55,6 @@ public class AtorJogador {
         return 0; // Contexto da JogadaPack
     }
 
-    public boolean avaliarInterrupcao() {
-        return false;
-    }
 
     public int desconectar() {
         rede.desconectar();
@@ -78,6 +67,7 @@ public class AtorJogador {
         System.out.println("Tratar Iniciar Partida");
     }
 
+    // TODO : Alterar para receber jogada e testar se é JogadaPack ou JogadaFinalizar
     public void receberJogada(JogadaPack jogadaPack) {
         view.mensagemDeStatus("Jogada Recebida!!! Pode jogar.");
 
@@ -106,11 +96,11 @@ public class AtorJogador {
     public void comecar(Stage primaryStage) {
 
         view = new View(primaryStage, Configuracoes.APPNOME, Configuracoes.JANELA_LARGURA, Configuracoes.JANELA_ALTURA, gerenteEventos);
-        view.start();
+        view.iniciar();
 
         /*do {
-            nome = view.obterIdJogador();
-        } while (nome.isEmpty());
+            idUsuario = view.obterIdJogador();
+        } while (idUsuario.isEmpty());
 
         do {
             servidor = view.obterIdServidor();
@@ -148,7 +138,7 @@ public class AtorJogador {
         }
     }
 
-    private void conectarEventos() {
+    protected void conectarEventos() {
 
         gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_INICIAR_PARTIDA, new OuvinteDeEventos() {
             @Override

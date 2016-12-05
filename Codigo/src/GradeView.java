@@ -20,7 +20,7 @@ public class GradeView extends ComponentesGraficos {
         gerarGrade(grupo);
     }
 
-    private void gerarGrade(Group grupo) {
+    protected void gerarGrade(Group grupo) {
 
         for (int i = 0; i < numLinhas; i++) {
             for (int j = 0; j < numColunas; j++) {

@@ -15,14 +15,14 @@ public class GeradorDePecas {
     }
 
     // TODO : Pensar em uma maneira mais elegante, por enquanto vai ser assim
-    private void criarCores() {
+    protected void criarCores() {
         listaDeCores.put(0, "blue");
         listaDeCores.put(1, "red");
         listaDeCores.put(2, "yellow");
     }
 
     // TODO : Achar um jeito melhor de fazer isso, tem muitos objetos sendo inseridos.
-    private void criarPecas() {
+    protected void criarPecas() {
         // Quadrado
         listaDePecas.put(0, new Peca(new Posicao(0,0), new Posicao(1,0), new Posicao(0,1), new Posicao(1,1)));
         // Linha Vertical

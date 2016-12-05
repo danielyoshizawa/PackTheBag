@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class GerenteDeEventos {
 
-    Map eventMap;
+    protected Map eventMap;
 
     public GerenteDeEventos() {
         eventMap = new HashMap<String, ArrayList<OuvinteDeEventos>>();
