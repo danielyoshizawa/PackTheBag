@@ -30,4 +30,18 @@ public class Configuracoes {
     public static final String PECA_IDENTIFICADOR = "Peca - ";
 
     public static final String EVENTO_PASSAR_VEZ = "EVENTO_PASSAR_VEZ";
+
+    public static final String CATEGORIA_COR_VERMELHO = "red";
+
+    public static final String CATEGORIA_COR_AMARELO = "yellow";
+
+    public static final String CATEGORIA_COR_AZUL = "blue";
+
+    public static final int CATEGORIA_PONTOS_VERMELHO = 200;
+
+    public static final int CATEGORIA_PONTOS_AMARELO = 100;
+
+    public static final int CATEGORIA_PONTOS_AZUL = 50;
+
+    public static final String EVENTO_FINALIZAR_PARTIDA = "EVENTO_FINALIZAR_PARTIDA";
 }

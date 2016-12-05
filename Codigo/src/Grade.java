@@ -77,4 +77,20 @@ public class Grade {
     public Map<String, Bloco> getListaDeBlocos() {
         return listaDeBlocos;
     }
+
+    public int pontuacao() {
+        int pontos = 0;
+        for (Map.Entry<String, Bloco> entrada : listaDeBlocos.entrySet()) {
+            String cor = entrada.getValue().getCor();
+
+            if (Configuracoes.CATEGORIA_COR_VERMELHO.equals(cor)) {
+                pontos += Configuracoes.CATEGORIA_PONTOS_VERMELHO;
+            } else if (Configuracoes.CATEGORIA_COR_AMARELO.equals(cor)) {
+                pontos += Configuracoes.CATEGORIA_PONTOS_AMARELO;
+            } else if (Configuracoes.CATEGORIA_COR_AZUL.equals(cor)) {
+                pontos += Configuracoes.CATEGORIA_PONTOS_AZUL;
+            }
+        }
+        return pontos;
+    }
 }

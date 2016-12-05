@@ -88,35 +88,17 @@ public class AtorJogador {
         alterarJogadorDaVez();
     }
 
-    // TODO : Isso nao deveria fazer parte do modelo, eu acho
-    public int tratarClick(float posicaoX, float posicaoY) {
-        return 0;
+
+    public void enviarJogada(JogadaPack jogada) {
+        if (jogada == null) {
+            view.mensagemDeStatus("Jogada invalida");
+        } else {
+            view.aplicarJogada(jogada);
+            rede.enviarJogada(jogada);
+            alterarJogadorDaVez();
+        }
     }
 
-    // TODO : Analisar se esse metodo vai ser necessario
-//    public void enviarJogada(String identificador, Posicao posicaoNaGrade, String idUsuario) {
-//        JogadaPack jogadaPack = new JogadaPack();
-//        Peca peca = jogo.pecaComIdentificador(identificador);
-//
-//        if (peca != null) {
-//            jogadaPack.iniciar(peca, posicaoNaGrade, idUsuario);
-//            alterarJogadorDaVez(idUsuario);
-//            rede.enviarJogada(jogadaPack);
-//            view.mensagemDeStatus("Jogada Enviada");
-//        } else {
-//            view.mensagemDeStatus("Peca invalida, tente novamente");
-//        }
-//    }
-
-    // TODO : Analizar como este metodo sera implementado
-    public ArrayList<Integer> informarEstado() {
-
-        return null;
-    }
-
-    public ArrayList<Integer> notificarPecasDisponiveis() {
-        return null;
-    }
 
     public void comecar(Stage primaryStage) {
 
@@ -178,21 +160,9 @@ public class AtorJogador {
             public void realizaAcao(Object... objetos) {
                 if (!jogo.temPecaSelecionada) {
                     view.mensagemDeStatus("Selecione a peça primeiro");
-                    return;
-                }
-
-                String idUsuario = (String) objetos[0];
-                Posicao posicao = (Posicao) objetos[1];
-
-                JogadaPack jogada = jogo.informarJogada(idUsuario, posicao);
-
-                // TODO : talvez mover para o metodo enviar jogada
-                if (jogada == null) {
-                    view.mensagemDeStatus("Jogada invalida");
                 } else {
-                    view.aplicarJogada(jogada);
-                    rede.enviarJogada(jogada);
-                    alterarJogadorDaVez();
+                    JogadaPack jogada = jogo.informarJogada((String) objetos[0], (Posicao) objetos[1]);
+                    enviarJogada(jogada);
                 }
             }
         });
@@ -221,5 +191,23 @@ public class AtorJogador {
                 }
             }
         });
+
+        gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_FINALIZAR_PARTIDA, new OuvinteDeEventos() {
+            @Override
+            public void realizaAcao(Object... objetos) {
+                rede.enviarJogada(new JogadaFinalizar());
+                finalizarPartida();
+            }
+        });
+    }
+
+    public void finalizarPartida() {
+        int pontuacaoJogador1 = 0;
+        int pontuacaoJogador2 = 0;
+
+        view.mensagemDeStatus("Partida finalizada");
+        jogo.finalizarPartida();
+
+        view.exibirPontuacao(jogo.pontuacaoJogador(nomeJogador1), jogo.pontuacaoJogador(nomeJogador2));
     }
 }

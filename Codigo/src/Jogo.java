@@ -70,10 +70,6 @@ public class Jogo {
         gerarNovasPecasDisponiveis();
     }
 
-    public int tratarClick(float posicaoX, float posicaoY, String idUsuario) {
-        return 0;
-    }
-
     // TODO : padronizar ou idUsuario - idJogador
     public boolean ehJogadorDaVez(String idUsuario) {
         return nomeJogadorDaVez.equals(idUsuario);
@@ -101,7 +97,7 @@ public class Jogo {
             Peca pecaDeslocada = new Peca(pecaSelecionada);
             pecaDeslocada.deslocar(posicaoNaGrade, posicaoSelecionada);
 
-            jogada.iniciar(pecaDeslocada, posicaoNaGrade, posicaoSelecionada, idUsuario);
+            jogada.iniciar(pecaDeslocada, posicaoNaGrade, posicaoSelecionada, idUsuario, false);
             if (ehJogadorDaVez(jogador1.getIdUsuario())) {
                 if (jogador1.aplicarJogada(jogada))
                     return jogada;
@@ -155,8 +151,20 @@ public class Jogo {
             return null;
         } else {
             JogadaPack jogada = new JogadaPack();
-            jogada.iniciar(null, null, null, idUsuario);
+            jogada.iniciar(null, null, null, idUsuario, false);
             return jogada;
+        }
+    }
+
+    public void finalizarPartida() {
+        jogoEmAndamento = false;
+    }
+
+    public int pontuacaoJogador(String idUsuario) {
+        if (idUsuario.equals(jogador1.getIdUsuario())) {
+            return jogador1.calcularPontuacao();
+        } else {
+            return jogador2.calcularPontuacao();
         }
     }
 }
