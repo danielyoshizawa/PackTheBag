@@ -212,9 +212,6 @@ public class AtorJogador {
     }
 
     public void finalizarPartida() {
-        int pontuacaoJogador1 = 0;
-        int pontuacaoJogador2 = 0;
-
         view.mensagemDeStatus("Partida finalizada");
         jogo.finalizarPartida();
 

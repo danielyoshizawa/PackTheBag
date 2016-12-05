@@ -2,12 +2,11 @@
 public class Jogador {
 
     protected String idUsuario;
-    protected float pontuacao;
+    protected int pontuacao;
     protected Grade grade;
 
-    public Jogador(int numLinhas, int numColunas) {
+    public Jogador() {
         grade = new Grade();
-        grade.iniciar(numLinhas, numColunas);
     }
 
     public void assumirNome(String idUsuario) {
@@ -15,7 +14,7 @@ public class Jogador {
     }
 
     public void iniciarGrade(int numLinhas, int numColunas) {
-
+        grade.iniciar(numLinhas, numColunas);
     }
 
     public boolean aplicarJogada(JogadaPack jogadaPack) {
@@ -39,6 +38,7 @@ public class Jogador {
     }
 
     public int calcularPontuacao() {
-        return grade.pontuacao();
+        pontuacao = grade.pontuacao();
+        return pontuacao;
     }
 }

@@ -26,8 +26,10 @@ public class Jogo {
         pecasDisponiveis = new ArrayList<>();
         geradorDePecas = new GeradorDePecas();
         // TODO : Gerar tamanhos variados de grade
-        jogador1 = new Jogador(5,5);
-        jogador2 = new Jogador(5,5);
+        jogador1 = new Jogador();
+        jogador2 = new Jogador();
+        jogador1.iniciarGrade(5,5);
+        jogador2.iniciarGrade(5,5);
         gerarNovasPecasDisponiveis();
     }
 
