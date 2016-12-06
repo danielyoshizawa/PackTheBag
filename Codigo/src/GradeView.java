@@ -62,6 +62,13 @@ public class GradeView extends ComponentesGraficos {
         }
     }
 
+    @Override
+    public void esvaziar() {
+        for (Map.Entry<String, BlocoView> entrada : listaDeBlocos.entrySet()) {
+            entrada.getValue().esvaziar();
+        }
+    }
+
     public String getIdUsuario() {
         return idUsuario;
     }

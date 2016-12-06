@@ -27,8 +27,6 @@ public class Jogo {
         // TODO : Gerar tamanhos variados de grade
         jogador1 = new Jogador();
         jogador2 = new Jogador();
-        jogador1.iniciarGrade(5,5);
-        jogador2.iniciarGrade(5,5);
         gerarNovasPecasDisponiveis();
     }
 
@@ -46,10 +44,12 @@ public class Jogo {
 
     public void criarJogador1(String idUsuario) {
         jogador1.assumirNome(idUsuario);
+        jogador1.iniciarGrade(5,5);
     }
 
     public void criarJogador2(String idUsuario) {
         jogador2.assumirNome(idUsuario);
+        jogador2.iniciarGrade(5,5);
     }
 
     public void receberJogada(JogadaPack jogada) {
@@ -176,5 +176,13 @@ public class Jogo {
 
     public boolean temJogadorAtivo() {
         return jogador1.ativo() || jogador2.ativo();
+    }
+
+    public void limparComponentes() {
+        temPecaSelecionada = false;
+        pecaSelecionada = null;
+        posicaoSelecionada = null;
+        jogador1.limpar();
+        jogador2.limpar();
     }
 }

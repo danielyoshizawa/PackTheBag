@@ -256,4 +256,17 @@ public class View {
             return false;
         }
     }
+
+    public void limparComponentesGraficos() {
+        nomeJogador1Text.setText("");
+        nomeJogador2Text.setText("");
+        nomeJogadorDaVezText.setText("");
+        pontuacaoJogador1Text.setText("");
+        pontuacaoJogador2Text.setText("");
+        gradeJogador1 = null;
+        gradeJogador2 = null;
+        listaDeComponentes.clear();
+        limparPecasDisponiveis();
+        mensagemDeStatus("");
+    }
 }

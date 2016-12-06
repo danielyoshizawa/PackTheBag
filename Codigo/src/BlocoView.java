@@ -54,4 +54,9 @@ public class BlocoView extends ComponentesGraficos {
             grupo.getChildren().remove(retangulo);
         });
     }
+
+    @Override
+    public void esvaziar() {
+        cor("white");
+    }
 }

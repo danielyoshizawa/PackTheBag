@@ -60,8 +60,6 @@ public class AtorNetGames implements OuvidorProxy {
 
     @Override
     public void iniciarNovaPartida(Integer posicao) {
-        System.out.println("Iniciar NOVA Partida");
-
         if (posicao == 1) {
             ehMinhaVez = true;
         } else {

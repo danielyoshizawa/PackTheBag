@@ -44,8 +44,12 @@ public class AtorJogador {
     }
 
 
-    public int iniciarPartida(boolean ehMinhaVez) {
-        String nomeOutroJogador = rede.obterNomeAdversario() ;
+    public void iniciarPartida(boolean ehMinhaVez) {
+
+        view.limparComponentesGraficos();
+        jogo.limparComponentes();
+
+        String nomeOutroJogador = rede.obterNomeAdversario();
 
         if (ehMinhaVez) {
             nomeJogador1 = this.nome;
@@ -69,8 +73,6 @@ public class AtorJogador {
         view.iniciarPartida();
 
         view.mensagemDeStatus("Partida Iniciada - Jogador " + jogo.getNomeJogadorDaVez());
-
-        return 0; // Contexto da JogadaPack
     }
 
 
@@ -92,6 +94,8 @@ public class AtorJogador {
 
         if (interromper || (estaConectado && !jogo.informarEmAndamento())) {
             rede.iniciarPartida();
+        } else {
+            view.mensagemDeStatus("Não foi possivel iniciar partida");
         }
     }
 

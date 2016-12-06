@@ -60,4 +60,9 @@ public class PecaView extends ComponentesGraficos {
             entrada.getValue().remover(grupo);
         }
     }
+
+    @Override
+    public void esvaziar() {
+
+    }
 }

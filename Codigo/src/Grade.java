@@ -16,6 +16,9 @@ public class Grade {
     }
 
     public void iniciar(int numLinhas, int numColunas) {
+
+        esvaziar();
+
         this.numColunas = numColunas;
         this.numLinhas = numLinhas;
 

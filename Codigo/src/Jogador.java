@@ -50,4 +50,10 @@ public class Jogador {
     public boolean ativo() {
         return ativo;
     }
+
+    public void limpar() {
+        grade.esvaziar();
+        pontuacao = 0;
+        ativo = true;
+    }
 }
