@@ -26,8 +26,6 @@ public class View {
     protected Button conectarButton;
     protected Button comecarPartidaButton;
     protected Button desconectarButton;
-    protected Button passarVezButton;
-    protected Button finalizarPartidaButton;
     protected String nomeJogador1;
     protected String nomeJogador2;
     protected String nomeJogadorDaVez;
@@ -67,16 +65,12 @@ public class View {
         conectarButton = new Button("Conectar");
         comecarPartidaButton = new Button("Começar Partida");
         desconectarButton = new Button("Desconectar");
-        passarVezButton = new Button("Passar a Vez");
-        finalizarPartidaButton = new Button("Finalizar Partida");
 
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_CONECTAR);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_INICIAR_PARTIDA);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_DESCONECTAR);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_PECA_SELECIONADA);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_GRADE_SELECIONADA);
-        gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_PASSAR_VEZ);
-        gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_FINALIZAR_PARTIDA);
     }
 
     public void iniciar() {
@@ -99,8 +93,6 @@ public class View {
         gridPane.add(conectarButton, 1, 1);
         gridPane.add(comecarPartidaButton, 2, 1);
         gridPane.add(desconectarButton, 3, 1);
-        gridPane.add(passarVezButton, 4, 1);
-        gridPane.add(finalizarPartidaButton, 5, 1);
 
         grupo.getChildren().add(gridPane);
         grupo.getChildren().add(nomeJogador1Text);
@@ -130,10 +122,6 @@ public class View {
             gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_DESCONECTAR);
         });
 
-        passarVezButton.setOnAction(event -> {
-            gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_PASSAR_VEZ, nomeJogadorDaVez);
-        });
-
         // INFO : So recebe eventos de click realizados sobre componentes em grupo
         grupo.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
@@ -151,10 +139,6 @@ public class View {
                     }
                 }
             }
-        });
-
-        finalizarPartidaButton.setOnAction(event -> {
-            gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_FINALIZAR_PARTIDA, nomeJogadorDaVez);
         });
     }
 

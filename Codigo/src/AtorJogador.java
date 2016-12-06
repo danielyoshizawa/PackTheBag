@@ -135,9 +135,7 @@ public class AtorJogador {
         if (jogada == null) {
             view.mensagemDeStatus("Jogada invalida");
         } else {
-            if (jogada.peca == null) {
-                view.mensagemDeStatus("Acabaram suas Jogadas");
-            } else {
+            if (jogada.peca != null) {
                 view.mensagemDeStatus("Jogada enviada");
                 view.aplicarJogada(jogada);
             }
@@ -223,42 +221,24 @@ public class AtorJogador {
                 jogo.setarPecaSelecionada(idPeca, posicao);
             }
         });
-
-        gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_PASSAR_VEZ, new OuvinteDeEventos() {
-            @Override
-            public void realizaAcao(Object... objetos) {
-                String idUsuario = (String) objetos[0];
-                JogadaPack jogada = jogo.informarJogadaVazia(idUsuario);
-
-                if (jogada == null) {
-                    view.mensagemDeStatus("Não pode passar a vez ainda, espera seu turno");
-                } else {
-                    rede.enviarJogada(jogada);
-                    alterarJogadorDaVez();
-                }
-            }
-        });
-
-        gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_FINALIZAR_PARTIDA, new OuvinteDeEventos() {
-            @Override
-            public void realizaAcao(Object... objetos) {
-                rede.enviarJogada(new JogadaFinalizar());
-                finalizarPartida();
-            }
-        });
     }
 
     public void finalizarPartida() {
-        view.mensagemDeStatus("Partida finalizada");
+        int pontuacaoJogador1 = jogo.pontuacaoJogador(nomeJogador1);
+        int pontuacaoJogador2 = jogo.pontuacaoJogador(nomeJogador2);
         jogo.finalizarPartida();
-        view.exibirPontuacao(jogo.pontuacaoJogador(nomeJogador1), jogo.pontuacaoJogador(nomeJogador2));
-    }
 
-    public void desativarJogador1() {
-        jogo.desativarJogador1();
-    }
+        String vencedor = "";
 
-    public void destativarJogador2() {
-        jogo.desativarJogador2();
+        if (pontuacaoJogador1 > pontuacaoJogador2) {
+            vencedor = nomeJogador1;
+        } else if (pontuacaoJogador2 > pontuacaoJogador1) {
+            vencedor = nomeJogador2;
+        } else {
+            vencedor = "Empate";
+        }
+
+        view.mensagemDeStatus("Partida finalizada\n" + "Vencedor : " + vencedor);
+        view.exibirPontuacao(pontuacaoJogador1, pontuacaoJogador2);
     }
 }

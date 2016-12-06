@@ -177,16 +177,4 @@ public class Jogo {
     public boolean temJogadorAtivo() {
         return jogador1.ativo() || jogador2.ativo();
     }
-
-    public boolean jogador1EhDaVez() {
-        return jogador1.equals(getNomeJogadorDaVez());
-    }
-
-    public void desativarJogador1() {
-        jogador1.encerrarParticipacao();
-    }
-
-    public void desativarJogador2() {
-        jogador2.encerrarParticipacao();
-    }
 }
