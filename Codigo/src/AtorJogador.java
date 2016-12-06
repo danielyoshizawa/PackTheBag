@@ -77,10 +77,10 @@ public class AtorJogador {
     }
 
 
-    public int desconectar() {
+    public void desconectar() {
         rede.desconectar();
         jogo.estabelecerConectado(false);
-        return 0;
+        view.mensagemDeStatus("Desconectado do Servidor");
     }
 
     public void tratarInciarPartida() {
@@ -194,6 +194,8 @@ public class AtorJogador {
             public void realizaAcao(Object... objetos) {
                 if (jogo.informarConectado())
                     desconectar();
+                else
+                    view.mensagemDeStatus("Jogo não está conectado");
             }
         });
 
@@ -249,5 +251,9 @@ public class AtorJogador {
 
         view.mensagemDeStatus("Partida finalizada\n" + "Vencedor : " + vencedor);
         view.exibirPontuacao(pontuacaoJogador1, pontuacaoJogador2);
+    }
+
+    public void finalizarPartidaComErro() {
+        view.mensagemDeStatus("Um dos jogadores desconectou");
     }
 }

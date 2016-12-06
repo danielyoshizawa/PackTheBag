@@ -42,9 +42,12 @@ public class AtorNetGames implements OuvidorProxy {
 
     public void desconectar() {
         try {
+            proxy.finalizarPartida();
             proxy.desconectar();
             System.out.print("Desconectando do servidor");
         } catch (NaoConectadoException e) {
+            e.printStackTrace();
+        } catch (NaoJogandoException e) {
             e.printStackTrace();
         }
     }
@@ -71,7 +74,7 @@ public class AtorNetGames implements OuvidorProxy {
 
     @Override
     public void finalizarPartidaComErro(String message) {
-
+        atorJogador.finalizarPartidaComErro();
     }
 
     @Override
@@ -85,9 +88,10 @@ public class AtorNetGames implements OuvidorProxy {
             atorJogador.receberJogada((JogadaPack) jogada);
     }
 
+    // No caso de desconectar este metodo é chamado.
     @Override
     public void tratarConexaoPerdida() {
-
+        int a = 0;
     }
 
     @Override
