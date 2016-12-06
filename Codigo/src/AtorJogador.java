@@ -18,11 +18,25 @@ public class AtorJogador {
         jogo = new Jogo();
     }
 
-    public boolean conectar() {
-        if(servidor != ""){
-            servidor = "127.0.0.1";
+    public void conectar() {
+        do {
+            nome = view.obterIdJogador();
+        } while (nome.isEmpty());
+
+        do {
+            servidor = view.obterIdServidor();
+        } while (servidor.isEmpty());
+
+
+        if (!nome.isEmpty() && !servidor.isEmpty()) {
+            if (rede.conectar(servidor, nome)) {
+                jogo.estabelecerConectado(true);
+                view.mensagemDeStatus("Aguardando o outro Jogador");
+            } else {
+                jogo.estabelecerConectado(false);
+                view.ExibirMensagemDeErro("Falha ao conectar com o servidor");
+            }
         }
-        return rede.conectar(servidor, nome);
     }
 
 
@@ -63,8 +77,18 @@ public class AtorJogador {
     }
 
     public void tratarInciarPartida() {
-        rede.iniciarPartida();
-        System.out.println("Tratar Iniciar Partida");
+        boolean estaConectado = false;
+        boolean interromper = false;
+
+        if (jogo.informarEmAndamento()) {
+            interromper = view.notificarInterromperPartida();
+        } else {
+            estaConectado = jogo.informarConectado();
+        }
+
+        if (interromper || (estaConectado && !jogo.informarEmAndamento())) {
+            rede.iniciarPartida();
+        }
     }
 
     // TODO : Alterar para receber jogada e testar se é JogadaPack ou JogadaFinalizar
@@ -86,6 +110,7 @@ public class AtorJogador {
         if (jogada == null) {
             view.mensagemDeStatus("Jogada invalida");
         } else {
+            view.mensagemDeStatus("Jogada enviada");
             view.aplicarJogada(jogada);
             rede.enviarJogada(jogada);
             alterarJogadorDaVez();
@@ -98,33 +123,7 @@ public class AtorJogador {
         view = new View(primaryStage, Configuracoes.APPNOME, Configuracoes.JANELA_LARGURA, Configuracoes.JANELA_ALTURA, gerenteEventos);
         view.iniciar();
 
-        /*do {
-            idUsuario = view.obterIdJogador();
-        } while (idUsuario.isEmpty());
-
-        do {
-            servidor = view.obterIdServidor();
-        } while (servidor.isEmpty());
-
-*/
-        // TODO : remover quando descomentar codigo acima
-        nome = view.obterIdJogador();
-        servidor = "127.0.0.1";
-
-
-
-        if (!nome.isEmpty() && !servidor.isEmpty()) {
-            if (conectar()) {
-                jogo.estabelecerConectado(true);
-                view.mensagemDeStatus("Jogo Conectado");
-            } else {
-                view.ExibirMensagemDeErro("Falha ao conectar com o servidor");
-            }
-        }
-
         conectarEventos();
-
-        view.mensagemDeStatus("Aguardando o outro Jogador");
     }
 
     private void alterarJogadorDaVez() {
@@ -139,6 +138,13 @@ public class AtorJogador {
     }
 
     protected void conectarEventos() {
+
+        gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_CONECTAR, new OuvinteDeEventos() {
+            @Override
+            public void realizaAcao(Object... objetos) {
+                conectar();
+            }
+        });
 
         gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_INICIAR_PARTIDA, new OuvinteDeEventos() {
             @Override
@@ -158,6 +164,12 @@ public class AtorJogador {
         gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_GRADE_SELECIONADA, new OuvinteDeEventos() {
             @Override
             public void realizaAcao(Object... objetos) {
+
+                if (!nome.equals(jogo.getNomeJogadorDaVez())) {
+                    view.mensagemDeStatus("Ainda não é sua vez, seu apressadinho!!!");
+                    return;
+                }
+
                 if (!jogo.temPecaSelecionada) {
                     view.mensagemDeStatus("Selecione a peça primeiro");
                 } else {
@@ -170,6 +182,12 @@ public class AtorJogador {
         gerenteEventos.AdicionarOuvinte(Configuracoes.EVENTO_PECA_SELECIONADA, new OuvinteDeEventos() {
             @Override
             public void realizaAcao(Object... objetos) {
+
+                if (!nome.equals(jogo.getNomeJogadorDaVez())) {
+                    view.mensagemDeStatus("Ainda não é sua vez, seu apressadinho!!!");
+                    return;
+                }
+
                 String idPeca = (String)objetos[0];
                 Posicao posicao = (Posicao)objetos[1];
                 view.mensagemDeStatus(idPeca + " selecionada");

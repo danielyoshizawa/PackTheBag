@@ -3,6 +3,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -10,6 +11,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class View {
 
@@ -21,6 +23,7 @@ public class View {
     protected String idUsuario;
     protected String servidor;
     protected GerenteDeEventos gerenteDeEventos;
+    protected Button conectarButton;
     protected Button comecarPartidaButton;
     protected Button desconectarButton;
     protected Button passarVezButton;
@@ -61,11 +64,13 @@ public class View {
         pontuacaoJogador1Text = new Text("");
         pontuacaoJogador2Text = new Text("");
 
+        conectarButton = new Button("Conectar");
         comecarPartidaButton = new Button("Começar Partida");
         desconectarButton = new Button("Desconectar");
         passarVezButton = new Button("Passar a Vez");
         finalizarPartidaButton = new Button("Finalizar Partida");
 
+        gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_CONECTAR);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_INICIAR_PARTIDA);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_DESCONECTAR);
         gerenteDeEventos.AdicionarEvento(Configuracoes.EVENTO_PECA_SELECIONADA);
@@ -91,10 +96,11 @@ public class View {
         aguardandoText.setY(600);
         aguardandoText.getStyleClass().add("aguardandoTexto");
 
-        gridPane.add(comecarPartidaButton, 1, 1);
-        gridPane.add(desconectarButton, 2, 1);
-        gridPane.add(passarVezButton, 3, 1);
-        gridPane.add(finalizarPartidaButton, 4, 1);
+        gridPane.add(conectarButton, 1, 1);
+        gridPane.add(comecarPartidaButton, 2, 1);
+        gridPane.add(desconectarButton, 3, 1);
+        gridPane.add(passarVezButton, 4, 1);
+        gridPane.add(finalizarPartidaButton, 5, 1);
 
         grupo.getChildren().add(gridPane);
         grupo.getChildren().add(nomeJogador1Text);
@@ -112,6 +118,10 @@ public class View {
     }
 
     protected void conectarEventos() {
+
+        conectarButton.setOnAction(event -> {
+            gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_CONECTAR);
+        });
         comecarPartidaButton.setOnAction(event -> {
             gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_INICIAR_PARTIDA);
         });
@@ -128,24 +138,14 @@ public class View {
         grupo.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("Mouse clicado em : " + event.getX() + " : " + event.getY());
-                System.out.println("Jogador da Vez : " + nomeJogadorDaVez);
                 Posicao posicaoClick = new Posicao(0,0);
 
-                // TODO : Repensar sobre essa logica inserida na view
-                if (!idUsuario.equals(nomeJogadorDaVez)) {
-                    mensagemDeStatus("Ainda não é sua vez, seu apressadinho!!!");
-                    return;
-                }
-
                 for (ComponentesGraficos componente : listaDeComponentes) {
-                    if (componente.pontoPertenceAoComponente((int)event.getX(), (int)event.getY(), posicaoClick) == true) {
+                    if (componente.pontoPertenceAoComponente((int)event.getX(), (int)event.getY(), posicaoClick)) {
                         if (componente instanceof GradeView) {
-                            System.out.println("Grade Encontrado !!! na posicao : " + posicaoClick.getX() + " - " + posicaoClick.getY());
                             gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_GRADE_SELECIONADA, ((GradeView) componente).getIdUsuario(), posicaoClick);
                         }
                         else if (componente instanceof PecaView) {
-                            System.out.println("Peca Encontrada !!! na posicao : " + posicaoClick.getX() + " - " + posicaoClick.getY());
                             gerenteDeEventos.NotificarEvento(Configuracoes.EVENTO_PECA_SELECIONADA, ((PecaView) componente).getIdentificador(), posicaoClick);
                         }
                     }
@@ -181,8 +181,6 @@ public class View {
     }
 
     public void iniciarPartida() {
-        System.out.println("View - Iniciar Partida");
-
         mensagemDeStatus("");
 
         gradeJogador1 = new GradeView(nomeJogador1);
@@ -260,5 +258,18 @@ public class View {
     public void exibirPontuacao(int pontuacaoJogador1, int pontuacaoJogador2) {
         pontuacaoJogador1Text.setText(nomeJogador1 + " fez " + pontuacaoJogador1 + " pontos.");
         pontuacaoJogador2Text.setText(nomeJogador2 + " fez " + pontuacaoJogador2 + " pontos.");
+    }
+
+    public boolean notificarInterromperPartida() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Interromper Partida");
+        alert.setHeaderText("Deseja finalizar a partida");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

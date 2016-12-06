@@ -44,4 +44,6 @@ public class Configuracoes {
     public static final int CATEGORIA_PONTOS_AZUL = 50;
 
     public static final String EVENTO_FINALIZAR_PARTIDA = "EVENTO_FINALIZAR_PARTIDA";
+
+    public static final String EVENTO_CONECTAR = "EVENTO_CONECTAR";
 }
