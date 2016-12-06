@@ -42,6 +42,10 @@ public class Jogo {
         return jogoEmAndamento;
     }
 
+    public void comecarPartida() {
+        jogoEmAndamento = true;
+    }
+
     public void criarJogador1(String idUsuario) {
         jogador1.assumirNome(idUsuario);
         jogador1.iniciarGrade(5,5);

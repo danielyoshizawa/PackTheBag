@@ -70,6 +70,7 @@ public class AtorJogador {
 
         view.novasPecas(jogo.pegarListaDePecas());
 
+        jogo.comecarPartida();
         view.iniciarPartida();
 
         view.mensagemDeStatus("Partida Iniciada - Jogador " + jogo.getNomeJogadorDaVez());
