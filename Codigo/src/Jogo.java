@@ -79,11 +79,7 @@ public class Jogo {
     }
 
     public JogadaPack informarJogada(String idUsuario, Posicao posicaoNaGrade) {
-        if (!ehJogadorDaVez(idUsuario)) {
-            System.out.println("Não é o jogador da vez");
-            // TODO : analisar como sera formada a jogada e se null é o melhor retorno em caso de erro
-            return null;
-        } else {
+        if (ehJogadorDaVez(idUsuario)) {
             JogadaPack jogada = new JogadaPack();
 
             Peca pecaDeslocada = new Peca(pecaSelecionada);
@@ -188,5 +184,9 @@ public class Jogo {
         posicaoSelecionada = null;
         jogador1.limpar();
         jogador2.limpar();
+    }
+
+    public boolean temPecaSelecionada() {
+        return temPecaSelecionada;
     }
 }

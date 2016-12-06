@@ -34,8 +34,6 @@ public class Grade {
         listaDeBlocos.clear();
     }
 
-
-    // TODO : Nao sei se jogada deveria estar aqui
     public boolean encaixa(JogadaPack jogada) {
 
         Peca peca = jogada.getPeca();

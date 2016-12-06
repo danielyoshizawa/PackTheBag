@@ -144,7 +144,7 @@ public class AtorJogador {
         if (jogada == null) {
             view.mensagemDeStatus("Jogada invalida");
         } else {
-            if (jogada.peca != null) {
+            if (jogada.getPeca() != null) {
                 view.mensagemDeStatus("Jogada enviada");
                 view.aplicarJogada(jogada);
             }
@@ -205,14 +205,14 @@ public class AtorJogador {
 
                 if (!nome.equals(jogo.getNomeJogadorDaVez())) {
                     view.mensagemDeStatus("Ainda não é sua vez, seu apressadinho!!!");
-                    return;
-                }
-
-                if (!jogo.temPecaSelecionada) {
-                    view.mensagemDeStatus("Selecione a peça primeiro");
                 } else {
-                    JogadaPack jogada = jogo.informarJogada((String) objetos[0], (Posicao) objetos[1]);
-                    enviarJogada(jogada);
+
+                    if (!jogo.temPecaSelecionada()) {
+                        view.mensagemDeStatus("Selecione a peça primeiro");
+                    } else {
+                        JogadaPack jogada = jogo.informarJogada((String) objetos[0], (Posicao) objetos[1]);
+                        enviarJogada(jogada);
+                    }
                 }
             }
         });
@@ -223,13 +223,12 @@ public class AtorJogador {
 
                 if (!nome.equals(jogo.getNomeJogadorDaVez())) {
                     view.mensagemDeStatus("Ainda não é sua vez, seu apressadinho!!!");
-                    return;
+                } else {
+                    String idPeca = (String) objetos[0];
+                    Posicao posicao = (Posicao) objetos[1];
+                    view.mensagemDeStatus(idPeca + " selecionada");
+                    jogo.setarPecaSelecionada(idPeca, posicao);
                 }
-
-                String idPeca = (String)objetos[0];
-                Posicao posicao = (Posicao)objetos[1];
-                view.mensagemDeStatus(idPeca + " selecionada");
-                jogo.setarPecaSelecionada(idPeca, posicao);
             }
         });
     }
