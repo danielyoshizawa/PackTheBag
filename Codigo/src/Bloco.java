@@ -31,4 +31,8 @@ public class Bloco {
     public String getCor() {
         return cor;
     }
+
+    public Posicao getPosicao() {
+        return posicao;
+    }
 }

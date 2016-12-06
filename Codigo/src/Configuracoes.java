@@ -46,4 +46,10 @@ public class Configuracoes {
     public static final String EVENTO_FINALIZAR_PARTIDA = "EVENTO_FINALIZAR_PARTIDA";
 
     public static final String EVENTO_CONECTAR = "EVENTO_CONECTAR";
+
+    public static final String ENCERRAR_PARTIDA = "ENCERRAR_PARTIDA";
+
+    public static final String DESATIVAR_JOGADOR_1 = "DESATIVAR_JOGADOR_1";
+
+    public static final String DESATIVAR_JOGADOR_2 = "DESATIVAR_JOGADOR_2";
 }

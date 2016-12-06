@@ -79,15 +79,19 @@ public class AtorNetGames implements OuvidorProxy {
     @Override
     public void receberMensagem(String msg) {
 
+        if (msg.equals(Configuracoes.ENCERRAR_PARTIDA)) {
+            atorJogador.finalizarPartida();
+        } else if (msg.equals(Configuracoes.DESATIVAR_JOGADOR_1)) {
+            atorJogador.desativarJogador1();
+        } else if (msg.equals(Configuracoes.DESATIVAR_JOGADOR_2)) {
+            atorJogador.destativarJogador2();
+        }
     }
 
     @Override
     public void receberJogada(Jogada jogada) {
-        if (jogada instanceof JogadaPack) {
+        if (jogada != null)
             atorJogador.receberJogada((JogadaPack) jogada);
-        } else if (jogada instanceof JogadaFinalizar) {
-            atorJogador.finalizarPartida();
-        }
     }
 
     @Override
@@ -110,5 +114,10 @@ public class AtorNetGames implements OuvidorProxy {
         }
 
         return nome;
+    }
+
+    // TODO : Avaliar se esse mecanismo funciona, aparentemente so funciona para o mesmo ouvinte, nao envia nada na rede
+    public void enviarMensagem(String mensagem) {
+        proxy.receberMensagem(mensagem);
     }
 }

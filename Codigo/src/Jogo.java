@@ -150,4 +150,43 @@ public class Jogo {
             return jogador2.calcularPontuacao();
         }
     }
+
+    public boolean existeEncaixePossivel(String idUsuario) {
+        if (idUsuario.equals(jogador1.getIdUsuario())) {
+            return jogador1.exiteEncaixePosivel(pecasDisponiveis);
+        } else {
+            return jogador2.exiteEncaixePosivel(pecasDisponiveis);
+        }
+    }
+
+    public void encerrarParticipacao(String idUsuario) {
+        if (idUsuario.equals(jogador1.getIdUsuario())) {
+            jogador1.encerrarParticipacao();
+        } else {
+            jogador2.encerrarParticipacao();
+        }
+    }
+
+    public boolean jogadorAtivo(String idUsuario) {
+        if (idUsuario.equals(jogador1.getIdUsuario()))
+            return jogador1.ativo();
+        else
+            return jogador2.ativo();
+    }
+
+    public boolean temJogadorAtivo() {
+        return jogador1.ativo() || jogador2.ativo();
+    }
+
+    public boolean jogador1EhDaVez() {
+        return jogador1.equals(getNomeJogadorDaVez());
+    }
+
+    public void desativarJogador1() {
+        jogador1.encerrarParticipacao();
+    }
+
+    public void desativarJogador2() {
+        jogador2.encerrarParticipacao();
+    }
 }

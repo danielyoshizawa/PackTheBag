@@ -91,18 +91,43 @@ public class AtorJogador {
         }
     }
 
-    // TODO : Alterar para receber jogada e testar se é JogadaPack ou JogadaFinalizar
+    // TODO : Rever a Logica, esta finalizando em apenas uma instancia.
+    // INFO : Caso se encerrem as possibilidades de encaixe em um determinado turno o jogador não podera mais jogar
     public void receberJogada(JogadaPack jogadaPack) {
-        view.mensagemDeStatus("Jogada Recebida!!! Pode jogar.");
+        view.mensagemDeStatus("Jogada Recebida!!!");
 
+
+        // INFO : Jogada vazia quer dizer que se esgotaram as possibilidades para o outro jogador
         if (jogadaPack.getPeca() != null) {
             jogo.receberJogada(jogadaPack);
             view.aplicarJogada(jogadaPack);
+        } else {
+            jogo.encerrarParticipacao(jogadaPack.getIdUsuario());
         }
 
-        view.novasPecas(jogo.pegarListaDePecas());
+        if (!jogo.temJogadorAtivo()) {
+            finalizarPartida();
+            return;
+        }
 
         alterarJogadorDaVez();
+
+        if (jogo.jogadorAtivo(jogo.getNomeJogadorDaVez())) {
+            view.novasPecas(jogo.pegarListaDePecas());
+
+            if (!jogo.existeEncaixePossivel(jogo.getNomeJogadorDaVez())) {
+                jogo.encerrarParticipacao(jogo.getNomeJogadorDaVez());
+
+                if (!jogo.temJogadorAtivo()) {
+                    finalizarPartida();
+                }
+
+                enviarJogada(jogo.informarJogadaVazia(jogo.getNomeJogadorDaVez()));
+            }
+        } else {
+            view.mensagemDeStatus("Acabaram suas Jogadas");
+            enviarJogada(jogo.informarJogadaVazia(jogo.getNomeJogadorDaVez()));
+        }
     }
 
 
@@ -110,8 +135,12 @@ public class AtorJogador {
         if (jogada == null) {
             view.mensagemDeStatus("Jogada invalida");
         } else {
-            view.mensagemDeStatus("Jogada enviada");
-            view.aplicarJogada(jogada);
+            if (jogada.peca == null) {
+                view.mensagemDeStatus("Acabaram suas Jogadas");
+            } else {
+                view.mensagemDeStatus("Jogada enviada");
+                view.aplicarJogada(jogada);
+            }
             rede.enviarJogada(jogada);
             alterarJogadorDaVez();
         }
@@ -222,7 +251,14 @@ public class AtorJogador {
     public void finalizarPartida() {
         view.mensagemDeStatus("Partida finalizada");
         jogo.finalizarPartida();
-
         view.exibirPontuacao(jogo.pontuacaoJogador(nomeJogador1), jogo.pontuacaoJogador(nomeJogador2));
+    }
+
+    public void desativarJogador1() {
+        jogo.desativarJogador1();
+    }
+
+    public void destativarJogador2() {
+        jogo.desativarJogador2();
     }
 }

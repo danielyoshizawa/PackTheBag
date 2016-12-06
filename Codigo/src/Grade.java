@@ -79,4 +79,19 @@ public class Grade {
         }
         return pontos;
     }
+
+    public boolean pecaEncaixa(Peca peca) {
+
+        for (Map.Entry<String, Bloco> entrada : listaDeBlocos.entrySet()) {
+            Bloco bloco = entrada.getValue();
+            if (!bloco.Ocupado()) {
+                Peca pecaDeslocada = new Peca(peca);
+                pecaDeslocada.deslocar(bloco.getPosicao(), peca.pegarPosicoes().get(0));
+
+                if(posicoesDisponiveis(pecaDeslocada.pegarPosicoes()))
+                    return true;
+            }
+        }
+        return false;
+    }
 }
