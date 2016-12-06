@@ -19,16 +19,20 @@ public class AtorJogador {
     }
 
     public void conectar() {
-        do {
-            nome = view.obterIdJogador();
-        } while (nome.isEmpty());
 
-        do {
-            servidor = view.obterIdServidor();
-        } while (servidor.isEmpty());
+        if (jogo.informarConectado()) {
+            view.mensagemDeStatus("Conexão já foi estabelecida");
+        } else {
+
+            do {
+                nome = view.obterIdJogador();
+            } while (nome.isEmpty());
+
+            do {
+                servidor = view.obterIdServidor();
+            } while (servidor.isEmpty());
 
 
-        if (!nome.isEmpty() && !servidor.isEmpty()) {
             if (rede.conectar(servidor, nome)) {
                 jogo.estabelecerConectado(true);
                 view.mensagemDeStatus("Aguardando o outro Jogador");
