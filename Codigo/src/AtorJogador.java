@@ -93,6 +93,10 @@ public class AtorJogador {
             estaConectado = jogo.informarConectado();
         }
 
+        if (!estaConectado) {
+            view.mensagemDeStatus("É necessario se conectar com o servidor");
+        }
+
         if (interromper || (estaConectado && !jogo.informarEmAndamento())) {
             rede.iniciarPartida();
         } else {
