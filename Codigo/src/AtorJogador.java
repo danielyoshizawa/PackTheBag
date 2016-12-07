@@ -116,26 +116,26 @@ public class AtorJogador {
 
         if (!jogo.temJogadorAtivo()) {
             finalizarPartida();
-            return;
-        }
+        } else {
 
-        alterarJogadorDaVez();
+            alterarJogadorDaVez();
 
-        if (jogo.jogadorAtivo(jogo.getNomeJogadorDaVez())) {
-            view.novasPecas(jogo.pegarListaDePecas());
+            if (jogo.jogadorAtivo(jogo.getNomeJogadorDaVez())) {
+                view.novasPecas(jogo.pegarListaDePecas());
 
-            if (!jogo.existeEncaixePossivel(jogo.getNomeJogadorDaVez())) {
-                jogo.encerrarParticipacao(jogo.getNomeJogadorDaVez());
+                if (!jogo.existeEncaixePossivel(jogo.getNomeJogadorDaVez())) {
+                    jogo.encerrarParticipacao(jogo.getNomeJogadorDaVez());
 
-                if (!jogo.temJogadorAtivo()) {
-                    finalizarPartida();
+                    if (!jogo.temJogadorAtivo()) {
+                        finalizarPartida();
+                    }
+
+                    enviarJogada(jogo.informarJogadaVazia(jogo.getNomeJogadorDaVez()));
                 }
-
+            } else {
+                view.mensagemDeStatus("Acabaram suas Jogadas");
                 enviarJogada(jogo.informarJogadaVazia(jogo.getNomeJogadorDaVez()));
             }
-        } else {
-            view.mensagemDeStatus("Acabaram suas Jogadas");
-            enviarJogada(jogo.informarJogadaVazia(jogo.getNomeJogadorDaVez()));
         }
     }
 
