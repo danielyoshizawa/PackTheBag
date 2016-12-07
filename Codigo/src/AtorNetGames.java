@@ -88,10 +88,9 @@ public class AtorNetGames implements OuvidorProxy {
             atorJogador.receberJogada((JogadaPack) jogada);
     }
 
-    // No caso de desconectar este metodo é chamado.
     @Override
     public void tratarConexaoPerdida() {
-        int a = 0;
+
     }
 
     @Override
