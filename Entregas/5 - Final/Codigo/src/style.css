@@ -1,0 +1,7 @@
+.jogador-nome{
+    -fx-font-size: 28px;
+}
+.aguardandoTexto{
+    -fx-font-size: 30px;
+    -fx-font-family:  sans-serif;
+}

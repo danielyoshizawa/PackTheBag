@@ -1,0 +1,102 @@
+==================================================================
+Pack The Bag v1.0  08/12/2016
+Release Notes
+
+Daniel Yoshizawa
+Jacqueline Cardozo
+==================================================================
+
+Sumário
+
+1. Requisitos do sistema
+2. Instalação
+3. Versão atual e seus aspectos
+4. Restrições
+5. Melhorias para próximas versões
+
+==================================================================
+1. Requisitos do sistema
+==================================================================
+
+Para executar o jogo é necessário:
+- Java Runtime Environment (JRE) instalado na máquina, na versão 8 ou superior
+- Conexão com a internet para jogar com outros usuário em rede.
+*Caso não possua conexão com a internet -> através do prompt de comando, no diretorio do arquivo "servidor.jar" execute o comando "java -jar servidor.jar" e deixe o prompt de comando aberto enquanto estiver jogando.
+
+
+==================================================================
+2. Instalação e execução
+==================================================================
+
+- Descompactar o arquivo packTheBag.zip que contém:
+	
+	- Codigo
+		- NetGrames 					// Arquivos do Framework NetGamesNRT
+			-Servidor				// Arquivos para executar o servidor local
+				- servidor.jar			// Executavel do servidor
+				- server.properties		// Arquivo de propriedades usado pelo servidor
+				- jogoMultiPlayer.properties	// Arquivo de propriedades do jogo
+			- NetGamesFileOffline.jar		// Executavel para gerar as propriedades do servidor
+			- ngnrtFramework.jar			// Pacote contendo o framework NetGamesNRT.
+		- out						// Pasta contendo os arquivos compilados do projeto e o executavel
+		- src						// Pasta com o codigo fonte do projeto Pack the Bag
+		- PackTheBag.iml				// Arquivo gerado pela IDE Intellij Idea
+	- Documentos						// Pasta contendo os documentos do projeto
+		- Requisitos					// Pasta contendo os documentos dos requisitos do projeto
+			- Requisitos.pdf			// Arquivo com os Requisitos do projeto
+		- UML						// Pasta com o arquivo .vpp contendo os diagramas gerados durante o semestre
+			- packTheBag.vpp			// Documento contendo os diagramas da UML do programa Visual Paradigm
+	- Executaveis						// Pasta com os arquivos executaveis do Pack the Bag
+	- ReleaseNotes.txt					// Arquivo com as informações sobre o Release
+
+- Não é necessário instalar o jogo para que ele seja executado.
+- Para executar o jogo há três possibilidades
+	1º Diretamente no arquivo "PackTheBag.jar" considerando as restrições:
+	Se  "Java platform SE binary" estiver definido como programa padrão para abrir arquivo: Dar duplo clique em "PackTheBag.jar";
+	Caso contrário: Clicar com o botão direito do mouse no arquivo "PackTheBag.jar" e clicar em "Abrir com..." para procurar o JRE 8 em seu computador. 
+
+	2º Através do prompt de comando:
+	No diretório onde consta o arquivo "PackTheBag.jar" executar o comando "java -jar PackTheBag.jar"
+
+	3º Através da IDE Eclipse.
+	Importe o projeto na pasta Codigo para o Eclipse. Depois em Build Path > Configure Build Path, clique em Libraries e atualize o arquivo "ngnrtFramework.jar" para o arquivo que se encontra na pasta "lib" do projeto.
+	Vale lembrar que o projeto utiliza o jdk8.0_91.
+
+==================================================================
+3. Como jogar
+==================================================================
+
+- Após executado, clique Conectar, digite seu nome, clique em ok, digite o endereço do servidor e clique em ok.
+- Com dois jogadores conectados, um dos dois clica no botao Iniciar Partida. 
+- Quem iniciou é o primeiro a jogar e terá as peças disponiveis apresentadas em sua tela, estas podendo posuir as cores Azul, Amarelo e Veremelho
+- O jogador da vez deve escolher uma peça com um clique e clicar na grade para realizar a jogada, caso seja uma posição invalida uma mensagem sera mostrada na tela 
+- Quando a jogada for enviada o outro jogador se torna o jogador da vez e pode executar os passos do item anterior
+- Cada cor representa uma categoria com pontuações diferentes, peças azuis valem 200 pontos, amarelas 400 pontos e vermelhas 800 ponto, com probabilidade de aparecer 10% para peças vermelhas, 30% para peças amarelas e 60% para peças azuis.
+- Para maiores informações, abra o arquivo Requisitos.pdf e veja a seçao "1.2 Descrição do Jogo". Este arquivo encontra-se na pasta "Documentos/Requisitos".
+
+==================================================================
+3. Versão atual e seus aspectos
+==================================================================
+
+- O jogo encontra-se na sua primeira versão, com uma interface simples, amigável e funcional. 
+- O jogo consiste em escolher as peças que melhor se encaixam na estrategia do jogador, pode se tentar ocupar o maior numero de espaços ou utilizar as peças de maior valor, tudo depende do estilo de jogo de cada jogado e das peças disponiveis
+
+==================================================================
+4. Restrições
+==================================================================
+
+- Quando houver vencedor na partida ou o jogo for encerrado por algum motivo, o usuário deve tomar a decisão de fechar o jogo, iniciar partida ou desconectar, não são tomadas medidas automaticas.
+- Quando o usuário conecta no servidor e não há adversário para jogar, o jogo aguarda até que um usuário se conecte, caso isso não ocorra o usuário deve tomar a decisão de fechar o jogo.
+- Caso uma nova partida seja iniciada durante outra partida não será atribuida pontuação para a partida, apenas será começada uma nova partida.
+
+==================================================================
+5. Melhorias para próximas versões
+==================================================================
+
+- Melhorar a interface gráfica: incluir um plano de fundo e melhorar o grafico das peças
+- Melhorar as mensagens exibidas na tela com textos mais significativos
+- Oferecer suporte para jogo single player.
+- Corrigir bugs de posicionamento das peças disponiveis, atualmente elas não estão alinhadas corretamente
+- Implementar um histórico de partidas para dar suporte a implementação de ranking.
+- Permitir a configuração do tamanho da grade, quantidade de peças por turno e categorias disponivies, estas funções ja estão implementadas porem não estão disponiveis para o usuário.
+	
